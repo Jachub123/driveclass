@@ -23,25 +23,52 @@
     >
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" text="HOME" aria-current="page" href="#"
+          <a
+            class="nav-link"
+            routerLink="/"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            text="HOME"
+            aria-current="page"
+            href="#"
             >HOME</a
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link" text="LINKS & TIPPS" href="#">LINKS & TIPPS</a>
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            text="LINKS & TIPPS"
+            href="#"
+            >LINKS & TIPPS</a
+          >
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link" text="PORTAL" href="#"> PORTAL </a>
+          <a class="nav-link" routerLinkActive="active" text="PORTAL" href="#">
+            PORTAL
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" text="LOGIN" href="#">LOGIN</a>
+          <a
+            routerLink="register"
+            routerLinkActive="active"
+            class="nav-link"
+            text="REGISTER"
+            >REGISTER</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" text="PREMIUM ABO" href="#">PREMIUM ABO</a>
+          <a
+            class="nav-link"
+            routerLinkActive="active"
+            text="PREMIUM ABO"
+            href="#"
+            >PREMIUM ABO</a
+          >
         </li>
       </ul>
       <form class="d-flex" role="search">
-        <select class="form-control me-2 bi-caret-down">
+        <select class="form-select me-2 bi-caret-down">
           <option>deutsch</option>
           <option>englisch</option>
           <option>französisch</option>

@@ -9,15 +9,17 @@ import { DrivingSchoolComponent } from './search-drive-class/driving-school/driv
 import { SchoolDetailViewComponent } from './search-drive-class/driving-school/school-detail-view/school-detail-view.component';
 import { TrimPipe } from './trim.pipe';
 import { RouterModule, Routes } from '@angular/router';
-import { SchoolService } from './school.service';
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterComponent } from './register/register.component';
 
 const appRoutes: Routes = [
-  { path: '', component: SearchDriveClassComponent },
-  { path: 'school/:id', component: SchoolDetailViewComponent },
+  { path: '', component: SearchDriveClassComponent, pathMatch: 'full' },
+  {
+    path: 'school/:id',
+    component: SchoolDetailViewComponent,
+  },
+  { path: 'register', component: RegisterComponent },
 ];
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +36,7 @@ const appRoutes: Routes = [
     FormsModule,
     RouterModule.forRoot(appRoutes),
   ],
+
   providers: [],
   bootstrap: [AppComponent],
 })

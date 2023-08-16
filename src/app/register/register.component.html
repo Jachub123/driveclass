@@ -1,1 +1,153 @@
-<p>register works!</p>
+<h1 class="">Registriere deine Fahrschule bei Driveclass</h1>
+
+<form #f="ngForm" (ngSubmit)="register()">
+  <div class="wrapper">
+    <div class="inner">
+      <label class="" for="schoolname"> Name deiner Fahrschule: </label>
+      <input
+        class="name"
+        id="schoolname"
+        type="text"
+        placeholder='z.B. "Drive Safe Fahrschule Kernten"'
+        name="schoolname"
+        ngModel
+        required
+      />
+      <p class="warn text-red-500">
+        Dies ist ein Pflichtfeld, bitte ausfüllen!
+      </p>
+    </div>
+    <div class="w-full md:w-1/2 px-3">
+      <label for="grid-last-name"> Profilname </label>
+      <input
+        class=""
+        id="grid-last-name"
+        type="text"
+        placeholder="mit diesem Namen Meldest du dich an"
+        name="profilename"
+        ngModel
+        required
+      />
+      <p class="warn text-red-500">
+        Dies ist ein Pflichtfeld, bitte ausfüllen!
+      </p>
+    </div>
+  </div>
+  <div class="labelInputWrapper mb-6">
+    <div class="w-full px-3">
+      <label for="grid-password"> Passwort </label>
+      <input
+        class=""
+        id="grid-password"
+        type="password"
+        placeholder="******************"
+        name="password"
+        ngModel
+        required
+      />
+      <p class="warn text-red-500">
+        Dies ist ein Pflichtfeld, bitte ausfüllen!
+      </p>
+      <p class="warn text-gray-600">Mach es sicher!</p>
+    </div>
+  </div>
+  <div class="labelInputWrapper mb-3">
+    <div class="w-full px-3">
+      <label for="img"> Link zu Bild deiner Fahrschule </label>
+      <input
+        class=""
+        id="img"
+        type="url"
+        placeholder="www.beispiel.de/bild.jpg"
+        name="img"
+        ngModel
+        required
+      />
+      <p class="warn text-red-500">
+        Dies ist ein Pflichtfeld, bitte ausfüllen!
+      </p>
+    </div>
+  </div>
+  <div class="labelInputWrapper mb-3">
+    <div class="labelInputWrapperInner">
+      <label for="area"> Stadt deiner Fahrschule </label>
+      <input
+        class=""
+        id="area"
+        type="text"
+        placeholder="Zürich"
+        name="area"
+        ngModel
+        required
+      />
+      <p class="warn text-red-500">
+        Dies ist ein Pflichtfeld, bitte ausfüllen!
+      </p>
+    </div>
+    <div class="labelInputWrapperInner">
+      <label for="kanton"> Kanton </label>
+      <div class="relative">
+        <select class="form-select" id="kanton" name="kanton" ngModel required>
+          <option>Zürich</option>
+          <option>Bern</option>
+          <option>Luzern</option>
+          <option>Uri</option>
+          <option>Schwyz</option>
+          <option>Obwalden</option>
+          <option>Nidwalden</option>
+          <option>Glarus</option>
+          <option>Zug</option>
+          <option>Freiburg</option>
+          <option>Solothurn</option>
+          <option>Basel-Stadt</option>
+          <option>Basel-Landschaft</option>
+          <option>Schaffhausen</option>
+          <option>Appenzell A.Rh</option>
+          <option>Appenzell I.Rh.</option>
+          <option>Sankt Gallen</option>
+          <option>Graubünden</option>
+          <option>Aargau</option>
+          <option>Thurgau</option>
+          <option>Tessin</option>
+          <option>Waadt</option>
+          <option>Wallis</option>
+          <option>Neuenburg</option>
+          <option>Genf</option>
+          <option>Jura</option>
+        </select>
+        <p class="warn text-red-500">
+          Dies ist ein Pflichtfeld, bitte ausfüllen!
+        </p>
+      </div>
+    </div>
+    <div class="labelInputWrapperInner">
+      <label for="grid-zip"> Postleitzahl </label>
+      <input
+        class=""
+        id="grid-zip"
+        type="text"
+        placeholder="8001"
+        name="postalCode"
+        ngModel
+        required
+      />
+      <p class="warn text-red-500">
+        Dies ist ein Pflichtfeld, bitte ausfüllen!
+      </p>
+    </div>
+  </div>
+  <div class="labelInputWrapper">
+    <div class="w-full px-3">
+      <label for="infoText"> Info-Text zu deiner Fahrschule</label>
+      <textarea
+        class=""
+        id="infoText"
+        type="text"
+        placeholder="sag etwas zu deiner Fahrschule"
+        name="infoText"
+        ngModel
+      ></textarea>
+    </div>
+  </div>
+  <button type="submit">Registrieren</button>
+</form>

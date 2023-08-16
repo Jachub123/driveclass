@@ -74,6 +74,6 @@ nav {
 header {
   background-image: url("/assets/img/pexels-djordje-petrovic-1416169.jpg");
   background-position: 0% 40%;
-  @apply flex h-96 flex-col justify-end max-lg:bg-center;
+  @apply flex h-96 flex-col justify-end max-lg:bg-[40%_40%];
   @apply p-2 pr-3;
 }

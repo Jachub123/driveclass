@@ -1,0 +1,54 @@
+$color1: #667468;
+$color2: #f8a100;
+
+h1 {
+  background: linear-gradient(to left, $color1, $color2);
+  @apply max-w-5xl mx-auto text-5xl my-32 text-center bg-clip-text text-transparent leading-[4rem];
+}
+
+form {
+  @apply w-full m-auto max-w-5xl mb-32 p-4;
+
+  .warn {
+    @apply text-xs italic;
+  }
+
+  input,
+  textarea,
+  select {
+    @apply appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500;
+
+    + p.warn {
+      display: none;
+    }
+  }
+
+  textarea {
+    @apply h-48;
+  }
+
+  label {
+    @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
+  }
+  .wrapper {
+    @apply flex flex-wrap -mx-3 mb-6;
+
+    .inner {
+      @apply w-full md:w-1/2 px-3 mb-6 md:mb-0;
+    }
+  }
+  .labelInputWrapper {
+    @apply flex flex-wrap -mx-3;
+  }
+  .labelInputWrapperInner {
+    @apply w-full md:w-1/3 px-3 mb-6 md:mb-0;
+  }
+
+  input.ng-touched.ng-invalid,
+  select.ng-touched.ng-invalid {
+    @apply border-red-500;
+    & + p.warn {
+      display: block;
+    }
+  }
+}
