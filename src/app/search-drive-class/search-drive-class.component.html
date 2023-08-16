@@ -1,0 +1,40 @@
+<form class="form" #f="ngForm" (ngSubmit)="filterSchools()">
+  <section>
+    <div class="inputContainer">
+      <div></div>
+      <label for="driveClassSearchbar">Fahrschule </label>
+      <input
+        id="driveClassSearchbar"
+        name="driveClassSearchbar"
+        value="suche nach Fahrschule in deiner Nähe"
+        type="text"
+        ngModel
+      />
+    </div>
+    <div class="inputContainer">
+      <div></div>
+      <label for="plz">Postleitzahl</label>
+      <input id="plz" name="plz" type="number" ngModel />
+    </div>
+    <div class="inputContainer">
+      <div></div>
+      <label for="area">Gebiet </label>
+      <input id="area" name="area" type="text" ngModel />
+    </div>
+    <div class="inputContainer">
+      <div></div>
+      <label for="lang">Sprache </label>
+      <input id="lang" name="lang" type="text" ngModel />
+    </div>
+    <div>
+      <button class="" type="submit">Suche</button>
+    </div>
+  </section>
+</form>
+<main class="container">
+  <app-driving-school
+    *ngFor="let school of filteredSchools; let i = index"
+    [school]="school"
+    [schoolId]="i"
+  ></app-driving-school>
+</main>

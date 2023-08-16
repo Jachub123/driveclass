@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: overpass;
+  src: url("assets/font/Overpass/static/Overpass-Regular.ttf");
+}
+@font-face {
+  font-family: DidactG;
+  src: url("assets/font/DidactGothic/DidactGothic-Regular.ttf");
+}
+body {
+  font-family: DidactG;
+}

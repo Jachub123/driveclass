@@ -1,0 +1,53 @@
+.form {
+  @apply max-md:-mt-48 md:-mt-[17rem] lg:-mt-[3.5rem];
+  .inputContainer {
+    @apply relative h-20 drop-shadow-xl;
+    & > div,
+    label {
+      @apply absolute top-0 p-2;
+    }
+    & > div {
+      @apply m-0 w-full h-full bg-slate-500 opacity-60 rounded-md;
+    }
+    input {
+      @apply z-10;
+    }
+  }
+
+  section {
+    @apply flex flex-col md:flex-row p-2 flex-wrap h-fit text-white justify-center;
+  }
+  input {
+    @apply text-black;
+  }
+  input,
+  button {
+    @apply border
+    border-[#858585]
+    h-10;
+  }
+
+  button {
+    @apply bg-[#4DBA57] 
+    hover:rounded-lg
+    drop-shadow-xl;
+    &:hover {
+      background: linear-gradient(#005c10, #4dba57);
+    }
+  }
+  div {
+    @apply flex
+    flex-col
+    justify-end
+    lg:w-1/5
+    md:w-2/6
+    w-full
+    my-0 
+    my-2 
+    mx-2;
+  }
+}
+
+main.container {
+  @apply pl-[1.5rem] mt-4 md:mt-[2.5rem] xl:w-4/6;
+}

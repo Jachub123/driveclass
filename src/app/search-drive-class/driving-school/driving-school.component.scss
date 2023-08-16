@@ -1,0 +1,142 @@
+$color1: #bdecc2;
+$color2: #c7a86f;
+
+.card {
+  @apply flex
+  flex-col
+  items-center
+  border
+border-gray-200 
+  rounded-lg 
+  md:pl-5  
+  shadow 
+  bg-white 
+  md:flex-row 
+  dark:border-gray-700 
+  dark:bg-gray-800 
+  dark:hover:bg-gray-700
+  mb-4
+  md:h-[10rem];
+
+  &::before,
+  &::after {
+    @apply rounded-lg opacity-0;
+    margin: 1rem 1rem;
+    content: "";
+    position: absolute;
+    display: block;
+    transition: 0.3s ease-in-out;
+    left: 0;
+    top: 0;
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
+    z-index: -2;
+    background: linear-gradient(to left, $color1, $color2);
+  }
+  &:after {
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
+    z-index: 0;
+    background: linear-gradient(to right, $color1, $color2);
+  }
+
+  &:hover {
+    animation: colorFadeToBorder 0.3s ease-in forwards;
+
+    &::after {
+      animation: colorFadeToBorderAfter 0.3s ease-in forwards;
+      @apply max-md:opacity-0 #{!important};
+    }
+    &::before {
+      animation: colorFadeToBorderBefore 0.3s ease-in forwards;
+      @apply max-md:opacity-0 #{!important};
+    }
+  }
+
+  img,
+  .schoolname,
+  .infoText {
+    z-index: 1;
+  }
+  img {
+    width: calc(100% - 2rem);
+
+    @apply object-contain rounded-t-lg md:h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg md:max-h-28;
+  }
+  .schoolname {
+    @apply mb-2 text-2xl font-bold tracking-tight;
+  }
+  .infoText {
+    @apply mb-3 font-normal;
+  }
+}
+
+@keyframes colorFadeToBorder {
+  0% {
+    background: white;
+  }
+  70% {
+    background: transparent;
+  }
+  100% {
+    background: transparent;
+  }
+}
+/* @keyframes colorFadeToBorderAfter {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+} */
+@keyframes colorFadeToBorderAfter {
+  0% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0;
+  }
+  90% {
+    opacity: 0;
+    background: white;
+  }
+  100% {
+    opacity: 1;
+    background: white;
+  }
+}
+/* @keyframes colorFadeToBorderBefore {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    margin: 1rem 1rem;
+    opacity: 1;
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
+  }
+} */
+@keyframes colorFadeToBorderBefore {
+  0% {
+    opacity: 0;
+  }
+  70% {
+    margin: 1rem 1rem;
+    opacity: 1;
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
+  }
+  90% {
+    opacity: 1;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+  100% {
+    opacity: 1;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+}

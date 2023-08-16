@@ -1,0 +1,79 @@
+nav {
+  @apply text-black bg-white;
+  img {
+    width: 5rem;
+  }
+  li a {
+    @apply text-2xl w-fit relative;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+
+    &::after,
+    &::before {
+      content: attr(text);
+      position: absolute;
+      display: block;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      margin: auto;
+      width: fit-content;
+      height: fit-content;
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+
+      background-image: linear-gradient(
+        to right,
+        rgba(147, 245, 157, 0.767),
+        rgba(3, 129, 24, 0.767)
+      );
+    }
+    &::after {
+      background-image: linear-gradient(
+        to left,
+        rgba(147, 245, 157, 0.767),
+        rgba(3, 129, 24, 0.767)
+      );
+    }
+    &:hover {
+      &::after {
+        animation: moveGradient 0.4s ease-out;
+      }
+    }
+    &.active {
+      &::after,
+      &::before {
+        color: transparent;
+        background-image: linear-gradient(to left, #93f59d, #93f59d);
+      }
+    }
+  }
+  select {
+    @apply w-fit;
+  }
+}
+
+.collapse {
+  visibility: initial !important;
+}
+
+@keyframes moveGradient {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+header {
+  background-image: url("/assets/img/pexels-djordje-petrovic-1416169.jpg");
+  background-position: 0% 40%;
+  @apply flex h-96 flex-col justify-end max-lg:bg-center;
+  @apply p-2 pr-3;
+}

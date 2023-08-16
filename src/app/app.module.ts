@@ -11,6 +11,7 @@ import { TrimPipe } from './trim.pipe';
 import { RouterModule, Routes } from '@angular/router';
 import { SchoolService } from './school.service';
 import { HttpClientModule } from '@angular/common/http';
+import { RegisterComponent } from './register/register.component';
 
 const appRoutes: Routes = [
   { path: '', component: SearchDriveClassComponent },
@@ -25,6 +26,7 @@ const appRoutes: Routes = [
     DrivingSchoolComponent,
     SchoolDetailViewComponent,
     TrimPipe,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
