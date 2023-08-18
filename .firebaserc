@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "drive-schools-3fa8f"
+  },
+  "targets": {
+    "drive-schools-3fa8f": {
+      "hosting": {
+        "driveclass": [
+          "drive-schools-3fa8f"
+        ]
+      }
+    }
+  }
+}

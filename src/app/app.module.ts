@@ -11,6 +11,12 @@ import { TrimPipe } from './trim.pipe';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterComponent } from './register/register.component';
+import { environment } from 'src/environments/environment';
+import { AngularFireModule } from '@angular/fire/compat';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { EmailVerificationComponent } from './email-verification/email-verification.component';
 
 const appRoutes: Routes = [
   { path: '', component: SearchDriveClassComponent, pathMatch: 'full' },
@@ -19,6 +25,10 @@ const appRoutes: Routes = [
     component: SchoolDetailViewComponent,
   },
   { path: 'register', component: RegisterComponent },
+  {
+    path: 'emailVerification/:name/:id',
+    component: EmailVerificationComponent,
+  },
 ];
 @NgModule({
   declarations: [
@@ -29,10 +39,15 @@ const appRoutes: Routes = [
     SchoolDetailViewComponent,
     TrimPipe,
     RegisterComponent,
+    EmailVerificationComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
     FormsModule,
     RouterModule.forRoot(appRoutes),
   ],

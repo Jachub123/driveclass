@@ -1,0 +1,13 @@
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "yes"
+  },
+  "hosting": [
+    {
+      "target": "driveclass",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}

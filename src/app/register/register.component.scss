@@ -13,7 +13,10 @@ form {
     @apply text-xs italic;
   }
 
-  input,
+  input[type="text"],
+  input[type="password"],
+  input[type="url"],
+  input[type="number"],
   textarea,
   select {
     @apply appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500;
@@ -22,7 +25,15 @@ form {
       display: none;
     }
   }
-
+  .check {
+    @apply flex my-10;
+    & > div {
+      @apply w-1/4 flex;
+      & > label {
+        @apply m-0 mx-2;
+      }
+    }
+  }
   textarea {
     @apply h-48;
   }
@@ -49,6 +60,20 @@ form {
     @apply border-red-500;
     & + p.warn {
       display: block;
+    }
+  }
+  button {
+    @apply border 
+    p-3
+    border-[#858585]
+
+    bg-[#4DBA57] 
+    hover:rounded-lg
+    drop-shadow-xl 
+    text-white;
+
+    &:hover {
+      background: linear-gradient(#005c10, #4dba57);
     }
   }
 }

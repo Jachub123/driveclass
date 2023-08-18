@@ -24,7 +24,6 @@ export class SchoolDetailViewComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
-      console.log(this.id);
     });
     if (this.schoolService.getAllSchools() === undefined) {
       this.schoolService.fetchSchools();

@@ -1,10 +1,11 @@
 $color1: #bdecc2;
 $color2: #c7a86f;
 
-.card {
+.schoolCard {
   @apply flex
   flex-col
   items-center
+  relative
   border
 border-gray-200 
   rounded-lg 
@@ -12,9 +13,6 @@ border-gray-200
   shadow 
   bg-white 
   md:flex-row 
-  dark:border-gray-700 
-  dark:bg-gray-800 
-  dark:hover:bg-gray-700
   mb-4
   md:h-[10rem];
 
