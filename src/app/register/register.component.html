@@ -1,221 +1,454 @@
-<h1 class="">Registriere deine Fahrschule bei Driveclass</h1>
+<h1 *ngIf="!successMsg" class="">
+  Registriere deine Fahrschule/Berufsschule bei Driveclass
+</h1>
 
-<form #f="ngForm" (ngSubmit)="register()">
-  <div class="wrapper px-1">
-    <div class="inner">
-      <label class="" for="schoolname"> Name deiner Fahrschule: </label>
-      <input
-        class="name"
-        id="schoolname"
-        type="text"
-        placeholder='z.B. "Drive Safe Fahrschule Kernten"'
-        name="schoolname"
-        ngModel
-        required
+<form *ngIf="!successMsg" #f="ngForm" (ngSubmit)="register()">
+  <div *ngIf="pageCount === 1" class="containerP1">
+    <h1 class="subHeading">Alles über deine Fahrschule/Berufsschule</h1>
+    <div class="w-full md:w-1/2 schulWrapper">
+      <label for="berufsschule">Berufsschule</label
+      ><input
+        id="berufsschule"
+        class="schule"
+        type="radio"
+        name="schule"
+        value="berufsschule"
+        ngModel="berufsschule"
       />
-      <p class="warn text-red-500">
-        Dies ist ein Pflichtfeld, bitte ausfüllen!
-      </p>
-    </div>
-    <div class="w-full md:w-1/2 px-3">
-      <label for="grid-last-name"> Profilname </label>
-      <input
-        class=""
-        id="grid-last-name"
-        type="text"
-        placeholder="mit diesem Namen Meldest du dich an"
-        name="profilename"
-        ngModel
-        required
+      <label for="fahrschule">Fahrschule</label
+      ><input
+        id="fahrschule"
+        class="schule"
+        type="radio"
+        name="schule"
+        value="fahrschule"
+        ngModel="fahrschule"
       />
-      <p class="warn text-red-500">
-        Dies ist ein Pflichtfeld, bitte ausfüllen!
-      </p>
     </div>
-  </div>
-  <div class="labelInputWrapper mb-6">
-    <div class="w-full px-3">
-      <label for="grid-password"> Passwort </label>
-      <input
-        class=""
-        id="grid-password"
-        type="password"
-        placeholder="******************"
-        name="password"
-        ngModel
-        required
-      />
-      <p class="warn text-red-500">
-        Dies ist ein Pflichtfeld, bitte ausfüllen!
-      </p>
-      <p class="warn text-gray-600">Mach es sicher!</p>
-    </div>
-  </div>
-  <div class="labelInputWrapper mb-3">
-    <div class="w-full px-3">
-      <label for="img"> Link zu Bild deiner Fahrschule </label>
-      <input
-        class=""
-        id="img"
-        type="url"
-        placeholder="www.beispiel.de/bild.jpg"
-        name="img"
-        ngModel
-        required
-      />
-      <p class="warn text-red-500">
-        Dies ist ein Pflichtfeld, bitte ausfüllen!
-      </p>
-    </div>
-  </div>
-  <div class="labelInputWrapper mb-3 px-1">
-    <div class="labelInputWrapperInner">
-      <label for="area"> Stadt deiner Fahrschule </label>
-      <input
-        class=""
-        id="area"
-        type="text"
-        placeholder="Zürich"
-        name="area"
-        ngModel
-        required
-      />
-      <p class="warn text-red-500">
-        Dies ist ein Pflichtfeld, bitte ausfüllen!
-      </p>
-    </div>
-    <div class="labelInputWrapperInner">
-      <label for="kanton"> Kanton </label>
-      <div class="relative">
-        <select class="form-select" id="kanton" name="kanton" ngModel required>
-          <option>Zürich</option>
-          <option>Bern</option>
-          <option>Luzern</option>
-          <option>Uri</option>
-          <option>Schwyz</option>
-          <option>Obwalden</option>
-          <option>Nidwalden</option>
-          <option>Glarus</option>
-          <option>Zug</option>
-          <option>Freiburg</option>
-          <option>Solothurn</option>
-          <option>Basel-Stadt</option>
-          <option>Basel-Landschaft</option>
-          <option>Schaffhausen</option>
-          <option>Appenzell A.Rh</option>
-          <option>Appenzell I.Rh.</option>
-          <option>Sankt Gallen</option>
-          <option>Graubünden</option>
-          <option>Aargau</option>
-          <option>Thurgau</option>
-          <option>Tessin</option>
-          <option>Waadt</option>
-          <option>Wallis</option>
-          <option>Neuenburg</option>
-          <option>Genf</option>
-          <option>Jura</option>
-        </select>
+    <div class="wrapper px-1">
+      <div class="inner">
+        <label class="" for="name">
+          *Name deiner Fahrschule/Berufsschule:
+        </label>
+        <input
+          class="name"
+          id="name"
+          type="text"
+          placeholder='z.B. "Drive Safe Fahrschule/Berufsschule Kernten"'
+          name="name"
+          [(ngModel)]="name"
+          required
+        />
+        <p class="warn text-red-500">
+          Dies ist ein Pflichtfeld, bitte ausfüllen!
+        </p>
+      </div>
+      <div class="w-full md:w-1/2 px-3">
+        <label for="grid-last-name"> *Profilname </label>
+        <input
+          class=""
+          id="grid-last-name"
+          type="text"
+          placeholder="mit diesem Namen Meldest du dich an"
+          name="profilename"
+          [(ngModel)]="profilename"
+          required
+        />
         <p class="warn text-red-500">
           Dies ist ein Pflichtfeld, bitte ausfüllen!
         </p>
       </div>
     </div>
-    <div class="labelInputWrapperInner">
-      <label for="grid-zip"> Postleitzahl </label>
+    <div class="labelInputWrapper mb-6">
+      <div class="w-full px-3">
+        <label for="grid-password"> *Passwort </label>
+        <input
+          class=""
+          id="grid-password"
+          type="password"
+          placeholder="******************"
+          name="password"
+          ngModel
+          required
+        />
+        <p class="warn text-red-500">
+          Dies ist ein Pflichtfeld, bitte ausfüllen!
+        </p>
+        <p class="warn text-gray-600">Mach es sicher!</p>
+      </div>
+    </div>
+    <div class="labelInputWrapper mb-3">
+      <div class="w-full px-3">
+        <label for="img"> *Link zu Bild deiner Fahrschule/Berufsschule </label>
+        <input
+          class=""
+          id="img"
+          type="file"
+          (change)="upload($event)"
+          accept="*.png.jpg.JPEG."
+          name="img"
+          required
+          [(ngModel)]="img"
+        />
+        <p class="warn text-red-500">
+          Dies ist ein Pflichtfeld, bitte ausfüllen!
+        </p>
+      </div>
+    </div>
+    <div class="labelInputWrapper mb-3 px-1">
+      <div class="labelInputWrapperInner">
+        <label for="stadt"> *Stadt deiner Fahrschule/Berufsschule </label>
+        <input
+          class=""
+          id="stadt"
+          type="text"
+          placeholder="Zürich"
+          name="stadt"
+          [(ngModel)]="stadt"
+          required
+        />
+        <p class="warn text-red-500">
+          Dies ist ein Pflichtfeld, bitte ausfüllen!
+        </p>
+      </div>
+      <div class="labelInputWrapperInner">
+        <label for="kanton"> *Kanton </label>
+        <div class="relative">
+          <select
+            class="form-select"
+            id="kanton"
+            name="kanton"
+            [(ngModel)]="kanton"
+            required
+          >
+            <option>Zürich</option>
+            <option>Bern</option>
+            <option>Luzern</option>
+            <option>Uri</option>
+            <option>Schwyz</option>
+            <option>Obwalden</option>
+            <option>Nidwalden</option>
+            <option>Glarus</option>
+            <option>Zug</option>
+            <option>Freiburg</option>
+            <option>Solothurn</option>
+            <option>Basel-Stadt</option>
+            <option>Basel-Landschaft</option>
+            <option>Schaffhausen</option>
+            <option>Appenzell A.Rh</option>
+            <option>Appenzell I.Rh.</option>
+            <option>Sankt Gallen</option>
+            <option>Graubünden</option>
+            <option>Aargau</option>
+            <option>Thurgau</option>
+            <option>Tessin</option>
+            <option>Waadt</option>
+            <option>Wallis</option>
+            <option>Neuenburg</option>
+            <option>Genf</option>
+            <option>Jura</option>
+          </select>
+          <p class="warn text-red-500">
+            Dies ist ein Pflichtfeld, bitte ausfüllen!
+          </p>
+        </div>
+      </div>
+      <div class="labelInputWrapperInner">
+        <label for="grid-zip"> *Postleitzahl </label>
+        <input
+          class=""
+          id="grid-zip"
+          type="number"
+          placeholder="8001"
+          name="postalCode"
+          [(ngModel)]="postalCode"
+          required
+        />
+        <p class="warn text-red-500">
+          Dies ist ein Pflichtfeld, bitte ausfüllen!
+        </p>
+      </div>
+    </div>
+    <div class="labelInputWrapper">
+      <div class="w-full px-3">
+        <label for="infoText">
+          Info-Text zu deiner Fahrschule/Berufsschule</label
+        >
+        <textarea
+          class=""
+          id="infoText"
+          type="text"
+          placeholder="erzähl etwas über deine Fahrschule/Berufsschule"
+          name="infoText"
+          [(ngModel)]="infoText"
+        ></textarea>
+      </div>
+    </div>
+    <label class="px-1"
+      >Was bietet deine Fahrschule/Berufsschule an?
+      <span class="text-yellow-600"
+        >(Achtung: bei nicht ankreuzen, gibst du an dass dies deine
+        Fahrschule/Berufsschule nicht anbietet)</span
+      ></label
+    >
+    <div class="labelInputWrapper check px-2">
+      <div>
+        <label for="handgeschaltet"> Handgeschaltet</label>
+        <input
+          [(ngModel)]="handgeschaltet"
+          type="checkbox"
+          id="handgeschaltet"
+          name="handgeschaltet"
+        />
+      </div>
+      <div>
+        <label for="automat"> Automat</label>
+        <input
+          [(ngModel)]="automat"
+          type="checkbox"
+          id="automat"
+          name="automat"
+        />
+      </div>
+      <div>
+        <label for="verkehrskunde"> Verkehrskunde</label>
+        <input
+          [(ngModel)]="verkehrskunde"
+          type="checkbox"
+          id="verkehrskunde"
+          name="verkehrskunde"
+        />
+      </div>
+      <div>
+        <label for="nothelferkurs"> Nothelferkurs</label>
+        <input
+          [(ngModel)]="nothelferkurs"
+          type="checkbox"
+          id="nothelferkurs"
+          name="nothelferkurs"
+        />
+      </div>
+    </div>
+    <div class="labelInputWrapper">
+      <div class="w-full px-3">
+        <label for="sprache"> *Sprachen</label>
+        <input
+          type="text"
+          name="sprache"
+          id="sprache"
+          [(ngModel)]="sprache"
+          required
+          placeholder="bitte mit Komma getrennt angeben: englisch, deutsch, französisch"
+        />
+      </div>
+    </div>
+    <label class="px-1 mt-3 mb-4">Was verlangst du für:</label>
+    <div class="labelInputWrapper mb-3 px-1">
+      <div class="labelInputWrapperInner">
+        <label for="lektion">eine Lektion</label>
+        <input
+          [(ngModel)]="preisLektionen"
+          type="number"
+          id="lektion"
+          name="preisLektionen"
+        />
+      </div>
+      <div class="labelInputWrapperInner">
+        <label for="preisVerkehrskunde">Verkehrskunde</label>
+        <input
+          [(ngModel)]="preisVerkehrskunde"
+          type="number"
+          id="preisVerkehrskunde"
+          name="preisVerkehrskunde"
+        />
+      </div>
+      <div class="labelInputWrapperInner">
+        <label for="preisNothelferkurs">eine Nothelferkurs-Stunde</label>
+        <input
+          [(ngModel)]="preisNothelferKurs"
+          type="number"
+          id="preisNothelferkurs"
+          name="preisNothelferKurs"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="pageCount === 2" class="containerP2">
+    <h1 class="subHeading">Kontaktdaten zu deiner Fahrschule/Berufsschule</h1>
+    <div class="w-full px-1">
+      <label class="" for="email"> *E-Mail </label>
       <input
         class=""
-        id="grid-zip"
-        type="number"
-        placeholder="8001"
-        name="postalCode"
-        ngModel
+        id="email"
+        type="email"
+        placeholder="email@example.com"
+        name="email"
+        email
+        [(ngModel)]="email"
         required
       />
       <p class="warn text-red-500">
         Dies ist ein Pflichtfeld, bitte ausfüllen!
       </p>
     </div>
-  </div>
-  <div class="labelInputWrapper">
-    <div class="w-full px-3">
-      <label for="infoText"> Info-Text zu deiner Fahrschule</label>
-      <textarea
-        class=""
-        id="infoText"
-        type="text"
-        placeholder="erzähl etwas über deine Fahrschule"
-        name="infoText"
-        ngModel
-      ></textarea>
+    <div class="wrapper px-1">
+      <div class="inner">
+        <label for="vorwhal"> *Vorwahl </label>
+        <select
+          id="vorwhal"
+          name="vorwahl"
+          class="form-select"
+          required
+          [(ngModel)]="vorwahl"
+        >
+          <option value="+41">+41 Schweiz</option>
+          <option value="+30">+30 Griechenland</option>
+          <option value="+31">+31 Niederlande</option>
+          <option value="+32">+32 Belgien</option>
+          <option value="+33">+33 Frankreich</option>
+          <option value="+34">+34 Spanien</option>
+          <option value="+39">+39 Italien</option>
+          <option value="+40">+40 Rumänien</option>
+          <option value="+43">+43 Österreich</option>
+          <option value="+49">+49 Deutschland</option>
+        </select>
+      </div>
+      <div class="w-full md:w-1/2 px-3">
+        <label for="telefon">
+          *Telefonnummer der Fahrschule/Berufsschule
+        </label>
+        <input
+          class=""
+          id="telefon"
+          type="tel"
+          name="telefon"
+          [(ngModel)]="nummer"
+          pattern="[0-9]{8,11}"
+          placeholder="Bitte erste Null weg lassen"
+          required
+        />
+        <p class="warn text-red-500">
+          Dies ist ein Pflichtfeld, bitte ausfüllen!
+        </p>
+      </div>
+    </div>
+
+    <div class="labelInputWrapper mb-3">
+      <div class="w-full px-3">
+        <label for="webseite"> *Webseite der Fahrschule/Berufsschule </label>
+        <input
+          class=""
+          id="webseite"
+          type="text"
+          name="webseite"
+          [(ngModel)]="webseite"
+          required
+        />
+        <p class="warn text-red-500">
+          Dies ist ein Pflichtfeld, bitte ausfüllen!
+        </p>
+      </div>
     </div>
   </div>
-  <label class="px-1"
-    >Was bietet deine Fahrschule an?
-    <span class="text-yellow-600"
-      >(Achtung: bei nicht ankreuzen, gibst du an dass dies deine Fahrschule
-      nicht anbietet)</span
-    ></label
-  >
-  <div class="labelInputWrapper check px-2">
-    <div>
-      <label for="handgeschaltet"> Handgeschaltet</label>
-      <input
-        ngModel
-        type="checkbox"
-        id="handgeschaltet"
-        name="handgeschaltet"
-      />
-    </div>
-    <div>
-      <label for="automat"> Automat</label>
-      <input ngModel type="checkbox" id="automat" name="automat" />
-    </div>
-    <div>
-      <label for="verkehrskunde"> Verkehrskunde</label>
-      <input ngModel type="checkbox" id="verkehrskunde" name="verkehrskunde" />
-    </div>
-    <div>
-      <label for="nothelferkurs"> Nothelferkurs</label>
-      <input ngModel type="checkbox" id="nothelferkurs" name="nothelferkurs" />
-    </div>
+
+  <fieldset *ngIf="pageCount === 3" class="containerP2">
+    <h1 class="subHeading">Dein Abo</h1>
+    <input
+      id="opt1"
+      class="w-full h-full"
+      type="radio"
+      name="abo"
+      value="70"
+      ngModel="abo1"
+    />
+    <label class="card" for="opt1">
+      <h1>Premium Abo Fahrschule Monatlich</h1>
+      <p>&#10003; übersichtliches Profil</p>
+      <p>&#10003; SEO optimierte Inhalte</p>
+      <p>&#10003; Call to Actions</p>
+      <p>&#10003; laufende Updates</p>
+      <p>&#10003; aktive promotion auf Social Media</p>
+      <p class="price">70.00 CHF</p>
+    </label>
+    <input
+      id="opt2"
+      class="w-full h-full"
+      type="radio"
+      name="abo"
+      value="720"
+      ngModel="abo2"
+    />
+
+    <label class="card" for="opt2">
+      <h1>Premium Abo Fahrschule Jährlich</h1>
+      <p>&#10003; übersichtliches Profil</p>
+      <p>&#10003; SEO optimierte Inhalte</p>
+      <p>&#10003; Call to Actions</p>
+      <p>&#10003; laufende Updates</p>
+      <p>&#10003; aktive promotion auf Social Media</p>
+      <p class="price">720.00 CHF</p>
+    </label>
+    <input
+      id="opt3"
+      class="w-full h-full"
+      type="radio"
+      name="abo"
+      value="150"
+      ngModel="abo3"
+    />
+
+    <label class="card" for="opt3">
+      <h1>Premium Abo Berufsschule Monatlich</h1>
+      <p>&#10003; übersichtliches Profil</p>
+      <p>&#10003; SEO optimierte Inhalte</p>
+      <p>&#10003; Call to Actions</p>
+      <p>&#10003; laufende Updates</p>
+      <p>&#10003; aktive promotion auf Social Media</p>
+      <p class="price">150.00 CHF</p>
+    </label>
+    <input
+      id="opt4"
+      class="w-full h-full"
+      type="radio"
+      name="abo"
+      value="1500"
+      ngModel="abo4"
+    />
+    <label class="card" for="opt4">
+      <h1>Premium Abo Berufsschule Monatlich</h1>
+      <p>&#10003; übersichtliches Profil</p>
+      <p>&#10003; SEO optimierte Inhalte</p>
+      <p>&#10003; Call to Actions</p>
+      <p>&#10003; laufende Updates</p>
+      <p>&#10003; aktive promotion auf Social Media</p>
+      <p class="price">1500.00 CHF</p>
+    </label>
+  </fieldset>
+
+  <div class="buttonContainer">
+    <button *ngIf="pageCount === 2" type="button" (click)="back()">
+      zurück zu 1/4
+    </button>
+    <button *ngIf="pageCount === 3" type="button" (click)="back()">
+      zurück zu 2/4
+    </button>
+    <button *ngIf="pageCount === 4" type="button" (click)="back()">
+      zurück zu 3/4
+    </button>
+    <button class="next" *ngIf="pageCount === 1" type="button" (click)="next()">
+      weiter zu 2/4
+    </button>
+    <button class="next" *ngIf="pageCount === 2" type="button" (click)="next()">
+      weiter zu 3/4
+    </button>
+    <button class="next" *ngIf="pageCount === 3" type="button" (click)="next()">
+      weiter zu 4/4
+    </button>
+    <button class="next" *ngIf="pageCount === 4" type="submit">
+      Registrieren
+    </button>
   </div>
-  <div class="labelInputWrapper">
-    <div class="w-full px-3">
-      <label for="sprache"> Sprachen</label>
-      <input
-        type="text"
-        name="sprache"
-        id="sprache"
-        ngModel
-        placeholder="bitte mit Komma getrennt angeben: englisch, deutsch, französisch"
-      />
-    </div>
-  </div>
-  <label class="px-1 mt-3 mb-4">Was verlangst du für:</label>
-  <div class="labelInputWrapper mb-3 px-1">
-    <div class="labelInputWrapperInner">
-      <label for="lektion">eine Lektion</label>
-      <input ngModel type="number" id="lektion" name="preisLektionen" />
-    </div>
-    <div class="labelInputWrapperInner">
-      <label for="preisVerkehrskunde">eine Verkehrskunde-Stunde</label>
-      <input
-        ngModel
-        type="number"
-        id="preisVerkehrskunde"
-        name="preisVerkehrskunde"
-      />
-    </div>
-    <div class="labelInputWrapperInner">
-      <label for="preisNothelferkurs">eine Nothelferkurs-Stunde</label>
-      <input
-        ngModel
-        type="number"
-        id="preisNothelferkurs"
-        name="preisNothelferKurs"
-      />
-    </div>
-  </div>
-  <button type="submit">weiter zu 2/4</button>
   <p class="text-red-500">{{ errorMsg }}</p>
 </form>
+<h1 *ngIf="successMsg">{{ successMsg }}</h1>

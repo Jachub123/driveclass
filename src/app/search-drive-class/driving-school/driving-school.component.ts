@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SchoolService } from 'src/app/school.service';
+import { School } from './school.model';
 
 @Component({
   selector: 'app-driving-school',
@@ -8,14 +9,7 @@ import { SchoolService } from 'src/app/school.service';
 })
 export class DrivingSchoolComponent implements OnInit {
   constructor(private schoolService: SchoolService) {}
-  @Input() school: {
-    name: string;
-    img: string;
-    infoText: string;
-    area: string;
-    postalCode: number;
-    rating: number;
-  };
+  @Input() school: School;
 
   @Input() schoolId: number;
 

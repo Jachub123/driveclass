@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SchoolService } from '../school.service';
+import { School } from './driving-school/school.model';
 
 @Component({
   selector: 'app-search-drive-class',
@@ -10,24 +11,10 @@ import { SchoolService } from '../school.service';
 export class SearchDriveClassComponent implements OnInit {
   constructor(private schoolService: SchoolService) {}
   @ViewChild('f') form: NgForm;
-
-  schools: {
-    name: string;
-    img: string;
-    infoText: string;
-    area: string;
-    postalCode: number;
-    rating: number;
-  }[];
-
-  filteredSchools: {
-    name: string;
-    img: string;
-    infoText: string;
-    area: string;
-    postalCode: number;
-    rating: number;
-  }[];
+  selectedSchoolType: string = 'fahrschule';
+  schools: School[];
+  img: string;
+  filteredSchools: School[];
 
   filterSchools() {
     const value = this.form.value;
@@ -45,7 +32,7 @@ export class SearchDriveClassComponent implements OnInit {
         let isSchoolnameEqSearchedName = school.name
           .toLowerCase()
           .includes(
-            value.driveClassSearchbar.toLowerCase() !== ''
+            value.driveClassSearchbar !== ''
               ? value.driveClassSearchbar.toLowerCase()
               : false
           );
@@ -74,20 +61,49 @@ export class SearchDriveClassComponent implements OnInit {
             }
           }
         }
-        if (value.area !== '') {
+        if (value.schoolType !== '') {
           if (this.filteredSchools.length !== 0) {
             if (isSchoolnameEqSearchedName || isPostCodeEqSearchedPCode) {
               return;
             } else {
               if (
-                school.area.toLowerCase().includes(value.area.toLowerCase())
+                school.schule
+                  .toLowerCase()
+                  .includes(value.schoolType.toLowerCase())
               ) {
                 let updatedArr = [school];
                 this.filteredSchools.push(...updatedArr);
               }
             }
           } else {
-            if (school.area.toLowerCase().includes(value.area.toLowerCase())) {
+            console.log(school.schule);
+            console.log(value.schoolType);
+            if (
+              school.schule
+                .toLowerCase()
+                .includes(value.schoolType.toLowerCase())
+            ) {
+              let updatedArr = [school];
+              this.filteredSchools.push(...updatedArr);
+            }
+          }
+        }
+        if (value.stadt !== '') {
+          if (this.filteredSchools.length !== 0) {
+            if (isSchoolnameEqSearchedName || isPostCodeEqSearchedPCode) {
+              return;
+            } else {
+              if (
+                school.stadt.toLowerCase().includes(value.stadt.toLowerCase())
+              ) {
+                let updatedArr = [school];
+                this.filteredSchools.push(...updatedArr);
+              }
+            }
+          } else {
+            if (
+              school.stadt.toLowerCase().includes(value.stadt.toLowerCase())
+            ) {
               let updatedArr = [school];
               this.filteredSchools.push(...updatedArr);
             }
@@ -101,9 +117,19 @@ export class SearchDriveClassComponent implements OnInit {
 
   ngOnInit() {
     this.schoolService.fetchSchools();
+    this.filteredSchools = this.schools;
     this.schoolService.schools.subscribe((school) => {
       this.schools = school;
       this.filteredSchools = this.schools;
     });
+
+    /*       this.fireStorage
+        .ref(`/${school[index].name}/images`)
+        .getDownloadURL()
+        .subscribe((url) => {
+          console.log(url);
+          this.schools[index].img = url;
+          console.log(this.schools);
+        }); */
   }
 }

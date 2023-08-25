@@ -1,5 +1,5 @@
 .form {
-  @apply max-md:-mt-48 md:-mt-[17rem] lg:-mt-[3.5rem];
+  @apply max-md:-mt-48 md:-mt-[15.55rem] lg:-mt-[3.5rem];
   .inputContainer {
     @apply relative h-20 drop-shadow-xl;
     & > div,
@@ -9,37 +9,44 @@
     & > div {
       @apply m-0 w-full h-full bg-slate-500 opacity-60 rounded-md;
     }
-    input {
+    input,
+    select {
       @apply z-10;
     }
   }
 
   section {
     @apply flex flex-col md:flex-row p-2 flex-wrap h-fit text-white justify-center;
+    div {
+      @apply my-2 mx-0 md:m-2;
+    }
   }
-  input {
+  input,
+  select {
     @apply text-black;
   }
   input,
-  button {
+  button,
+  select {
     @apply border
     border-[#858585]
     h-10;
   }
+  .buttonWrapper {
+    @apply flex w-full items-center;
+    button {
+      @apply bg-[#4DBA57] w-full md:w-2/6 xl:w-1/6 drop-shadow-xl;
 
-  button {
-    @apply bg-[#4DBA57] 
-    hover:rounded-lg
-    drop-shadow-xl;
-    &:hover {
-      background: linear-gradient(#005c10, #4dba57);
+      &:hover {
+        background: linear-gradient(#005c10, #4dba57);
+      }
     }
   }
   div {
     @apply flex
     flex-col
     justify-end
-    lg:w-1/5
+    lg:w-1/6
     md:w-2/6
     w-full
     my-0 

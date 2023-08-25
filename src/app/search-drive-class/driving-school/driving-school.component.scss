@@ -1,5 +1,16 @@
-$color1: #bdecc2;
-$color2: #c7a86f;
+$color1: #66746885;
+$color2: #f8a10079;
+
+.sideInfo {
+  @apply flex flex-col max-md:self-end items-end h-full p-4 justify-between;
+  p {
+    @apply whitespace-nowrap;
+  }
+}
+
+.textWrapper {
+  @apply flex flex-col justify-between p-4 leading-normal w-full;
+}
 
 .schoolCard {
   @apply flex
@@ -19,21 +30,21 @@ border-gray-200
   &::before,
   &::after {
     @apply rounded-lg opacity-0;
-    margin: 1rem 1rem;
+    margin: 0.5rem 0.5rem;
     content: "";
     position: absolute;
     display: block;
     transition: 0.3s ease-in-out;
     left: 0;
     top: 0;
-    width: calc(100% - 2rem);
-    height: calc(100% - 2rem);
+    width: calc(100% - 1rem);
+    height: calc(100% - 1rem);
     z-index: -2;
     background: linear-gradient(to left, $color1, $color2);
   }
   &:after {
-    width: calc(100% - 2rem);
-    height: calc(100% - 2rem);
+    width: calc(100% - 1rem);
+    height: calc(100% - 1rem);
     z-index: 0;
     background: linear-gradient(to right, $color1, $color2);
   }
@@ -51,15 +62,14 @@ border-gray-200
     }
   }
 
-  img,
-  .schoolname,
-  .infoText {
+  div,
+  img {
     z-index: 1;
   }
   img {
     width: calc(100% - 2rem);
 
-    @apply object-contain rounded-t-lg md:h-96 md:w-48 md:rounded-none md:rounded-l-lg md:max-h-28;
+    @apply object-contain rounded-t-lg md:h-96 md:w-48 md:rounded-lg md:max-h-28;
   }
   .schoolname {
     @apply mb-2 text-2xl font-bold tracking-tight;

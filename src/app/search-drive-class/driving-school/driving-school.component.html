@@ -5,8 +5,18 @@
   (click)="onClickSchool()"
 >
   <img src="{{ school.img }}" alt="" />
-  <div class="flex flex-col justify-between p-4 leading-normal">
+  <div class="textWrapper">
     <h5 class="schoolname">{{ school.name }}</h5>
     <p class="infoText">{{ school.infoText | trim : 175 }}</p>
+  </div>
+  <div class="sideInfo">
+    <p>{{ school.stadt }}</p>
+    <p>
+      {{
+        school.preisLektionen === 0
+          ? "kein Preis angegeben"
+          : "Preis Lektionen: " + school.preisLektionen + " CHF"
+      }}
+    </p>
   </div>
 </a>

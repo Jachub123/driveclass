@@ -1,78 +1,130 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { SchoolService } from '../school.service';
+import { School } from '../search-drive-class/driving-school/school.model';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent {
-  constructor(private http: HttpClient, private db: AngularFirestore) {}
+export class RegisterComponent implements OnInit {
+  constructor(
+    private angFire: AngularFireStorage,
+    private db: AngularFirestore,
+    private schoolservice: SchoolService
+  ) {
+    this.schoolservice.school.subscribe((response) => {
+      this.school = response;
+      this.name = response.name;
+    });
+  }
   @ViewChild('f') form: NgModel;
   errorMsg: string;
   successMsg: string;
+  pageCount: number = 1;
+  name: string;
+  profilename: string;
+  automat: boolean = true;
+  verkehrskunde: boolean = true;
+  handgeschaltet: boolean = true;
+  nothelferkurs: boolean = true;
+  email: string;
+  img: string;
+  infoText: string = '';
+  postalCode: number;
+  rating: number;
+  preisLektionen: number = 0;
+  preisVerkehrskunde: number = 0;
+  preisNothelferKurs: number = 0;
+  sprache: string;
+  stadt: string;
+  kanton: string;
+  vorwahl: string;
+  telefon: string;
+  nummer: string;
+  webseite: string;
+  schule: string;
+  school: School;
+  file: any;
+
+  upload(event) {
+    this.file = event.target.files[0];
+  }
+
+  next() {
+    console.log(this.form.value);
+    this.errorMsg = '';
+    if (this.form.valid) {
+      const options = { method: 'GET' };
+
+      this.schoolservice.setSchool(this.pageCount, this.form.value);
+      console.log('this.school');
+      console.log(this.school);
+      this.school = this.schoolservice.getAllSchools();
+      this.db
+        .collection('schools')
+        .doc('T4GpuQlOBycURI4BzvG2')
+        .collection('school')
+        .doc(this.schoolservice.getAllSchools().name)
+        .get()
+        .subscribe((response) => {
+          if (response.exists) {
+            this.errorMsg += 'Name der Fahrschule existiert bereits.';
+            return;
+          } else if (this.schoolservice.getAllSchools().name.length < 3) {
+            this.errorMsg += 'Der Name muss mindestens 3 Buchstaben enthalten.';
+            return;
+          }
+          this.pageCount += 1;
+        });
+    } else {
+      this.form.control.markAllAsTouched();
+    }
+  }
+  back() {
+    this.school = this.schoolservice.getAllSchools();
+    this.pageCount -= 1;
+  }
 
   register() {
     this.errorMsg = '';
     if (this.form.valid) {
-      /*   
-    const options = { method: 'GET' };
-    fetch(
-      'https://emailvalidation.abstractapi.com/v1?api_key=a8a36a6639a24f23a6b2a5234678a96a&email=' +
-        this.form.value.email,
-      options
-    )
-      .then((response) => response.json())
-      .then((response) => console.log(response))
-      .catch((err) => console.error(err)); */
-
-      console.log(this.form.control);
-
-      const school = {
-        automat: this.form.value.automat,
-        email: '',
-        handgeschaltet: this.form.value.handgeschaltet,
-        name: this.form.value.schoolname,
-        img: this.form.value.img,
-        infoText: this.form.value.infoText,
-        postalCode: this.form.value.postalCode,
-        rating: 0,
-        nothelferkurs: this.form.value.nothelferkurs,
-        preisliste: {
-          preisLektionen: this.form.value.preisLektionen,
-          preisVerkehrskunde: this.form.value.preisVerkehrskunde,
-          preisNothelferKurs: this.form.value.preisNothelferKurs,
-        },
-        sprache: this.form.value.sprache,
-        stadt: this.form.value.area,
-        telefon: 0,
-        verkehrskunde: this.form.value.nothelferkurs,
-        webseite: '',
-      };
-
       this.db
         .collection('schools')
         .doc('T4GpuQlOBycURI4BzvG2')
-        .collection(this.form.value.schoolname)
+        .collection('school')
+        .doc(this.schoolservice.getAllSchools().name)
         .get()
         .subscribe((response) => {
-          if (response.docs.length !== 0) {
+          if (response.exists) {
             this.errorMsg += 'Name der Fahrschule existiert bereits.';
             return;
           } else {
-            if (this.form.value.schoolname.length < 3) {
+            if (this.schoolservice.getAllSchools().name.length < 3) {
               this.errorMsg +=
                 'Der Name muss mindestens 3 Buchstaben enthalten.';
             } else {
               this.db
                 .collection('schools')
                 .doc('T4GpuQlOBycURI4BzvG2')
-                .collection(this.form.value.schoolname)
-                .add({ school: school });
+                .collection('school')
+                .doc(this.schoolservice.getAllSchools().name)
+                .set({
+                  school: {
+                    ...this.schoolservice.getAllSchools(),
+                    img: this.file.name,
+                  },
+                });
               this.successMsg =
                 'Deine Fahrschule wurde angelegt! Danke dass du Teil von Driveclass bist!';
+              this.angFire.upload(
+                this.schoolservice.getAllSchools().name + '/' + this.file.name,
+                this.file
+              );
             }
           }
         });
@@ -80,4 +132,6 @@ export class RegisterComponent {
       this.form.control.markAllAsTouched();
     }
   }
+
+  ngOnInit() {}
 }

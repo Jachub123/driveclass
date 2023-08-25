@@ -9,24 +9,57 @@
         value="suche nach Fahrschule in deiner Nähe"
         type="text"
         ngModel
+        (keypress)="filterSchools()"
       />
     </div>
     <div class="inputContainer">
       <div></div>
       <label for="plz">Postleitzahl</label>
-      <input id="plz" name="plz" type="number" ngModel />
+      <input
+        id="plz"
+        name="plz"
+        type="number"
+        ngModel
+        (keypress)="filterSchools()"
+      />
     </div>
     <div class="inputContainer">
       <div></div>
-      <label for="area">Gebiet </label>
-      <input id="area" name="area" type="text" ngModel />
+      <label for="stadt">Gebiet </label>
+      <input
+        id="stadt"
+        name="stadt"
+        type="text"
+        ngModel
+        (keypress)="filterSchools()"
+      />
     </div>
     <div class="inputContainer">
       <div></div>
       <label for="lang">Sprache </label>
-      <input id="lang" name="lang" type="text" ngModel />
+      <input
+        id="lang"
+        name="lang"
+        type="text"
+        ngModel
+        (keypress)="filterSchools()"
+      />
     </div>
-    <div>
+    <div class="inputContainer">
+      <div></div>
+      <label for="schule">Suche nach </label>
+      <select
+        id="schule"
+        name="schoolType"
+        [(ngModel)]="selectedSchoolType"
+        (change)="filterSchools()"
+      >
+        <option name=""></option>
+        <option name="fahrschule">Fahrschule</option>
+        <option name="berufsschule">Berufsschule</option>
+      </select>
+    </div>
+    <div class="buttonWrapper">
       <button type="submit">Suche</button>
     </div>
   </section>
