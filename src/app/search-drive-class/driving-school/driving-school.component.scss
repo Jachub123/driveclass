@@ -9,7 +9,7 @@ $color2: #f8a10079;
 }
 
 .textWrapper {
-  @apply flex flex-col justify-between p-4 leading-normal w-full;
+  @apply flex flex-col justify-between p-4 leading-normal w-full overflow-hidden;
 }
 
 .schoolCard {

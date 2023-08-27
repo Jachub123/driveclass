@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ActivatedRoute, Params } from '@angular/router';
-import { AuthService } from '../shared/services/auth-serverice.service';
 import { User } from '../shared/services/user';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AuthService } from '../register/auth-service.service';
 
 @Component({
   selector: 'app-email-verification',

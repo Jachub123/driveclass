@@ -44,15 +44,16 @@
         </p>
       </div>
       <div class="w-full md:w-1/2 px-3">
-        <label for="grid-last-name"> *Profilname </label>
+        <label for="grid-last-name"> *E-Mail </label>
         <input
           class=""
           id="grid-last-name"
-          type="text"
+          type="email"
           placeholder="mit diesem Namen Meldest du dich an"
           name="profilename"
           [(ngModel)]="profilename"
           required
+          email
         />
         <p class="warn text-red-500">
           Dies ist ein Pflichtfeld, bitte ausfüllen!
@@ -88,7 +89,7 @@
           accept="*.png.jpg.JPEG."
           name="img"
           required
-          [(ngModel)]="img"
+          ngModel=""
         />
         <p class="warn text-red-500">
           Dies ist ein Pflichtfeld, bitte ausfüllen!
@@ -276,22 +277,7 @@
 
   <div *ngIf="pageCount === 2" class="containerP2">
     <h1 class="subHeading">Kontaktdaten zu deiner Fahrschule/Berufsschule</h1>
-    <div class="w-full px-1">
-      <label class="" for="email"> *E-Mail </label>
-      <input
-        class=""
-        id="email"
-        type="email"
-        placeholder="email@example.com"
-        name="email"
-        email
-        [(ngModel)]="email"
-        required
-      />
-      <p class="warn text-red-500">
-        Dies ist ein Pflichtfeld, bitte ausfüllen!
-      </p>
-    </div>
+
     <div class="wrapper px-1">
       <div class="inner">
         <label for="vorwhal"> *Vorwahl </label>

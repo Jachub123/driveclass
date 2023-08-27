@@ -13,7 +13,7 @@ export class SchoolService {
     private db: AngularFirestore,
     private fireStorage: AngularFireStorage
   ) {}
-  schoolCache = [];
+  schoolCache: School[] = [];
   schools = new Subject<School[]>();
   school = new Subject<School>();
   private incommingSchool: School = {
@@ -65,29 +65,18 @@ export class SchoolService {
     },
   ];
 
-  async fetchImagesForSchools() {
-    const schoolsWithImages = [];
-    const fetchImagePromises = [];
-
-    for (const school of this.incommingSchools) {
-      const storageRef = this.fireStorage.ref(`/${school.name}/${school.img}`);
-      const fetchImagePromise = lastValueFrom(storageRef.getDownloadURL());
-
-      fetchImagePromises.push(fetchImagePromise);
-
-      fetchImagePromise.then((url) => {
-        const schoolWithImage = { ...school, img: url };
-        schoolsWithImages.push(schoolWithImage);
-      });
-      await Promise.all(fetchImagePromises);
-
-      this.schools.next(schoolsWithImages);
-    }
+  fetchImagesForSchools() {
+    this.school.subscribe((school: School) => {
+      this.fireStorage
+        .ref(`/${school.name}/${school.img}`)
+        .getDownloadURL()
+        .subscribe((url) => {
+          this.schoolCache.push({ ...school, img: url });
+        });
+    });
   }
 
   fetchSchools() {
-    this.incommingSchools = [];
-    this.schoolCache = [];
     this.db
       .collection('schools')
       .doc('T4GpuQlOBycURI4BzvG2')
@@ -95,10 +84,10 @@ export class SchoolService {
       .get()
       .subscribe((response) => {
         response.docs.map((response2) => {
-          this.schoolCache.push(response2.data()['school']);
-
-          this.schools.next(this.incommingSchools);
-          this.incommingSchools = this.schoolCache;
+          /* this.schoolCache.push(response2.data()['school']); */
+          //console.log(response2.data()['school']);
+          this.school.next(response2.data()['school']);
+          /* this.incommingSchools = this.schoolCache; */
           this.fetchImagesForSchools();
         });
       });
@@ -109,7 +98,6 @@ export class SchoolService {
   }
 
   setSchool(page, form): any {
-    console.log(form);
     this.incommingSchool = {
       ...this.incommingSchool,
       ...form,

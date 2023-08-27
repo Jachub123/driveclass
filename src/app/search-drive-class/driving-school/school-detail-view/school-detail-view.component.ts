@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { SchoolService } from 'src/app/school.service';
 import { School } from '../school.model';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
   selector: 'app-school-detail-view',
@@ -11,20 +12,31 @@ import { School } from '../school.model';
 export class SchoolDetailViewComponent implements OnInit {
   constructor(
     private schoolService: SchoolService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private fireStorage: AngularFireStorage
   ) {}
   id: number;
-  school: School[];
+  schools: School[] = [];
+  school: School;
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
     });
 
     this.schoolService.fetchSchools();
-    this.schoolService.schools.subscribe((school) => {
-      this.school = school;
-      console.log(this.school[this.id]);
-    });
+    if (this.schoolService.schoolCache === undefined) {
+      this.schoolService.fetchImagesForSchools();
+    }
+
+    this.schools = this.schoolService.schoolCache;
+    /*     this.schoolService.school.subscribe((school: School) => {
+      this.fireStorage
+        .ref(`/${school.name}/${school.img}`)
+        .getDownloadURL()
+        .subscribe((url) => {
+          this.schools.push({ ...school, img: url });
+        });
+    }); */
 
     //this.school = this.schoolService.getAllSchools();
   }

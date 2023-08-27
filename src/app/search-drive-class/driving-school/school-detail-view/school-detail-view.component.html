@@ -1,13 +1,85 @@
 <main class="container">
-  <img src="{{ school[id].img }}" alt="" />
+  <img src="{{ schools[id].img }}" alt="" />
   <div class="headingContainer">
-    <h1 class="h1">{{ school[id].name }}</h1>
+    <h1 class="h1">{{ schools[id].name }}</h1>
   </div>
   <section>
-    <p class="infoText">“{{ school[id].infoText }}”</p>
+    <p class="infoText">“{{ schools[id].infoText }}”</p>
+    <div id="generalInfo">
+      <div class="angebot">
+        <h1>Das bietet {{ schools[id].name }} an:</h1>
+        <p class="">
+          automat:
+
+          {{ schools[id].automat ? "&#10003;" : "&#10007;" }}
+        </p>
+        <p>
+          handgeschaltet:
+
+          {{ schools[id].handgeschaltet ? "&#10003;" : "&#10007;" }}
+        </p>
+        <p>
+          Verkehrskunde:
+
+          {{ schools[id].verkehrskunde ? "&#10003;" : "&#10007;" }}
+        </p>
+        <p>
+          Nothelferkurs:
+
+          {{ schools[id].nothelferkurs ? "&#10003;" : "&#10007;" }}
+        </p>
+      </div>
+      <div class="kontakt">
+        <h1>So erreichst du {{ schools[id].name }}</h1>
+        <h4>Telefon:</h4>
+        <p>
+          {{ schools[id].vorwahl + " " + schools[id].telefon }}
+        </p>
+        <a
+          [href]="
+            schools[id].webseite.includes('https://')
+              ? schools[id].webseite
+              : 'https://' + schools[id].webseite
+          "
+        >
+          Website:
+          {{ schools[id].webseite }}
+        </a>
+      </div>
+      <div class="preise">
+        <h1>Das verlangt {{ schools[id].name }}:</h1>
+        <h4 class="">Preis für eine Lektion:</h4>
+        <p>
+          {{
+            schools[id].preisLektionen === 0
+              ? "Kein Preis angegeben"
+              : schools[id].preisLektionen + " CHF"
+          }}
+        </p>
+        <h4 class="">Preis für NothelferKurs:</h4>
+        <p>
+          {{
+            schools[id].preisNothelferKurs === 0
+              ? "Kein Preis angegeben"
+              : schools[id].preisNothelferKurs + " CHF"
+          }}
+        </p>
+        <h4 class="">Preis für Verkehrskunde:</h4>
+        <p>
+          {{
+            schools[id].preisVerkehrskunde === 0
+              ? "Kein Preis angegeben"
+              : schools[id].preisVerkehrskunde + " CHF"
+          }}
+        </p>
+      </div>
+    </div>
     <div class="classFooter">
-      <address>{{ school[id].postalCode }} {{ school[id].stadt }}</address>
-      <p class="rating">rating {{ school[id].rating }}</p>
+      <address>
+        {{ schools[id].postalCode }} {{ schools[id].stadt }}
+        {{ schools[id].kanton }}
+      </address>
+      <p class="rating">rating {{ schools[id].rating }}</p>
     </div>
   </section>
 </main>

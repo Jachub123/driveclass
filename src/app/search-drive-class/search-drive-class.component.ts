@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SchoolService } from '../school.service';
 import { School } from './driving-school/school.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search-drive-class',
@@ -10,11 +11,13 @@ import { School } from './driving-school/school.model';
 })
 export class SearchDriveClassComponent implements OnInit {
   constructor(private schoolService: SchoolService) {}
+
   @ViewChild('f') form: NgForm;
   selectedSchoolType: string = 'fahrschule';
-  schools: School[];
+  schools: School[] = [];
   img: string;
   filteredSchools: School[];
+  schoolSub: Subscription;
 
   filterSchools() {
     const value = this.form.value;
@@ -117,19 +120,8 @@ export class SearchDriveClassComponent implements OnInit {
 
   ngOnInit() {
     this.schoolService.fetchSchools();
+    this.schoolService.fetchImagesForSchools();
+    this.schools = this.schoolService.schoolCache;
     this.filteredSchools = this.schools;
-    this.schoolService.schools.subscribe((school) => {
-      this.schools = school;
-      this.filteredSchools = this.schools;
-    });
-
-    /*       this.fireStorage
-        .ref(`/${school[index].name}/images`)
-        .getDownloadURL()
-        .subscribe((url) => {
-          console.log(url);
-          this.schools[index].img = url;
-          console.log(this.schools);
-        }); */
   }
 }
