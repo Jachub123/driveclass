@@ -2,7 +2,7 @@
   Registriere deine Fahrschule/Berufsschule bei Driveclass
 </h1>
 
-<form *ngIf="!successMsg" #f="ngForm" (ngSubmit)="register()">
+<form class="login" *ngIf="!successMsg" #f="ngForm" (ngSubmit)="register()">
   <div *ngIf="pageCount === 1" class="containerP1">
     <h1 class="subHeading">Alles über deine Fahrschule/Berufsschule</h1>
     <div class="w-full md:w-1/2 schulWrapper">

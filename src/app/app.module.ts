@@ -18,6 +18,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
+import { LoginComponent } from './login/login.component';
 
 const appRoutes: Routes = [
   { path: '', component: SearchDriveClassComponent, pathMatch: 'full' },
@@ -26,6 +27,7 @@ const appRoutes: Routes = [
     component: SchoolDetailViewComponent,
   },
   { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
   {
     path: 'emailVerification/:name/:id',
     component: EmailVerificationComponent,
@@ -38,6 +40,7 @@ const appRoutes: Routes = [
     HeaderComponent,
     DrivingSchoolComponent,
     SchoolDetailViewComponent,
+    LoginComponent,
     TrimPipe,
     RegisterComponent,
     EmailVerificationComponent,
@@ -46,11 +49,11 @@ const appRoutes: Routes = [
     BrowserModule,
     HttpClientModule,
     AngularFireStorageModule,
+    FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    FormsModule,
     RouterModule.forRoot(appRoutes),
   ],
 

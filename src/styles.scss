@@ -12,3 +12,58 @@
 body {
   font-family: DidactG;
 }
+
+form {
+  button,
+  [type="button"],
+  [type="reset"],
+  [type="submit"] {
+    @apply border 
+    p-3
+    border-[#858585]
+    bg-[#4DBA57]
+    drop-shadow-xl 
+    text-white;
+    &.next {
+      @apply float-right;
+    }
+
+    &:hover {
+      background: linear-gradient(#005c10, #4dba57);
+    }
+  }
+
+  .wrapper {
+    @apply flex flex-wrap -mx-3 mb-6;
+
+    .inner {
+      @apply w-full md:w-1/2 px-3 mb-6 md:mb-0;
+    }
+  }
+  .labelInputWrapper {
+    @apply flex flex-wrap -mx-3;
+  }
+  .labelInputWrapperInner {
+    @apply w-full md:w-1/3 px-3 mb-6 md:mb-0;
+  }
+}
+.login {
+  input[type="text"],
+  input[type="password"],
+  input[type="url"],
+  input[type="email"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="file"],
+  textarea,
+  select {
+    @apply appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500;
+
+    + p.warn {
+      display: none;
+    }
+  }
+  label {
+    @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2;
+  }
+}

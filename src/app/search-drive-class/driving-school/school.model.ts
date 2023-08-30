@@ -42,7 +42,7 @@ export class School {
     verkehrskunde: boolean,
     webseite: string,
     abo: number,
-    schule: string
+    schule: string,
   ) {
     this.automat = automat;
     this.email = email;

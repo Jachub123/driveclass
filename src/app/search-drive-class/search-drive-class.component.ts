@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SchoolService } from '../school.service';
 import { School } from './driving-school/school.model';
@@ -9,119 +9,100 @@ import { Subscription } from 'rxjs';
   templateUrl: './search-drive-class.component.html',
   styleUrls: ['./search-drive-class.component.scss'],
 })
-export class SearchDriveClassComponent implements OnInit {
+export class SearchDriveClassComponent implements OnInit, OnDestroy {
   constructor(private schoolService: SchoolService) {}
 
   @ViewChild('f') form: NgForm;
   selectedSchoolType: string = 'fahrschule';
   schools: School[] = [];
   img: string;
-  filteredSchools: School[];
+  filteredSchools: School[] = [];
   schoolSub: Subscription;
+  count = 0;
+  searchedName(word, searchBar) {
+    //gib den Namen zurück der dem eingegebenen Suchfeldbegriff entspricht.
+    return word.toLowerCase().includes(searchBar.toLowerCase());
+  }
 
   filterSchools() {
-    const value = this.form.value;
-    let formHasValue: boolean = false;
+    const formValue = this.form.value;
 
-    for (let school in value) {
-      if (value[school] !== '') {
-        formHasValue = true;
-      }
+    let mergedArray = [];
+    let resultPostalC: School[] = [];
+    let resultName: School[] = [];
+    let resultStadt: School[] = [];
+    let resultSprache: School[] = [];
+    let resultschoolType: School[] = [];
+    let allArrays = [];
+    this.filteredSchools = [];
+
+    if (formValue.plz !== '' && formValue.plz !== null) {
+      resultPostalC = this.schools.filter((item) =>
+        item.postalCode.toString().includes(formValue.plz.toString())
+      );
+    }
+    if (
+      formValue.driveClassSearchbar !== '' &&
+      formValue.driveClassSearchbar !== null
+    ) {
+      resultName = this.schools.filter((item) =>
+        this.searchedName(item.name, formValue.driveClassSearchbar)
+      );
+    }
+    if (formValue.stadt !== '' && formValue.stadt !== null) {
+      resultStadt = this.schools.filter((item) =>
+        this.searchedName(item.stadt, formValue.stadt)
+      );
+    }
+    if (formValue.lang !== '' && formValue.lang !== null) {
+      resultSprache = this.schools.filter((item) =>
+        this.searchedName(item.sprache, formValue.lang)
+      );
+    }
+    if (
+      formValue.schoolType !== 'fahrschule' &&
+      formValue.schoolType !== null
+    ) {
+      resultschoolType = this.schools.filter((item) =>
+        this.searchedName(item.schule, formValue.schoolType)
+      );
     }
 
-    if (formHasValue) {
-      this.filteredSchools = [];
-      this.schools.map((school) => {
-        let isSchoolnameEqSearchedName = school.name
-          .toLowerCase()
-          .includes(
-            value.driveClassSearchbar !== ''
-              ? value.driveClassSearchbar.toLowerCase()
-              : false
-          );
-        let isPostCodeEqSearchedPCode = school.postalCode == value.plz;
+    allArrays = [
+      resultName,
+      resultPostalC,
+      resultStadt,
+      resultSprache,
+      resultschoolType,
+    ];
 
-        if (value.driveClassSearchbar !== '') {
-          if (isSchoolnameEqSearchedName) {
-            let updatedArr = [school];
-            this.filteredSchools.push(...updatedArr);
-          }
-        }
-        if (value.plz !== '') {
-          if (this.filteredSchools.length !== 0) {
-            if (isSchoolnameEqSearchedName) {
-              return;
-            } else {
-              if (isPostCodeEqSearchedPCode) {
-                let updatedArr = [school];
-                this.filteredSchools.push(...updatedArr);
-              }
-            }
-          } else {
-            if (isPostCodeEqSearchedPCode) {
-              let updatedArr = [school];
-              this.filteredSchools.push(...updatedArr);
-            }
-          }
-        }
-        if (value.schoolType !== '') {
-          if (this.filteredSchools.length !== 0) {
-            if (isSchoolnameEqSearchedName || isPostCodeEqSearchedPCode) {
-              return;
-            } else {
-              if (
-                school.schule
-                  .toLowerCase()
-                  .includes(value.schoolType.toLowerCase())
-              ) {
-                let updatedArr = [school];
-                this.filteredSchools.push(...updatedArr);
-              }
-            }
-          } else {
-            console.log(school.schule);
-            console.log(value.schoolType);
-            if (
-              school.schule
-                .toLowerCase()
-                .includes(value.schoolType.toLowerCase())
-            ) {
-              let updatedArr = [school];
-              this.filteredSchools.push(...updatedArr);
-            }
-          }
-        }
-        if (value.stadt !== '') {
-          if (this.filteredSchools.length !== 0) {
-            if (isSchoolnameEqSearchedName || isPostCodeEqSearchedPCode) {
-              return;
-            } else {
-              if (
-                school.stadt.toLowerCase().includes(value.stadt.toLowerCase())
-              ) {
-                let updatedArr = [school];
-                this.filteredSchools.push(...updatedArr);
-              }
-            }
-          } else {
-            if (
-              school.stadt.toLowerCase().includes(value.stadt.toLowerCase())
-            ) {
-              let updatedArr = [school];
-              this.filteredSchools.push(...updatedArr);
-            }
-          }
+    allArrays.forEach((currentArray) => {
+      currentArray.forEach((obj: School) => {
+        const existingObj = mergedArray.find((item) => item.name === obj.name);
+        if (existingObj) {
+          Object.assign(existingObj, obj);
+        } else {
+          mergedArray.push(obj);
         }
       });
-    } else {
-      this.filteredSchools = this.schools;
-    }
+    });
+
+    this.filteredSchools = mergedArray;
   }
 
   ngOnInit() {
-    this.schoolService.fetchSchools();
-    this.schoolService.fetchImagesForSchools();
-    this.schools = this.schoolService.schoolCache;
-    this.filteredSchools = this.schools;
+    if (this.schools.length === 0) {
+      this.schoolService.fetchSchools();
+    }
+
+    this.schoolSub = this.schoolService.schoolCache.subscribe((obj) => {
+      this.schools.push(obj);
+    });
+
+    console.log(this.schools);
+  }
+
+  ngOnDestroy(): void {
+    this.schoolSub.unsubscribe();
   }
 }

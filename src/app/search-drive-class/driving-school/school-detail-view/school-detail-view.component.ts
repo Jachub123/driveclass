@@ -12,32 +12,25 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 export class SchoolDetailViewComponent implements OnInit {
   constructor(
     private schoolService: SchoolService,
-    private route: ActivatedRoute,
-    private fireStorage: AngularFireStorage
+    private route: ActivatedRoute
   ) {}
-  id: number;
+  id: string;
   schools: School[] = [];
   school: School;
+  render: boolean = false;
   ngOnInit() {
+    this.schools = [];
     this.route.params.subscribe((params: Params) => {
-      this.id = +params['id'];
+      this.id = params['id'];
     });
-
-    this.schoolService.fetchSchools();
-    if (this.schoolService.schoolCache === undefined) {
-      this.schoolService.fetchImagesForSchools();
+    if (this.schools.length === 0) {
+      this.schoolService.fetchSchools();
     }
-
-    this.schools = this.schoolService.schoolCache;
-    /*     this.schoolService.school.subscribe((school: School) => {
-      this.fireStorage
-        .ref(`/${school.name}/${school.img}`)
-        .getDownloadURL()
-        .subscribe((url) => {
-          this.schools.push({ ...school, img: url });
-        });
-    }); */
-
-    //this.school = this.schoolService.getAllSchools();
+    this.schoolService.schoolCache.subscribe((obj) => {
+      if (obj.name === this.id) {
+        this.render = true;
+        this.school = obj;
+      }
+    });
   }
 }

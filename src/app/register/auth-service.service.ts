@@ -59,6 +59,20 @@ export class AuthService {
         });
     });
   }
+
+  logout() {
+    this.afAuth.signOut();
+  }
+  login(email: string, password: string) {
+    this.afAuth
+      .signInWithEmailAndPassword(email, password)
+      .catch((error) => this.eventAuthError.next(error))
+      .then((usercredential) => {
+        if (usercredential) {
+          this.router.navigate(['/']);
+        }
+      });
+  }
 }
 
 /* 

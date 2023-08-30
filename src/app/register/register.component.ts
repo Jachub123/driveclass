@@ -64,7 +64,7 @@ export class RegisterComponent implements OnInit {
   next() {
     this.errorMsg = '';
     if (this.form.valid) {
-      this.schoolservice.setSchool(this.pageCount, this.form.value);
+      this.schoolservice.setSchool(this.form.value);
       this.school = this.schoolservice.getAllSchools();
       this.db
         .collection('schools')

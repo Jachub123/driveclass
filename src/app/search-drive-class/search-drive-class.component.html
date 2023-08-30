@@ -1,4 +1,4 @@
-<form class="form" #f="ngForm" (ngSubmit)="filterSchools()">
+<form class="form" #f="ngForm">
   <section>
     <div class="inputContainer">
       <div></div>
@@ -9,7 +9,7 @@
         value="suche nach Fahrschule in deiner Nähe"
         type="text"
         ngModel
-        (keypress)="filterSchools()"
+        (input)="filterSchools()"
       />
     </div>
     <div class="inputContainer">
@@ -20,7 +20,7 @@
         name="plz"
         type="number"
         ngModel
-        (keypress)="filterSchools()"
+        (input)="filterSchools()"
       />
     </div>
     <div class="inputContainer">
@@ -31,7 +31,7 @@
         name="stadt"
         type="text"
         ngModel
-        (keypress)="filterSchools()"
+        (input)="filterSchools()"
       />
     </div>
     <div class="inputContainer">
@@ -42,7 +42,7 @@
         name="lang"
         type="text"
         ngModel
-        (keypress)="filterSchools()"
+        (input)="filterSchools()"
       />
     </div>
     <div class="inputContainer">
@@ -52,22 +52,28 @@
         id="schule"
         name="schoolType"
         [(ngModel)]="selectedSchoolType"
+        (click)="filterSchools()"
         (change)="filterSchools()"
       >
-        <option name=""></option>
         <option name="fahrschule">Fahrschule</option>
         <option name="berufsschule">Berufsschule</option>
       </select>
     </div>
-    <div class="buttonWrapper">
-      <button type="submit">Suche</button>
-    </div>
   </section>
 </form>
-<main class="container">
+<main class="container" *ngIf="filteredSchools.length > 0; else allSchools">
   <app-driving-school
     *ngFor="let school of filteredSchools; let i = index"
     [school]="school"
     [schoolId]="i"
   ></app-driving-school>
 </main>
+<ng-template #allSchools>
+  <main class="container">
+    <app-driving-school
+      *ngFor="let school of schools; let i = index"
+      [school]="school"
+      [schoolId]="i"
+    ></app-driving-school>
+  </main>
+</ng-template>
