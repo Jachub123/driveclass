@@ -1,0 +1,16 @@
+<form #loginForm="ngForm" (ngSubmit)="login(loginForm)" class="login">
+  <div class="w-full">
+    <p>{{ errorMsg }}</p>
+  </div>
+  <div class="w-full md:w-[45%]">
+    <label for="email">E-Mail</label>
+    <input type="email" name="email" id="email" ngModel />
+  </div>
+  <div class="w-full md:w-[45%]">
+    <label for="password">Passwort</label>
+    <input type="password" name="password" id="password" ngModel />
+  </div>
+  <div class="w-full">
+    <button type="submit">anmelden</button>
+  </div>
+</form>
