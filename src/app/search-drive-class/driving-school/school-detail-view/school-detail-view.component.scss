@@ -40,21 +40,6 @@ $color4: #a0884d;
   & > * {
     @apply m-auto p-2;
   }
-  /*   .headingContainer {
-    @apply w-8/12 rounded-md bg-[#f3d588];
-    h1 {
-      background: linear-gradient(to left, $color1, $color2);
-      font-weight: 600;
-      @apply bg-clip-text text-transparent border border-[#fde29c] w-10/12 text-center m-auto text-6xl py-4 relative box-content shadow-inner shadow-[#C39127] my-5;
-      &::after {
-        content: "";
-        @apply border border-[#dfbf70] block absolute w-[calc(100%-2px)] h-[calc(100%-2px)] top-0 left-0 box-content;
-      }
-    }
-  }
-  img {
-    @apply w-8/12 rounded-md p-0 mt-5 m-auto;
-  } */
   .headingContainer {
     @apply w-full md:w-8/12 rounded-md;
     h1 {

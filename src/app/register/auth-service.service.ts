@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { SchoolService } from '../school.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,8 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private router: Router,
-    private db: AngularFirestore
+    private db: AngularFirestore,
+    private schoolService: SchoolService
   ) {}
 
   createUser(user) {
@@ -40,6 +42,15 @@ export class AuthService {
       email: this.newUser.email,
       name: this.newUser.name,
       role: 'user',
+    });
+  }
+
+  loggedIn() {
+    this.afAuth.authState.subscribe((data) => {
+      this.schoolService.getSchool(data.email);
+      this.schoolService.mySchool.subscribe((school) => {
+        console.log(school);
+      });
     });
   }
 

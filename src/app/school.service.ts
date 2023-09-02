@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { School } from './search-drive-class/driving-school/school.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
@@ -15,7 +15,7 @@ export class SchoolService {
   schoolCache = new Subject<School>();
   schools = new Subject<School[]>();
   school = new Subject<School>();
-
+  mySchool = new Subject<School>();
   private incommingSchool: School = {
     automat: false,
     email: '',
@@ -61,6 +61,22 @@ export class SchoolService {
                 img: url,
               });
             });
+        });
+      });
+  }
+
+  getSchool(email: string) {
+    this.db
+      .collection('schools')
+      .doc('T4GpuQlOBycURI4BzvG2')
+      .collection('school')
+      .get()
+      .subscribe((schoolList) => {
+        schoolList.docs.map((school) => {
+          const schoolData = school.data()['school'];
+          if (schoolData['email'] === email) {
+            this.mySchool.next(schoolData);
+          }
         });
       });
   }

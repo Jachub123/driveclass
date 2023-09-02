@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { SchoolService } from '../school.service';
 import { School } from './driving-school/school.model';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../register/auth-service.service';
 
 @Component({
   selector: 'app-search-drive-class',
@@ -10,7 +11,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./search-drive-class.component.scss'],
 })
 export class SearchDriveClassComponent implements OnInit, OnDestroy {
-  constructor(private schoolService: SchoolService) {}
+  constructor(
+    private schoolService: SchoolService,
+    private authService: AuthService
+  ) {}
 
   @ViewChild('f') form: NgForm;
   selectedSchoolType: string = 'fahrschule';
@@ -91,6 +95,8 @@ export class SearchDriveClassComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.authService.loggedIn();
+
     if (this.schools.length === 0) {
       this.schoolService.fetchSchools();
     }
