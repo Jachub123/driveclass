@@ -55,7 +55,7 @@ export class SearchDriveClassComponent implements OnInit, OnDestroy {
     }
     if (formValue.stadt !== '' && formValue.stadt !== null) {
       resultStadt = this.schools.filter((item) =>
-        this.searchedName(item.stadt, formValue.stadt)
+        this.searchedName(item.kanton, formValue.stadt)
       );
     }
     if (formValue.lang !== '' && formValue.lang !== null) {
@@ -104,8 +104,6 @@ export class SearchDriveClassComponent implements OnInit, OnDestroy {
     this.schoolSub = this.schoolService.schoolCache.subscribe((obj) => {
       this.schools.push(obj);
     });
-
-    console.log(this.schools);
   }
 
   ngOnDestroy(): void {

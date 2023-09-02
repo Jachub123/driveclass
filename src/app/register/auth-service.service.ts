@@ -2,20 +2,23 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { SchoolService } from '../school.service';
+import { School } from '../search-drive-class/driving-school/school.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   newUser: any;
+  loggedInUser = new Subject<any>();
+  loggedInSub = new Subscription();
   eventAuthError = new Subject<string>();
+  mySchool: School;
   constructor(
     private afAuth: AngularFireAuth,
     private router: Router,
-    private db: AngularFirestore,
-    private schoolService: SchoolService
+    private db: AngularFirestore
   ) {}
 
   createUser(user) {
@@ -46,11 +49,12 @@ export class AuthService {
   }
 
   loggedIn() {
-    this.afAuth.authState.subscribe((data) => {
-      this.schoolService.getSchool(data.email);
-      this.schoolService.mySchool.subscribe((school) => {
-        console.log(school);
-      });
+    this.loggedInSub = this.afAuth.authState.subscribe((data) => {
+      if (!data) {
+        return;
+      } else {
+        this.loggedInUser.next(data);
+      }
     });
   }
 

@@ -68,6 +68,7 @@
         </li>
         <li class="nav-item">
           <a
+            *ngIf="isLoggedOut; else mySchoolLink"
             class="nav-link"
             routerLink="login"
             routerLinkActive="active"
@@ -75,9 +76,29 @@
             href="#"
             >LOGIN</a
           >
+          <ng-template #mySchoolLink>
+            <a
+              class="nav-link"
+              routerLink="school/mySchool"
+              routerLinkActive="active"
+              text="MEINE SCHULE"
+              href="#"
+              >MEINE SCHULE</a
+            >
+          </ng-template>
         </li>
       </ul>
-      <form class="d-flex" role="search">
+      <form class="d-flex items-center" role="search">
+        <a
+          *ngIf="!isLoggedOut"
+          class="nav-link mx-2"
+          routerLink="/"
+          (click)="logout()"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          href="#"
+          >Logout</a
+        >
         <select class="form-select me-2 bi-caret-down">
           <option>deutsch</option>
           <option>englisch</option>

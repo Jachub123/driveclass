@@ -2,6 +2,20 @@
   <section>
     <div class="inputContainer">
       <div></div>
+      <label for="schule">Suche nach </label>
+      <select
+        id="schule"
+        name="schoolType"
+        [(ngModel)]="selectedSchoolType"
+        (click)="filterSchools()"
+        (change)="filterSchools()"
+      >
+        <option name="fahrschule">Fahrschule</option>
+        <option name="berufsschule">Berufsschule</option>
+      </select>
+    </div>
+    <div class="inputContainer">
+      <div></div>
       <label for="driveClassSearchbar">Fahrschule </label>
       <input
         id="driveClassSearchbar"
@@ -26,13 +40,41 @@
     <div class="inputContainer">
       <div></div>
       <label for="stadt">Gebiet </label>
-      <input
+      <select
         id="stadt"
         name="stadt"
         type="text"
         ngModel
-        (input)="filterSchools()"
-      />
+        (click)="filterSchools()"
+        (change)="filterSchools()"
+      >
+        <option>Zürich</option>
+        <option>Bern</option>
+        <option>Luzern</option>
+        <option>Uri</option>
+        <option>Schwyz</option>
+        <option>Obwalden</option>
+        <option>Nidwalden</option>
+        <option>Glarus</option>
+        <option>Zug</option>
+        <option>Freiburg</option>
+        <option>Solothurn</option>
+        <option>Basel-Stadt</option>
+        <option>Basel-Landschaft</option>
+        <option>Schaffhausen</option>
+        <option>Appenzell A.Rh</option>
+        <option>Appenzell I.Rh.</option>
+        <option>Sankt Gallen</option>
+        <option>Graubünden</option>
+        <option>Aargau</option>
+        <option>Thurgau</option>
+        <option>Tessin</option>
+        <option>Waadt</option>
+        <option>Wallis</option>
+        <option>Neuenburg</option>
+        <option>Genf</option>
+        <option>Jura</option>
+      </select>
     </div>
     <div class="inputContainer">
       <div></div>
@@ -44,20 +86,6 @@
         ngModel
         (input)="filterSchools()"
       />
-    </div>
-    <div class="inputContainer">
-      <div></div>
-      <label for="schule">Suche nach </label>
-      <select
-        id="schule"
-        name="schoolType"
-        [(ngModel)]="selectedSchoolType"
-        (click)="filterSchools()"
-        (change)="filterSchools()"
-      >
-        <option name="fahrschule">Fahrschule</option>
-        <option name="berufsschule">Berufsschule</option>
-      </select>
     </div>
   </section>
 </form>

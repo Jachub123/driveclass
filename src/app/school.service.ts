@@ -40,7 +40,7 @@ export class SchoolService {
     schule: '',
   };
 
-  fetchSchools() {
+  fetchSchools(email = '') {
     this.db
       .collection('schools')
       .doc('T4GpuQlOBycURI4BzvG2')
@@ -56,16 +56,25 @@ export class SchoolService {
             )
             .getDownloadURL()
             .subscribe((url) => {
-              this.schoolCache.next({
-                ...response2.data()['school'],
-                img: url,
-              });
+              if (email === '') {
+                this.schoolCache.next({
+                  ...response2.data()['school'],
+                  img: url,
+                });
+              } else {
+                if (response2.data()['school']['email'] === email) {
+                  this.schoolCache.next({
+                    ...response2.data()['school'],
+                    img: url,
+                  });
+                }
+              }
             });
         });
       });
   }
 
-  getSchool(email: string) {
+  /*   getSchool(email: string) {
     this.db
       .collection('schools')
       .doc('T4GpuQlOBycURI4BzvG2')
@@ -79,7 +88,7 @@ export class SchoolService {
           }
         });
       });
-  }
+  } */
 
   getAllSchools() {
     return this.incommingSchool;
