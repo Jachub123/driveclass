@@ -3,8 +3,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
-import { SchoolService } from '../school.service';
 import { School } from '../search-drive-class/driving-school/school.model';
+import { User } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -15,11 +15,22 @@ export class AuthService {
   loggedInSub = new Subscription();
   eventAuthError = new Subject<string>();
   mySchool: School;
+  userData: User;
   constructor(
     private afAuth: AngularFireAuth,
     private router: Router,
     private db: AngularFirestore
-  ) {}
+  ) {
+    this.afAuth.authState.subscribe((user) => {
+      this.loggedInUser.next(user);
+      if (user) {
+        this.userData = user;
+        localStorage.setItem('user', JSON.stringify(this.userData));
+      } else {
+        localStorage.setItem('user', 'null');
+      }
+    });
+  }
 
   createUser(user) {
     this.afAuth
@@ -48,16 +59,14 @@ export class AuthService {
     });
   }
 
-  loggedIn() {
-    this.loggedInSub = this.afAuth.authState.subscribe((data) => {
-      if (!data) {
-        return;
-      } else {
-        this.loggedInUser.next(data);
-      }
-    });
+  isLoggedIn() {
+    const user = localStorage.getItem('user');
+    if (user === 'null') {
+      return false;
+    } else {
+      return true;
+    }
   }
-
   checkEmailExists(email) {
     return new Promise((resolve, reject) => {
       this.afAuth

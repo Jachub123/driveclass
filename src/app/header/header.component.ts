@@ -6,7 +6,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { AuthService } from '../register/auth-service.service';
-import { School } from '../search-drive-class/driving-school/school.model';
 
 @Component({
   selector: 'app-header',
@@ -15,14 +14,29 @@ import { School } from '../search-drive-class/driving-school/school.model';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isLoggedOut: boolean = true;
+  schoolLoggedIn: boolean = false;
+
+  providerId = JSON.parse(localStorage.getItem('user')!);
   obj = Object;
   constructor(private auth: AuthService) {}
   @ViewChild('navCollapsable') nav: ElementRef;
 
   ngOnInit(): void {
-    this.auth.loggedIn();
+    this.isLoggedOut = !this.auth.isLoggedIn();
     this.auth.loggedInUser.subscribe((user) => {
-      this.isLoggedOut = user.isAnonymous;
+      if (user) {
+        this.isLoggedOut = false;
+      } else {
+        this.isLoggedOut = true;
+      }
+      if (
+        user.providerData[0].providerId === 'facebook.com' ||
+        user.providerData[0].providerId === 'google.com'
+      ) {
+        this.schoolLoggedIn = false;
+      } else {
+        this.schoolLoggedIn = true;
+      }
     });
   }
   ngOnDestroy(): void {

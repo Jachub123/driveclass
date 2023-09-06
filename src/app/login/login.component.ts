@@ -8,8 +8,9 @@ import {
   GoogleAuthProvider,
   browserPopupRedirectResolver,
 } from 'firebase/auth';
-import { environment } from 'src/environments/environment';
 import { FirebaseApp } from '@angular/fire/app';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,9 @@ export class LoginComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private auth3: AngularFireAuth,
-    private firebase: FirebaseApp
+    private firebase: FirebaseApp,
+    private db: AngularFirestore,
+    private router: Router
   ) {}
 
   errorMsg: string;
@@ -32,15 +35,34 @@ export class LoginComponent implements OnInit {
   }
 
   async facebookLogin() {
-    const result = await this.auth3.signInWithPopup(new FacebookAuthProvider());
-    console.log(result);
+    this.auth3.signInWithPopup(new FacebookAuthProvider()).then((result) => {
+      this.db
+        .collection('users')
+        .doc(result.credential.providerId)
+        .collection(result.user.uid)
+        .add({
+          name: result.user.displayName,
+          email: result.user.email,
+          phone: result.user.phoneNumber,
+          accountCreated: result.user.metadata.creationTime,
+        });
+    });
   }
   async googleLogin() {
     const auth = getAuth(this.firebase);
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider, browserPopupRedirectResolver).then(
       (result) => {
-        console.log(result.user);
+        this.db
+          .collection('users')
+          .doc(result.providerId)
+          .collection(result.user.uid)
+          .add({
+            name: result.user.displayName,
+            email: result.user.email,
+            phone: result.user.phoneNumber,
+            accountCreated: result.user.metadata.creationTime,
+          });
       }
     );
   }

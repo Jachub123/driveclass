@@ -95,8 +95,6 @@ export class SearchDriveClassComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.authService.loggedIn();
-
     if (this.schools.length === 0) {
       this.schoolService.fetchSchools();
     }

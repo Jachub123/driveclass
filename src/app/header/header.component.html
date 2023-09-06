@@ -78,6 +78,7 @@
           >
           <ng-template #mySchoolLink>
             <a
+              *ngIf="schoolLoggedIn"
               class="nav-link"
               routerLink="school/mySchool"
               routerLinkActive="active"

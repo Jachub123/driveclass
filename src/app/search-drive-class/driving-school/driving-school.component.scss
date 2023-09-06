@@ -75,7 +75,7 @@ border-gray-200
     @apply mb-2 text-2xl font-bold tracking-tight;
   }
   .infoText {
-    @apply mb-3 font-normal md:max-h-28;
+    @apply mb-3 font-normal md:max-h-28 break-words;
   }
 }
 

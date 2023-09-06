@@ -19,15 +19,17 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
 import { LoginComponent } from './login/login.component';
+import { AuthGuardService } from './auth.guard';
 
 const appRoutes: Routes = [
   { path: '', component: SearchDriveClassComponent, pathMatch: 'full' },
   {
     path: 'school/:id',
+    canActivate: [AuthGuardService],
     component: SchoolDetailViewComponent,
   },
   { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'login', canActivate: [AuthGuardService], component: LoginComponent },
   {
     path: 'emailVerification/:name/:id',
     component: EmailVerificationComponent,

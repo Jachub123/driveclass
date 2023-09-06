@@ -26,16 +26,15 @@ export class SchoolDetailViewComponent implements OnInit {
     });
 
     if (this.id === 'mySchool') {
-      this.auth.loggedIn();
-      this.auth.loggedInUser.subscribe((user) => {
-        this.schoolService.fetchSchools(user.email);
+      if (this.auth.isLoggedIn()) {
+        this.schoolService.fetchSchools(
+          JSON.parse(localStorage.getItem('user')!).email
+        );
         this.schoolService.schoolCache.subscribe((school) => {
           this.school = school;
           this.render = true;
         });
-      });
-
-      //console.log(this.school);
+      }
     } else {
       if (this.schools.length === 0) {
         this.schoolService.fetchSchools();
