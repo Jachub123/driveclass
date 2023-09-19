@@ -20,6 +20,7 @@ export class School {
   webseite: string;
   abo: number;
   schule: string;
+  profilename: string;
 
   constructor(
     automat: boolean,
@@ -43,6 +44,7 @@ export class School {
     webseite: string,
     abo: number,
     schule: string,
+    profilename: string
   ) {
     this.automat = automat;
     this.email = email;
@@ -65,5 +67,6 @@ export class School {
     this.webseite = webseite;
     this.abo = abo;
     this.schule = schule;
+    this.profilename = profilename;
   }
 }

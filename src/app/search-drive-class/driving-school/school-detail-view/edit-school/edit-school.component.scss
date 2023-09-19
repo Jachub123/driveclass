@@ -117,31 +117,3 @@ $color4: #a0884d;
     }
   }
 }
-
-.popUp {
-  &.hidden {
-    display: none !important;
-  }
-  @apply z-10 flex flex-col justify-evenly items-center fixed top-0 bottom-0 left-0 right-0 m-auto h-2/6 w-2/12;
-  .innerPopUp {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-  }
-  &::after {
-    content: "";
-    z-index: -1;
-    @apply fixed top-0 bottom-0 left-0 right-0 m-auto h-2/6 w-2/12 bg-white border;
-  }
-  &::before {
-    content: "";
-    @apply fixed -z-10 top-0 left-0 block w-screen h-screen bg-[#00000056];
-  }
-  .googleLoginBtn,
-  .facebookLoginBtn {
-    @apply flex items-center  bg-white border border-gray-300 rounded-lg shadow-md max-w-xs px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500;
-  }
-}

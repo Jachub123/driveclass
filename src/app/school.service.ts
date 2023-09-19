@@ -38,6 +38,7 @@ export class SchoolService {
     webseite: '',
     abo: 0,
     schule: '',
+    profilename: '',
   };
 
   fetchSchools(email = '') {
@@ -57,15 +58,17 @@ export class SchoolService {
             .getDownloadURL()
             .subscribe((url) => {
               if (email === '') {
+                console.log(response2.data());
                 this.schoolCache.next({
                   ...response2.data()['school'],
                   img: url,
                 });
               } else {
-                if (response2.data()['school']['email'] === email) {
+                if (response2.data()['school']['profilename'] === email) {
                   this.schoolCache.next({
                     ...response2.data()['school'],
                     img: url,
+                    imgName: response2.data()['school'].img,
                   });
                 }
               }

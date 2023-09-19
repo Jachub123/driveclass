@@ -16,6 +16,8 @@ export class AuthService {
   eventAuthError = new Subject<string>();
   mySchool: School;
   userData: User;
+  authSub: Subscription;
+  user = new Subject<any>();
   constructor(
     private afAuth: AngularFireAuth,
     private router: Router,
@@ -49,6 +51,27 @@ export class AuthService {
       .catch((error) => {
         this.eventAuthError.next(error);
       });
+  }
+
+  getUserState(callback: (data: any) => void) {
+    this.authSub = this.afAuth.authState.subscribe((data) => {
+      if (data !== null) {
+        callback(data);
+      } else {
+        callback(false);
+      }
+    });
+    return this.authSub;
+  }
+
+  getUser() {
+    this.getUserState((data) => {
+      if (data) {
+        this.user.next(data);
+      } else {
+        this.user.next(false);
+      }
+    });
   }
 
   insertUserData(userCredentials) {

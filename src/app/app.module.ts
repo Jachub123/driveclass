@@ -20,6 +20,8 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { EmailVerificationComponent } from './email-verification/email-verification.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './auth.guard';
+import { DatePipe } from '@angular/common';
+import { EditSchoolComponent } from './search-drive-class/driving-school/school-detail-view/edit-school/edit-school.component';
 
 const appRoutes: Routes = [
   { path: '', component: SearchDriveClassComponent, pathMatch: 'full' },
@@ -27,6 +29,11 @@ const appRoutes: Routes = [
     path: 'school/:id',
     canActivate: [AuthGuardService],
     component: SchoolDetailViewComponent,
+  },
+  {
+    path: 'school/:id/edit',
+    canActivate: [AuthGuardService],
+    component: EditSchoolComponent,
   },
   { path: 'register', component: RegisterComponent },
   { path: 'login', canActivate: [AuthGuardService], component: LoginComponent },
@@ -46,6 +53,7 @@ const appRoutes: Routes = [
     TrimPipe,
     RegisterComponent,
     EmailVerificationComponent,
+    EditSchoolComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,7 +67,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
   ],
 
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
