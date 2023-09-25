@@ -82,37 +82,37 @@ $color4: #a0884d;
 }
 
 .comments {
-  @apply max-w-7xl mx-auto bg-white dark:bg-gray-900 py-8 lg:py-16 antialiased;
+  @apply max-w-7xl mx-auto bg-white py-8 lg:py-16 antialiased;
 
   .commentHeaderWrapper {
     @apply flex justify-between items-center mb-6;
     .heading {
-      @apply text-lg lg:text-2xl font-bold text-gray-900 dark:text-white;
+      @apply text-lg lg:text-2xl font-bold text-gray-900;
     }
   }
   .commentWrapper {
-    @apply py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700;
+    @apply py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200;
     .comment {
-      @apply px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800;
+      @apply px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none;
     }
   }
   .sendComment {
     @apply inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white  rounded-lg focus:ring-4;
   }
   article {
-    @apply p-6 text-base bg-white rounded-lg dark:bg-gray-900;
+    @apply p-6 text-base bg-white rounded-lg;
 
     footer {
       @apply flex justify-between items-center mb-2;
 
       p.imagewrapper {
-        @apply inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold;
+        @apply inline-flex items-center mr-3 text-sm text-gray-900  font-semibold;
       }
       p.date {
-        @apply text-sm text-gray-600 dark:text-gray-400;
+        @apply text-sm text-gray-600;
       }
       .commentText {
-        @apply text-gray-500 dark:text-gray-400;
+        @apply text-gray-500;
       }
     }
   }
@@ -122,19 +122,14 @@ $color4: #a0884d;
   &.hidden {
     display: none !important;
   }
-  @apply z-10 flex flex-col justify-evenly items-center fixed top-0 bottom-0 left-0 right-0 m-auto h-2/6 w-2/12;
+  @apply z-10 flex flex-col justify-evenly items-center fixed top-0 bottom-0 left-0 right-0 m-auto h-2/6 md:w-[50vw] xl:w-[33vw];
   .innerPopUp {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
+    @apply w-full h-full flex flex-col items-center justify-evenly p-4;
   }
   &::after {
     content: "";
     z-index: -1;
-    @apply fixed top-0 bottom-0 left-0 right-0 m-auto h-2/6 w-2/12 bg-white border;
+    @apply fixed top-0 bottom-0 left-0 right-0 m-auto h-2/6 md:w-[50vw] xl:w-[33vw] bg-white border;
   }
   &::before {
     content: "";

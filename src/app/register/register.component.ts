@@ -1,5 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SchoolService } from '../school.service';
@@ -12,7 +11,9 @@ import { AuthService } from './auth-service.service';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
+  user: any;
+  sub: any;
   constructor(
     private angFire: AngularFireStorage,
     private db: AngularFirestore,
@@ -52,6 +53,7 @@ export class RegisterComponent implements OnInit {
   schule: string;
   school: School;
   file: any;
+  uid: string;
 
   upload(event) {
     this.file = event.target.files[0];
@@ -64,46 +66,59 @@ export class RegisterComponent implements OnInit {
   next() {
     this.errorMsg = '';
     if (this.form.valid) {
-      this.schoolservice.setSchool(this.form.value);
-      this.school = this.schoolservice.getAllSchools();
-      this.db
-        .collection('schools')
-        .doc('T4GpuQlOBycURI4BzvG2')
-        .collection('school')
-        .doc(this.schoolservice.getAllSchools().name)
-        .get()
-        .subscribe((response) => {
-          if (response.exists) {
-            this.errorMsg += 'Name der Fahrschule existiert bereits.';
-            return;
-          }
-        });
-      if (this.schoolservice.getAllSchools().name.length < 3) {
-        this.errorMsg += 'Der Name muss mindestens 3 Buchstaben enthalten.';
-        return;
-      }
       if (this.pageCount === 1) {
-        this.authService
-          .checkEmailExists(this.form.value.profilename)
-          .then((emailExists) => {
-            if (emailExists) {
-              this.errorMsg += 'Die E-Mail existiert bereits!';
-              return;
+        if (this.form.value.name.length < 3) {
+          this.errorMsg += 'Der Name muss mindestens 3 Buchstaben enthalten.';
+          return;
+        }
+        this.db
+          .collection('schools')
+          .doc('T4GpuQlOBycURI4BzvG2')
+          .collection('school')
+          .get()
+          .subscribe((schools) => {
+            let usernameExists = false;
+            let nameExists = false;
+
+            schools.docs.forEach((school) => {
+              const schoolData = school.data()['school'];
+
+              if (schoolData['profilename'] === this.form.value.profilename) {
+                usernameExists = true;
+              }
+
+              if (schoolData['name'] === this.form.value.name) {
+                nameExists = true;
+              }
+            });
+
+            if (usernameExists || nameExists) {
+              // Display the error message if either username or email exists
+              if (usernameExists) {
+                this.errorMsg += 'Die E-Mail existiert bereits! ';
+              }
+              if (nameExists) {
+                this.errorMsg += 'Name der Fahrschule existiert bereits. ';
+              }
             } else {
+              // No conflicts, proceed with registration
+
+              this.onCreateUser({
+                profilename: this.form.value.profilename,
+                name: this.form.value.name,
+                password: this.form.value.password,
+              });
+              delete this.form.value.password;
+              this.schoolservice.setSchool(this.form.value);
+
+              this.school = this.schoolservice.getAllSchools();
               this.pageCount += 1;
             }
-          })
-          .catch((error) => {
-            this.errorMsg += error;
-            return;
           });
       } else if (this.errorMsg === '') {
+        this.schoolservice.setSchool(this.form.value);
         this.pageCount += 1;
       }
-      /*    if (this.authService.checkEmailExists(this.form.value.email)) {
-        this.errorMsg = 'Die E-Mail existiert bereits!';
-        return;
-      } */
     } else {
       this.form.control.markAllAsTouched();
     }
@@ -114,7 +129,6 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    this.onCreateUser(this.schoolservice.getAllSchools());
     this.db
       .collection('schools')
       .doc('T4GpuQlOBycURI4BzvG2')
@@ -129,10 +143,23 @@ export class RegisterComponent implements OnInit {
     this.successMsg =
       'Deine Fahrschule wurde angelegt! Danke dass du Teil von Driveclass bist!';
     this.angFire.upload(
-      this.schoolservice.getAllSchools().name + '/' + this.file.name,
+      this.schoolservice.getAllSchools().name +
+        '/' +
+        this.user.uid +
+        '/' +
+        this.file.name,
       this.file
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.authService.getUser();
+    this.sub = this.authService.user.subscribe((user) => {
+      this.user = user;
+    });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 }

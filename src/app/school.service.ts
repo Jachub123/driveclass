@@ -49,30 +49,36 @@ export class SchoolService {
       .get()
       .subscribe((response) => {
         response.docs.map((response2) => {
-          this.fireStorage
-            .ref(
-              `/${response2.data()['school']['name']}/${
-                response2.data()['school']['img']
-              }`
-            )
-            .getDownloadURL()
-            .subscribe((url) => {
-              if (email === '') {
-                console.log(response2.data());
-                this.schoolCache.next({
-                  ...response2.data()['school'],
-                  img: url,
-                });
-              } else {
-                if (response2.data()['school']['profilename'] === email) {
+          const lol = this.fireStorage.ref(
+            `/${response2.data()['school']['name']}/`
+          );
+          console.log(response2.data()['school']['name']);
+          lol.listAll().subscribe((lel) => {
+            this.fireStorage
+              .ref(
+                `${lel.prefixes[0].fullPath}/${
+                  response2.data()['school']['img']
+                }`
+              )
+              .getDownloadURL()
+              .subscribe((url) => {
+                if (email === '') {
+                  console.log(response2.data());
                   this.schoolCache.next({
                     ...response2.data()['school'],
                     img: url,
-                    imgName: response2.data()['school'].img,
                   });
+                } else {
+                  if (response2.data()['school']['profilename'] === email) {
+                    this.schoolCache.next({
+                      ...response2.data()['school'],
+                      img: url,
+                      imgName: response2.data()['school'].img,
+                    });
+                  }
                 }
-              }
-            });
+              });
+          });
         });
       });
   }

@@ -27,7 +27,11 @@ export class EditSchoolComponent implements OnInit {
 
   async updateSchool() {
     const imgPath = this.angFire.ref(
-      this.school.name + '/' + this.school.imgName
+      this.school.name +
+        '/' +
+        JSON.parse(localStorage.getItem('user')!).uid +
+        '/' +
+        this.school.imgName
     );
     if (this.file !== undefined) {
       await imgPath.put(this.file);

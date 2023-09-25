@@ -21,7 +21,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { DatePipe } from '@angular/common';
 import { Comment } from 'src/app/comment';
-import { Subject, Subscription, lastValueFrom } from 'rxjs';
+import { Subscription, lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-school-detail-view',
