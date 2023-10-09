@@ -42,7 +42,7 @@ export class EditSchoolComponent implements OnInit {
         .doc('T4GpuQlOBycURI4BzvG2')
         .collection('school')
         .doc(this.school.name)
-        .set({ school: { ...this.school, img: this.school.imgName } });
+        .update({ school: { ...this.school, img: this.school.imgName } });
       /*     this.angFire.upload(
       
       this.schoolservice.getAllSchools().name + '/' + this.file.name,

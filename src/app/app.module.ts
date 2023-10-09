@@ -36,6 +36,7 @@ const appRoutes: Routes = [
     component: EditSchoolComponent,
   },
   { path: 'register', component: RegisterComponent },
+  { path: 'register/:id', component: RegisterComponent },
   { path: 'login', canActivate: [AuthGuardService], component: LoginComponent },
   {
     path: 'emailVerification/:name/:id',

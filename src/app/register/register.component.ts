@@ -5,6 +5,7 @@ import { SchoolService } from '../school.service';
 import { School } from '../search-drive-class/driving-school/school.model';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AuthService } from './auth-service.service';
+import { Renderer2, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-register',
@@ -20,12 +21,18 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private schoolservice: SchoolService,
     private authService: AuthService
   ) {
+    window.addEventListener('message', this.handleMessage.bind(this), false);
+
     this.schoolservice.school.subscribe((response) => {
       this.school = response;
       this.name = response.name;
     });
   }
   @ViewChild('f') form: NgModel;
+
+  @ViewChild('payrexxIframe', { static: false }) payrexxIframe: ElementRef;
+  payrexxGatewayUrl: string =
+    'https://driveclass.payrexx.com/pay?tid=2ce074b7&appview=1';
   errorMsg: string;
   successMsg: string;
   pageCount: number = 1;
@@ -149,6 +156,51 @@ export class RegisterComponent implements OnInit, OnDestroy {
         '/' +
         this.file.name,
       this.file
+    );
+  }
+
+  handleMessage(event: MessageEvent) {
+    if (event.source === this.payrexxIframe.nativeElement.contentWindow) {
+      console.log(event);
+
+      if (typeof event.data === 'string') {
+        console.log('event');
+        try {
+          const data = JSON.parse(event.data);
+          if (data && data.payrexx) {
+            console.log(data);
+            Object.keys(data.payrexx).forEach((name) => {
+              switch (name) {
+                case 'transaction':
+                  if (typeof data.payrexx[name] === 'object') {
+                    if (data.payrexx[name].status === 'confirmed') {
+                      // Handle success
+                      console.log('Transaction confirmed');
+                    } else {
+                      // Handle failure
+                      console.log('Transaction failed');
+                    }
+                  }
+                  break;
+              }
+            });
+          }
+        } catch (error) {
+          console.error('Error parsing message data:', error);
+        }
+      }
+    }
+  }
+
+  showFrame() {
+    const iFrame = this.payrexxIframe.nativeElement;
+    const iFrameOrigin = new URL(iFrame.src).origin;
+
+    iFrame.contentWindow.postMessage(
+      JSON.stringify({
+        origin: window.location.origin,
+      }),
+      iFrameOrigin
     );
   }
 
