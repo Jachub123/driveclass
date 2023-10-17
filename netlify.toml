@@ -1,3 +1,3 @@
 [build]
-command = "ng build --configuration production"
+command = "ng build --configuration production && ng serve "
 functions = "functions"
