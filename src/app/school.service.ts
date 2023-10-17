@@ -36,7 +36,7 @@ export class SchoolService {
     telefon: '',
     verkehrskunde: false,
     webseite: '',
-    abo: 0,
+    abo: '',
     schule: '',
     profilename: '',
   };
@@ -49,21 +49,19 @@ export class SchoolService {
       .get()
       .subscribe((response) => {
         response.docs.map((response2) => {
-          const lol = this.fireStorage.ref(
+          const schools = this.fireStorage.ref(
             `/${response2.data()['school']['name']}/`
           );
-          console.log(response2.data()['school']['name']);
-          lol.listAll().subscribe((lel) => {
+          schools.listAll().subscribe((school) => {
             this.fireStorage
               .ref(
-                `${lel.prefixes[0].fullPath}/${
+                `${school?.prefixes[0]?.fullPath}/${
                   response2.data()['school']['img']
                 }`
               )
               .getDownloadURL()
               .subscribe((url) => {
                 if (email === '') {
-                  console.log(response2.data());
                   this.schoolCache.next({
                     ...response2.data()['school'],
                     img: url,

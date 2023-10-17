@@ -5,7 +5,8 @@ import { SchoolService } from '../school.service';
 import { School } from '../search-drive-class/driving-school/school.model';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AuthService } from './auth-service.service';
-import { Renderer2, ElementRef } from '@angular/core';
+import { ElementRef } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -19,7 +20,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private angFire: AngularFireStorage,
     private db: AngularFirestore,
     private schoolservice: SchoolService,
-    private authService: AuthService
+    private authService: AuthService,
+    private http: HttpClient
   ) {
     window.addEventListener('message', this.handleMessage.bind(this), false);
 
@@ -31,8 +33,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   @ViewChild('f') form: NgModel;
 
   @ViewChild('payrexxIframe', { static: false }) payrexxIframe: ElementRef;
-  payrexxGatewayUrl: string =
-    'https://driveclass.payrexx.com/pay?tid=2ce074b7&appview=1';
   errorMsg: string;
   successMsg: string;
   pageCount: number = 1;
@@ -61,6 +61,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   school: School;
   file: any;
   uid: string;
+  abo: string = '';
 
   upload(event) {
     this.file = event.target.files[0];
@@ -144,6 +145,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       .set({
         school: {
           ...this.schoolservice.getAllSchools(),
+          abo: this.abo,
           img: this.file.name,
         },
       });
@@ -160,35 +162,26 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   handleMessage(event: MessageEvent) {
-    if (event.source === this.payrexxIframe.nativeElement.contentWindow) {
-      console.log(event);
-
-      if (typeof event.data === 'string') {
-        console.log('event');
-        try {
-          const data = JSON.parse(event.data);
-          if (data && data.payrexx) {
-            console.log(data);
-            Object.keys(data.payrexx).forEach((name) => {
-              switch (name) {
-                case 'transaction':
-                  if (typeof data.payrexx[name] === 'object') {
-                    if (data.payrexx[name].status === 'confirmed') {
-                      // Handle success
-                      console.log('Transaction confirmed');
-                    } else {
-                      // Handle failure
-                      console.log('Transaction failed');
-                    }
+    if (typeof event.data === 'string') {
+      try {
+        const data = JSON.parse(event.data);
+        if (data && data.payrexx) {
+          Object.keys(data.payrexx).forEach((name) => {
+            switch (name) {
+              case 'transaction':
+                if (typeof data.payrexx[name] === 'object') {
+                  if (data.payrexx[name].status === 'confirmed') {
+                    // Handle success
+                    this.register();
+                  } else {
+                    // Handle failure
                   }
-                  break;
-              }
-            });
-          }
-        } catch (error) {
-          console.error('Error parsing message data:', error);
+                }
+                break;
+            }
+          });
         }
-      }
+      } catch (error) {}
     }
   }
 
@@ -204,7 +197,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
     );
   }
 
+  executePHP() {
+    this.http
+      .get('/assets/index.js', { responseType: 'text' }) // Replace with the correct URL for your serverless function
+      .subscribe((response: string) => {
+        return response;
+      });
+  }
+
   ngOnInit() {
+    this.executePHP();
     this.authService.getUser();
     this.sub = this.authService.user.subscribe((user) => {
       this.user = user;

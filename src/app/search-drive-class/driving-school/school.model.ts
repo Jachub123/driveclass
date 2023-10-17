@@ -18,7 +18,7 @@ export class School {
   telefon: string;
   verkehrskunde: boolean;
   webseite: string;
-  abo: number;
+  abo: string;
   schule: string;
   profilename: string;
 
@@ -42,7 +42,7 @@ export class School {
     telefon: string,
     verkehrskunde: boolean,
     webseite: string,
-    abo: number,
+    abo: string,
     schule: string,
     profilename: string
   ) {

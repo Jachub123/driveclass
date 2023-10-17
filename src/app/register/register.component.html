@@ -346,7 +346,7 @@
       type="radio"
       name="abo"
       value="70"
-      ngModel="abo1"
+      [(ngModel)]="abo"
     />
     <label class="card" for="opt1">
       <h1>Premium Abo Fahrschule Monatlich</h1>
@@ -363,7 +363,7 @@
       type="radio"
       name="abo"
       value="720"
-      ngModel="abo2"
+      [(ngModel)]="abo"
     />
 
     <label class="card" for="opt2">
@@ -381,7 +381,7 @@
       type="radio"
       name="abo"
       value="150"
-      ngModel="abo3"
+      [(ngModel)]="abo"
     />
 
     <label class="card" for="opt3">
@@ -399,7 +399,7 @@
       type="radio"
       name="abo"
       value="1500"
-      ngModel="abo4"
+      [(ngModel)]="abo"
     />
     <label class="card" for="opt4">
       <h1>Premium Abo Berufsschule Monatlich</h1>
@@ -428,12 +428,7 @@
     <button class="next" *ngIf="pageCount === 2" type="button" (click)="next()">
       weiter zu 3/4
     </button>
-    <button class="next" *ngIf="pageCount === 3" type="button" (click)="next()">
-      weiter zu 4/4
-    </button>
-    <button class="next" *ngIf="pageCount === 4" type="submit">
-      Registrieren
-    </button>
+
     <!--     <button class="next" *ngIf="pageCount === 3" type="button">
       <a href="https://driveclass.payrexx.com/pay?tid=2ce074b7">Zahlen</a>
     </button> -->
@@ -441,12 +436,24 @@
   <p class="text-red-500">{{ errorMsg }}</p>
 </form>
 <iframe
+  *ngIf="pageCount === 3 && abo === '70'"
   #payrexxIframe
-  *ngIf="pageCount === 1"
+  (load)="showFrame()"
   src="https://driveclass.payrexx.com/pay?tid=2ce074b7&appview=1"
   allow="payment *"
   width="100%"
-  height="800"
+  height="1000px"
+  style="border: 0"
+  id="payrexx-embed"
+></iframe>
+<iframe
+  *ngIf="pageCount === 3 && abo === '720'"
+  #payrexxIframe
+  (load)="showFrame()"
+  src="https://driveclass.payrexx.com/pay?tid=fa53beb6&appview=1"
+  allow="payment *"
+  width="100%"
+  height="1000px"
   style="border: 0"
   id="payrexx-embed"
 ></iframe>
