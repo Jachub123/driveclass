@@ -1,4 +1,3 @@
 [build]
 command = "ng build --configuration production"
 functions = "functions"
-publish = "dist"
