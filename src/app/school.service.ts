@@ -49,34 +49,40 @@ export class SchoolService {
       .get()
       .subscribe((response) => {
         response.docs.map((response2) => {
-          const schools = this.fireStorage.ref(
-            `/${response2.data()['school']['name']}/`
-          );
-          schools.listAll().subscribe((school) => {
-            this.fireStorage
-              .ref(
-                `${school.prefixes[0]?.fullPath}/${
-                  response2.data()['school']['img']
-                }`
-              )
-              .getDownloadURL()
-              .subscribe((url) => {
-                if (email === '') {
-                  this.schoolCache.next({
-                    ...response2.data()['school'],
-                    img: url,
-                  });
-                } else {
-                  if (response2.data()['school']['profilename'] === email) {
+          if (
+            Date.parse(response2.data()['school'].valid) -
+              new Date().getTime() >=
+            0
+          ) {
+            const schools = this.fireStorage.ref(
+              `/${response2.data()['school']['name']}/`
+            );
+            schools.listAll().subscribe((school) => {
+              this.fireStorage
+                .ref(
+                  `${school.prefixes[0]?.fullPath}/${
+                    response2.data()['school']['img']
+                  }`
+                )
+                .getDownloadURL()
+                .subscribe((url) => {
+                  if (email === '') {
                     this.schoolCache.next({
                       ...response2.data()['school'],
                       img: url,
-                      imgName: response2.data()['school'].img,
                     });
+                  } else {
+                    if (response2.data()['school']['profilename'] === email) {
+                      this.schoolCache.next({
+                        ...response2.data()['school'],
+                        img: url,
+                        imgName: response2.data()['school'].img,
+                      });
+                    }
                   }
-                }
-              });
-          });
+                });
+            });
+          }
         });
       });
   }

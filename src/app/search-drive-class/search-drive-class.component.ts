@@ -40,29 +40,6 @@ export class SearchDriveClassComponent implements OnInit, OnDestroy {
     let allArrays = [];
     this.filteredSchools = [];
 
-    if (formValue.plz !== '' && formValue.plz !== null) {
-      resultPostalC = this.schools.filter((item) =>
-        item.postalCode.toString().includes(formValue.plz.toString())
-      );
-    }
-    if (
-      formValue.driveClassSearchbar !== '' &&
-      formValue.driveClassSearchbar !== null
-    ) {
-      resultName = this.schools.filter((item) =>
-        this.searchedName(item.name, formValue.driveClassSearchbar)
-      );
-    }
-    if (formValue.stadt !== '' && formValue.stadt !== null) {
-      resultStadt = this.schools.filter((item) =>
-        this.searchedName(item.kanton, formValue.stadt)
-      );
-    }
-    if (formValue.lang !== '' && formValue.lang !== null) {
-      resultSprache = this.schools.filter((item) =>
-        this.searchedName(item.sprache, formValue.lang)
-      );
-    }
     if (
       formValue.schoolType !== 'fahrschule' &&
       formValue.schoolType !== null
@@ -72,6 +49,53 @@ export class SearchDriveClassComponent implements OnInit, OnDestroy {
       );
     }
 
+    if (formValue.plz !== '' && formValue.plz !== null) {
+      if (resultschoolType.length > 0) {
+        resultPostalC = resultschoolType.filter((item) =>
+          item.postalCode.toString().includes(formValue.plz.toString())
+        );
+      } else {
+        resultPostalC = this.schools.filter((item) =>
+          item.postalCode.toString().includes(formValue.plz.toString())
+        );
+      }
+    }
+    if (
+      formValue.driveClassSearchbar !== '' &&
+      formValue.driveClassSearchbar !== null
+    ) {
+      if (resultschoolType.length > 0) {
+        resultName = resultschoolType.filter((item) =>
+          this.searchedName(item.name, formValue.driveClassSearchbar)
+        );
+      } else {
+        resultName = this.schools.filter((item) =>
+          this.searchedName(item.name, formValue.driveClassSearchbar)
+        );
+      }
+    }
+    if (formValue.stadt !== '' && formValue.stadt !== null) {
+      if (resultschoolType.length > 0) {
+        resultStadt = resultschoolType.filter((item) =>
+          this.searchedName(item.kanton, formValue.stadt)
+        );
+      } else {
+        resultStadt = this.schools.filter((item) =>
+          this.searchedName(item.kanton, formValue.stadt)
+        );
+      }
+    }
+    if (formValue.lang !== '' && formValue.lang !== null) {
+      if (resultschoolType.length > 0) {
+        resultSprache = resultschoolType.filter((item) =>
+          this.searchedName(item.sprache, formValue.lang)
+        );
+      } else {
+        resultSprache = this.schools.filter((item) =>
+          this.searchedName(item.sprache, formValue.lang)
+        );
+      }
+    }
     allArrays = [
       resultName,
       resultPostalC,

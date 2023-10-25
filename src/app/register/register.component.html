@@ -2,7 +2,7 @@
   Registriere deine Fahrschule/Berufsschule bei Driveclass
 </h1>
 
-<form class="login" *ngIf="!successMsg" #f="ngForm" (ngSubmit)="register()">
+<form class="login" *ngIf="!successMsg" #f="ngForm">
   <div *ngIf="pageCount === 1" class="containerP1">
     <h1 class="subHeading">Alles über deine Fahrschule/Berufsschule</h1>
     <div class="w-full md:w-1/2 schulWrapper">
@@ -435,6 +435,7 @@
   </div>
   <p class="text-red-500">{{ errorMsg }}</p>
 </form>
+<h1 *ngIf="successMsg">{{ successMsg }}</h1>
 <iframe
   *ngIf="pageCount === 3 && abo === '70'"
   #payrexxIframe
@@ -457,4 +458,25 @@
   style="border: 0"
   id="payrexx-embed"
 ></iframe>
-<h1 *ngIf="successMsg">{{ successMsg }}</h1>
+<iframe
+  *ngIf="pageCount === 3 && abo === '150'"
+  #payrexxIframe
+  (load)="showFrame()"
+  src="https://driveclass.payrexx.com/pay?tid=7e171dd7&appview=1"
+  allow="payment *"
+  width="100%"
+  height="1000px"
+  style="border: 0"
+  id="payrexx-embed"
+></iframe>
+<iframe
+  *ngIf="pageCount === 3 && abo === '1500'"
+  #payrexxIframe
+  (load)="showFrame()"
+  src="https://driveclass.payrexx.com/pay?tid=d1d152e8&appview=1"
+  allow="payment *"
+  width="100%"
+  height="1000px"
+  style="border: 0"
+  id="payrexx-embed"
+></iframe>

@@ -66,7 +66,6 @@ export class EditSchoolComponent implements OnInit {
       this.schoolSub = this.schoolService.schoolCache.subscribe((school) => {
         this.school = school;
         this.render = true;
-        console.log(school);
       });
     }
   }

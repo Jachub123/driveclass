@@ -136,7 +136,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.pageCount -= 1;
   }
 
-  register() {
+  register(uuid, valid) {
     this.db
       .collection('schools')
       .doc('T4GpuQlOBycURI4BzvG2')
@@ -147,6 +147,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
           ...this.schoolservice.getAllSchools(),
           abo: this.abo,
           img: this.file.name,
+          payrexxUuid: uuid,
+          valid: valid,
         },
       });
     this.successMsg =
@@ -172,9 +174,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 if (typeof data.payrexx[name] === 'object') {
                   if (data.payrexx[name].status === 'confirmed') {
                     // Handle success
-                    this.register();
+                    this.register(
+                      data.payrexx.transaction.subscription.uuid,
+                      data.payrexx.transaction.subscription.valid_until
+                    );
                   } else {
-                    // Handle failure
                   }
                 }
                 break;
@@ -197,16 +201,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     );
   }
 
-  executePHP() {
-    this.http
-      .get('/assets/index.js', { responseType: 'text' }) // Replace with the correct URL for your serverless function
-      .subscribe((response: string) => {
-        return response;
-      });
-  }
-
   ngOnInit() {
-    this.executePHP();
     this.authService.getUser();
     this.sub = this.authService.user.subscribe((user) => {
       this.user = user;

@@ -219,7 +219,6 @@ export class SchoolDetailViewComponent implements OnInit, OnDestroy {
       this.id = params['id'];
       if (this.id === 'mySchool') {
         if (this.auth.isLoggedIn()) {
-          console.log(JSON.parse(localStorage.getItem('user')!).email);
           this.schoolService.fetchSchools(
             JSON.parse(localStorage.getItem('user')!).email
           );
