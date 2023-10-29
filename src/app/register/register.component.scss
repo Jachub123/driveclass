@@ -1,17 +1,8 @@
 $color1: #667468;
 $color2: #f8a100;
 
-h1 {
-  background: linear-gradient(to left, $color1, $color2);
-  @apply max-w-5xl mx-auto text-3xl md:text-5xl my-28 text-center bg-clip-text text-transparent leading-[4rem];
-}
-
 form {
   @apply w-full m-auto max-w-5xl mb-32 p-4;
-
-  h1.subHeading {
-    @apply text-2xl md:text-3xl;
-  }
 
   .warn {
     @apply text-xs italic;

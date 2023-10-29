@@ -24,15 +24,24 @@ const handler: Handler = async (event, context) => {
     snapshot.forEach((doc) => {
       if (
         JSON.parse(event.body)?.subscription?.uuid ===
-        doc.data()['school']['payrexxUuid']
+          doc.data()['school']['payrexxUuid'] &&
+        JSON.parse(event.body)?.subscription?.uuid !== undefined
       ) {
         /*         console.log(JSON.parse(event.body)?.subscription?.uuid);
         console.log(doc.data()['school']['payrexxUuid']);
         console.log(doc.id); */
+        console.log(JSON.parse(event.body));
+        console.log(JSON.parse(event.body)?.subscription?.valid_until);
+        console.log(new Date().getHours() + 1);
+        const time = new Date().getHours() + 1;
         collectionRef.doc(doc.id).update({
           school: {
             ...doc.data()['school'],
-            valid: JSON.parse(event.body)?.subscription?.valid_until,
+            valid:
+              JSON.parse(event.body)?.subscription?.valid_until +
+              'T' +
+              time +
+              ':00',
           },
         });
       }
@@ -48,7 +57,6 @@ const handler: Handler = async (event, context) => {
       body: JSON.stringify({ success: true }),
     };
   } catch (error) {
-    console.error('Error:', error);
     return {
       statusCode: 500,
       body: JSON.stringify({ success: false, error: error.message }),

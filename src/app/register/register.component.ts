@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { SchoolService } from '../school.service';
@@ -30,7 +36,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.name = response.name;
     });
   }
-  @ViewChild('f') form: NgModel;
+  @ViewChild('f', { static: false }) form: NgModel;
+  @ViewChild('heading', { static: false }) heading: ElementRef;
 
   @ViewChild('payrexxIframe', { static: false }) payrexxIframe: ElementRef;
   errorMsg: string;
@@ -70,7 +77,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
   onCreateUser(user) {
     this.authService.createUser(user);
   }
+  scrollToAnchor(anchor: string): void {
+    // Use the anchor name to scroll to the element
+    setTimeout(() => {
+      const element = this.heading.nativeElement;
 
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
   next() {
     this.errorMsg = '';
     if (this.form.valid) {
@@ -202,12 +218,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.scrollToAnchor('heading');
+
     this.authService.getUser();
     this.sub = this.authService.user.subscribe((user) => {
       this.user = user;
     });
   }
-
   ngOnDestroy() {
     this.sub.unsubscribe();
   }

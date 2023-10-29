@@ -1,0 +1,8 @@
+.mat-expanded {
+  mat-panel-title {
+    @apply text-green-600 mb-4;
+  }
+}
+mat-panel-title {
+  @apply text-lg;
+}

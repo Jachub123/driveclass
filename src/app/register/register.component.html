@@ -1,10 +1,10 @@
-<h1 *ngIf="!successMsg" class="">
+<h1 id="heading" #heading *ngIf="!successMsg" class="">
   Registriere deine Fahrschule/Berufsschule bei Driveclass
 </h1>
 
 <form class="login" *ngIf="!successMsg" #f="ngForm">
   <div *ngIf="pageCount === 1" class="containerP1">
-    <h1 class="subHeading">Alles über deine Fahrschule/Berufsschule</h1>
+    <h3 class="subHeading">Alles über deine Fahrschule/Berufsschule</h3>
     <div class="w-full md:w-1/2 schulWrapper">
       <label for="berufsschule">Berufsschule</label
       ><input

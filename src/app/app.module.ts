@@ -22,7 +22,8 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuardService } from './auth.guard';
 import { DatePipe } from '@angular/common';
 import { EditSchoolComponent } from './search-drive-class/driving-school/school-detail-view/edit-school/edit-school.component';
-
+import { LinksAndTippsComponent } from './links-and-tipps/links-and-tipps.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 const appRoutes: Routes = [
   { path: '', component: SearchDriveClassComponent, pathMatch: 'full' },
   {
@@ -34,6 +35,10 @@ const appRoutes: Routes = [
     path: 'school/:id/edit',
     canActivate: [AuthGuardService],
     component: EditSchoolComponent,
+  },
+  {
+    path: 'tipps',
+    component: LinksAndTippsComponent,
   },
   { path: 'register', component: RegisterComponent },
   { path: 'register/:id', component: RegisterComponent },
@@ -61,11 +66,12 @@ const appRoutes: Routes = [
     HttpClientModule,
     AngularFireStorageModule,
     FormsModule,
+    BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, { scrollPositionRestoration: 'enabled' }),
   ],
 
   providers: [DatePipe],

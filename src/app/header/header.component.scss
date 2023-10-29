@@ -28,7 +28,7 @@ nav {
       background-image: linear-gradient(
         to right,
         rgba(147, 245, 157, 0.767),
-        rgba(3, 129, 24, 0.767)
+        rgba(3, 130, 24, 0.767)
       );
     }
     &::after {
@@ -76,4 +76,15 @@ header {
   background-position: 0% 40%;
   @apply flex h-96 flex-col justify-end max-lg:bg-[40%_40%];
   @apply p-2 pr-3;
+}
+.navbar-nav {
+  @apply items-center;
+}
+.nav-item {
+  &.login {
+    @apply border-b-[1px] border-[#038118c4];
+  }
+  .login {
+    @apply text-3xl underline;
+  }
 }

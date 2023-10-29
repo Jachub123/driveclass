@@ -1,3 +1,6 @@
+$color1: #667468;
+$color2: #f8a100;
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,8 +14,17 @@
 }
 body {
   font-family: DidactG;
+  scroll-behavior: smooth;
 }
-
+h1,
+h2,
+h3 {
+  background: linear-gradient(to left, $color1, $color2);
+  @apply max-w-5xl mx-auto text-3xl md:text-5xl my-28 text-center bg-clip-text text-transparent leading-[4rem];
+}
+h3 {
+  @apply text-2xl md:text-3xl;
+}
 form,
 main.edit {
   button,
@@ -92,4 +104,9 @@ main.edit {
 .btn-payrexx:hover {
   background-color: #046013;
   color: #ffffff;
+}
+
+html,
+body {
+  height: 100%;
 }
