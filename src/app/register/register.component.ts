@@ -201,10 +201,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
               case 'transaction':
                 if (typeof data.payrexx[name] === 'object') {
                   if (data.payrexx[name].status === 'confirmed') {
+                    const time = new Date().getHours() + 1;
                     // Handle success
                     this.register(
                       data.payrexx.transaction.subscription.uuid,
-                      data.payrexx.transaction.subscription.valid_until
+                      data.payrexx.transaction.subscription.valid_until +
+                        'T' +
+                        time +
+                        ':00'
                     );
                   } else {
                   }

@@ -14,7 +14,7 @@ const handler: Handler = async (event, context) => {
   const firestore = admin.firestore();
   try {
     console.log(JSON.parse(event.body));
-    console.log(JSON.parse(event.body)?.subscription?.cancelled);
+    console.log(JSON.parse(event.body)?.subscription?.status);
     console.log(JSON.parse(event.body)?.subscription?.valid_until);
     console.log(new Date().getHours() + 1);
     // Access Firestore data here
@@ -25,7 +25,7 @@ const handler: Handler = async (event, context) => {
     const snapshot = await collectionRef.get();
 
     const data: any[] = [];
-    if (!JSON.parse(event.body)?.subscription?.cancelled) {
+    if (JSON.parse(event.body)?.subscription?.status === 'active') {
       snapshot.forEach((doc) => {
         if (
           JSON.parse(event.body)?.subscription?.uuid ===
