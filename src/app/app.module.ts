@@ -24,12 +24,28 @@ import { DatePipe } from '@angular/common';
 import { EditSchoolComponent } from './search-drive-class/driving-school/school-detail-view/edit-school/edit-school.component';
 import { LinksAndTippsComponent } from './links-and-tipps/links-and-tipps.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DisclaimerComponent } from './footer/disclaimer/disclaimer.component';
+import { ImpressumComponent } from './footer/impressum/impressum.component';
+import { FooterComponent } from './footer/footer.component';
+import { ContactComponent } from './footer/contact/contact.component';
 const appRoutes: Routes = [
   { path: '', component: SearchDriveClassComponent, pathMatch: 'full' },
   {
     path: 'school/:id',
     canActivate: [AuthGuardService],
     component: SchoolDetailViewComponent,
+  },
+  {
+    path: 'disclaimer',
+    component: DisclaimerComponent,
+  },
+  {
+    path: 'impressum',
+    component: ImpressumComponent,
+  },
+  {
+    path: 'contact',
+    component: ContactComponent,
   },
   {
     path: 'school/:id/edit',
@@ -60,6 +76,10 @@ const appRoutes: Routes = [
     RegisterComponent,
     EmailVerificationComponent,
     EditSchoolComponent,
+    DisclaimerComponent,
+    ImpressumComponent,
+    FooterComponent,
+    ContactComponent,
   ],
   imports: [
     BrowserModule,

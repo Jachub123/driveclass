@@ -83,13 +83,14 @@
         <label for="img"> *Bild deiner Fahrschule/Berufsschule </label>
         <input
           class=""
+          #img
           id="img"
           type="file"
           (change)="upload($event)"
           accept="*.png.jpg.JPEG."
           name="img"
           required
-          ngModel=""
+          ngModel
         />
         <p class="warn text-red-500">
           Dies ist ein Pflichtfeld, bitte ausfüllen!

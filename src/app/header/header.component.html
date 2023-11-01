@@ -66,7 +66,7 @@
             >PREMIUM ABO</a
           >
         </li>
-        <li class="nav-item login">
+        <li [class]="schoolLoggedIn ? ' nav-item' : 'nav-item login'">
           <a
             *ngIf="isLoggedOut; else mySchoolLink"
             class="nav-link login"

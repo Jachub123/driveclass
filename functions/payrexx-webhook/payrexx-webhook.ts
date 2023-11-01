@@ -13,6 +13,10 @@ admin.initializeApp({
 const handler: Handler = async (event, context) => {
   const firestore = admin.firestore();
   try {
+    console.log(JSON.parse(event.body));
+    console.log(JSON.parse(event.body)?.subscription?.cancelled);
+    console.log(JSON.parse(event.body)?.subscription?.valid_until);
+    console.log(new Date().getHours() + 1);
     // Access Firestore data here
     const collectionRef = firestore
       .collection('schools')
@@ -21,35 +25,27 @@ const handler: Handler = async (event, context) => {
     const snapshot = await collectionRef.get();
 
     const data: any[] = [];
-    snapshot.forEach((doc) => {
-      if (
-        JSON.parse(event.body)?.subscription?.uuid ===
-          doc.data()['school']['payrexxUuid'] &&
-        JSON.parse(event.body)?.subscription?.uuid !== undefined
-      ) {
-        /*         console.log(JSON.parse(event.body)?.subscription?.uuid);
-        console.log(doc.data()['school']['payrexxUuid']);
-        console.log(doc.id); */
-        console.log(JSON.parse(event.body));
-        console.log(JSON.parse(event.body)?.subscription?.valid_until);
-        console.log(new Date().getHours() + 1);
-        const time = new Date().getHours() + 1;
-        collectionRef.doc(doc.id).update({
-          school: {
-            ...doc.data()['school'],
-            valid:
-              JSON.parse(event.body)?.subscription?.valid_until +
-              'T' +
-              time +
-              ':00',
-          },
-        });
-      }
-      /* data.push({
-        id: doc.id,
-        ...doc.data(),
-      }); */
-    });
+    if (!JSON.parse(event.body)?.subscription?.cancelled) {
+      snapshot.forEach((doc) => {
+        if (
+          JSON.parse(event.body)?.subscription?.uuid ===
+            doc.data()['school']['payrexxUuid'] &&
+          JSON.parse(event.body)?.subscription?.uuid !== undefined
+        ) {
+          const time = new Date().getHours() + 1;
+          collectionRef.doc(doc.id).update({
+            school: {
+              ...doc.data()['school'],
+              valid:
+                JSON.parse(event.body)?.subscription?.valid_until +
+                'T' +
+                time +
+                ':00',
+            },
+          });
+        }
+      });
+    }
 
     // Respond with Firestore data or do something with it
     return {

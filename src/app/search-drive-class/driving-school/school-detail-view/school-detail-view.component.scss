@@ -125,6 +125,9 @@ $color4: #a0884d;
   @apply z-10 flex flex-col justify-evenly items-center fixed top-0 bottom-0 left-0 right-0 m-auto h-2/6 md:w-[50vw] xl:w-[33vw];
   .innerPopUp {
     @apply w-full h-full flex flex-col items-center justify-evenly p-4;
+    h1 {
+      @apply text-black text-xl my-3;
+    }
   }
   &::after {
     content: "";

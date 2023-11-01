@@ -38,6 +38,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
   @ViewChild('f', { static: false }) form: NgModel;
   @ViewChild('heading', { static: false }) heading: ElementRef;
+  @ViewChild('img', { static: false }) imgInput: ElementRef;
 
   @ViewChild('payrexxIframe', { static: false }) payrexxIframe: ElementRef;
   errorMsg: string;
@@ -71,7 +72,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
   abo: string = '';
 
   upload(event) {
-    this.file = event.target.files[0];
+    if (event.target.files[0].size > 5 * 1024 * 1024) {
+      this.errorMsg = 'Das Bild darf nicht größer als 5MB sein.';
+      this.imgInput.nativeElement.value = '';
+      return;
+    } else {
+      this.errorMsg = '';
+      this.file = event.target.files[0];
+    }
   }
 
   onCreateUser(user) {
@@ -88,7 +96,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     });
   }
   next() {
-    this.errorMsg = '';
     if (this.form.valid) {
       if (this.pageCount === 1) {
         if (this.form.value.name.length < 3) {
@@ -133,10 +140,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
                 password: this.form.value.password,
               });
               delete this.form.value.password;
-              this.schoolservice.setSchool(this.form.value);
+              if (this.file === undefined) {
+                return;
+              } else {
+                this.errorMsg = '';
+                this.schoolservice.setSchool(this.form.value);
 
-              this.school = this.schoolservice.getAllSchools();
-              this.pageCount += 1;
+                this.school = this.schoolservice.getAllSchools();
+                this.pageCount += 1;
+              }
             }
           });
       } else if (this.errorMsg === '') {
