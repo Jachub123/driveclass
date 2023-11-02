@@ -8,6 +8,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
   providedIn: 'root',
 })
 export class SchoolService {
+  invalidSchools = new Subject<School>();
   constructor(
     private db: AngularFirestore,
     private fireStorage: AngularFireStorage
@@ -39,6 +40,8 @@ export class SchoolService {
     abo: '',
     schule: '',
     profilename: '',
+    payrexxUuid: '',
+    valid: '',
   };
 
   fetchSchools(email = '') {
@@ -82,6 +85,10 @@ export class SchoolService {
                   }
                 });
             });
+          } else {
+            if (response2.data()['school']['profilename'] === email) {
+              this.invalidSchools.next(response2.data()['school']);
+            }
           }
         });
       });

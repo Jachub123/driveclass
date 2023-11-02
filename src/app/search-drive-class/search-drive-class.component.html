@@ -89,6 +89,8 @@
     </div>
   </section>
 </form>
+<h1>Fahrschulen oder Berufsschulen in deiner Nähe</h1>
+
 <main class="container" *ngIf="filteredSchools.length > 0; else allSchools">
   <app-driving-school
     *ngFor="let school of filteredSchools; let i = index"

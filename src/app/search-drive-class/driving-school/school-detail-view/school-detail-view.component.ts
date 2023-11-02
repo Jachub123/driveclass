@@ -38,6 +38,16 @@ export class SchoolDetailViewComponent implements OnInit, OnDestroy {
   authedUserSub: Subscription;
   dbSub2: any;
   mySchool: boolean;
+  showSubs: boolean = false;
+  abo: string = '';
+  @ViewChild('payrexxIframe', { static: false }) payrexxIframe: ElementRef;
+  id: string;
+  schools: School[] = [];
+  school: School;
+  render: boolean = false;
+  comments: Array<Comment> = [];
+  @ViewChild('payrexxIframe', { static: false }) iframe: ElementRef;
+
   constructor(
     private schoolService: SchoolService,
     private route: ActivatedRoute,
@@ -47,14 +57,9 @@ export class SchoolDetailViewComponent implements OnInit, OnDestroy {
     private db: AngularFirestore,
     private datePipe: DatePipe
   ) {
+    window.addEventListener('message', this.handleMessage.bind(this), false);
     this.user = JSON.parse(localStorage.getItem('user'));
   }
-
-  id: string;
-  schools: School[] = [];
-  school: School;
-  render: boolean = false;
-  comments: Array<Comment> = [];
 
   @ViewChild('popUp') popUp: ElementRef;
   @ViewChild('comment') comment: ElementRef;
@@ -160,6 +165,7 @@ export class SchoolDetailViewComponent implements OnInit, OnDestroy {
             comment: this.comment.nativeElement.value,
             date: this.datePipe.transform(Date(), 'dd-MM-yyyy HH:mm'),
           });
+        this.fetchComments(this.school);
       }
       this.canNotComment = true;
     });
@@ -213,6 +219,75 @@ export class SchoolDetailViewComponent implements OnInit, OnDestroy {
     }
   }
 
+  handleMessage(event: MessageEvent) {
+    if (typeof event.data === 'string') {
+      try {
+        const data = JSON.parse(event.data);
+        if (data && data.payrexx) {
+          Object.keys(data.payrexx).forEach((name) => {
+            switch (name) {
+              case 'transaction':
+                if (typeof data.payrexx[name] === 'object') {
+                  if (data.payrexx[name].status === 'confirmed') {
+                    const time = new Date().getHours() + 1;
+                    // Handle success
+                    this.updateSub(
+                      this.school,
+                      data.payrexx.transaction.subscription.valid_until +
+                        'T' +
+                        time +
+                        ':00',
+                      data.payrexx.transaction.subscription.uuid
+                    );
+                    this.showSubs = false;
+                    this.schoolService.fetchSchools(this.school.profilename);
+                  }
+                }
+                break;
+            }
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+  updateSub(school: School, valid: string, uuid: string) {
+    this.db
+      .collection('schools')
+      .doc('T4GpuQlOBycURI4BzvG2')
+      .collection('school')
+      .doc(school.name)
+      .set({
+        school: {
+          ...school,
+          valid: valid,
+          payrexxUuid: uuid,
+        },
+      });
+  }
+
+  showFrame() {
+    const iFrame = this.payrexxIframe.nativeElement;
+    const iFrameOrigin = new URL(iFrame.src).origin;
+
+    iFrame.contentWindow.postMessage(
+      JSON.stringify({
+        origin: window.location.origin,
+      }),
+      iFrameOrigin
+    );
+  }
+  scrollToAnchor(): void {
+    // Use the anchor name to scroll to the element
+    setTimeout(() => {
+      const element = this.iframe.nativeElement;
+
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
   ngOnInit() {
     this.schools = [];
     this.route.params.subscribe((params: Params) => {
@@ -227,9 +302,16 @@ export class SchoolDetailViewComponent implements OnInit, OnDestroy {
               this.school = school;
               this.mySchool = true;
               this.render = true;
+              this.showSubs = false;
             }
           );
         }
+        this.schoolSub = this.schoolService.invalidSchools.subscribe(
+          (school) => {
+            this.school = school;
+            this.showSubs = true;
+          }
+        );
       } else {
         if (this.schools.length === 0) {
           this.schoolService.fetchSchools();

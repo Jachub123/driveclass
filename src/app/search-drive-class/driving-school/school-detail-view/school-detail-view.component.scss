@@ -143,3 +143,128 @@ $color4: #a0884d;
     @apply flex items-center  bg-white border border-gray-300 rounded-lg shadow-md max-w-xs px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500;
   }
 }
+
+input[type="radio"] {
+  @apply hidden;
+  animation: colorFadeToBorder 0.3s ease-in forwards;
+  &:checked + .card {
+    @apply border z-10;
+
+    & h1 {
+      animation: colorFade 0.3s ease-in forwards;
+    }
+
+    &::after {
+      animation: colorFadeToBorderAfter 0.3s ease-in forwards;
+      @apply max-md:opacity-0;
+      width: calc(100% - 1rem);
+      height: calc(100% - 1rem);
+      z-index: 0;
+      background: linear-gradient(to right, white, white);
+    }
+    &::before {
+      animation: colorFadeToBorderBefore 0.3s ease-in forwards;
+      @apply max-md:opacity-0;
+    }
+  }
+}
+
+.container {
+  h1 {
+    @apply mx-auto my-28;
+  }
+}
+
+.card {
+  margin-bottom: 1rem !important;
+  @apply text-center p-4 relative cursor-pointer w-full;
+  &::after,
+  &::before {
+    @apply rounded-lg opacity-0;
+    margin: 0.5rem 0.5rem;
+    content: "";
+    position: absolute;
+    display: block;
+    transition: 0.3s ease-in-out;
+    left: 0;
+    top: 0;
+    width: calc(100% - 1rem);
+    height: calc(100% - 1rem);
+    z-index: -2;
+    background: linear-gradient(to left, $color1, $color2);
+  }
+
+  h1 {
+    @apply text-3xl z-10 relative;
+  }
+  p {
+    @apply block uppercase tracking-wide text-gray-700 text-lg font-bold mb-2 z-10 relative;
+    &.price {
+      @apply block uppercase tracking-wide text-green-500 text-2xl font-bold my-6;
+    }
+  }
+}
+@keyframes colorFadeToBorder {
+  0% {
+    background: white;
+  }
+  70% {
+    background: transparent;
+  }
+  100% {
+    background: transparent;
+  }
+}
+@keyframes colorFade {
+  0% {
+    background: linear-gradient(to left, $color1, $color2);
+    @apply bg-clip-text text-transparent;
+  }
+  70% {
+    background: linear-gradient(to left, white, white);
+    @apply bg-clip-text text-transparent;
+  }
+  100% {
+    background: linear-gradient(to left, $color1, $color2);
+    @apply bg-clip-text text-transparent;
+  }
+}
+@keyframes colorFadeToBorderAfter {
+  0% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0;
+  }
+  90% {
+    opacity: 0;
+    background: white;
+  }
+  100% {
+    opacity: 1;
+    background: white;
+  }
+}
+@keyframes colorFadeToBorderBefore {
+  0% {
+    opacity: 0;
+  }
+  70% {
+    margin: 1rem 1rem;
+    opacity: 1;
+    width: calc(100% - 2rem);
+    height: calc(100% - 2rem);
+  }
+  90% {
+    opacity: 1;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+  100% {
+    opacity: 1;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+}

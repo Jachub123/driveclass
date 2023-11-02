@@ -10,7 +10,7 @@ export class ContactComponent implements OnInit {
   constructor(private http: HttpClient) {}
   ngOnInit(): void {
     this.http.post(
-      'https://ephemeral-biscochitos-b29449.netlify.app/.netlify/functions/webhook',
+      'http://134.3.10.133:8888/.netlify/functions/webhook',
       'lol'
     );
   }

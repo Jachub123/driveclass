@@ -21,6 +21,8 @@ export class School {
   abo: string;
   schule: string;
   profilename: string;
+  payrexxUuid: string;
+  valid: string;
 
   constructor(
     automat: boolean,
@@ -44,7 +46,9 @@ export class School {
     webseite: string,
     abo: string,
     schule: string,
-    profilename: string
+    profilename: string,
+    payrexxUuid: string,
+    valid: string
   ) {
     this.automat = automat;
     this.email = email;
@@ -68,5 +72,7 @@ export class School {
     this.abo = abo;
     this.schule = schule;
     this.profilename = profilename;
+    this.payrexxUuid = payrexxUuid;
+    this.valid = valid;
   }
 }
