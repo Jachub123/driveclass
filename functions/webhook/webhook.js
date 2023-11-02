@@ -1,23 +1,30 @@
-import { Handler } from "@netlify/functions";
-import * as admin from "firebase-admin";
+import nodemailer from "nodemailer";
 
-// Initialize Firebase Admin SDK
-var serviceAccount = require("../drive-schools-3fa8f-firebase-adminsdk-8ue8l-7e71615120.json");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL:
-    "https://drive-schools-3fa8f-default-rtdb.europe-west1.firebasedatabase.app",
+// Create a Nodemailer transporter
+const transporter = nodemailer.createTransport({
+  service: "hotmail",
+  auth: {
+    user: "dschakub@hotmail.de",
+    pass: "imperialismus1!", // Use environment variables for security
+  },
 });
 
-// Docs on event and context https://docs.netlify.com/functions/build/#code-your-function-2
-admin
-  .firestore()
-  .collection("mail")
-  .add({
+// Define an async function to send an email
+async function sendEmail() {
+  const mailOptions = {
+    from: "your_email@gmail.com",
     to: "dschakub@hotmail.de",
-    message: {
-      subject: "Hello from Firebase!",
-      html: "This is an <code>HTML</code> email body.",
-    },
-  });
+    subject: "Hello from TypeScript Node.js",
+    text: "This is a test email sent from a TypeScript Node.js script.",
+  };
+
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent:", info.response);
+  } catch (error) {
+    console.error("Error sending email:", error);
+  }
+}
+
+// Call the sendEmail function to send the email
+sendEmail();
