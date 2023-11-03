@@ -1,5 +1,21 @@
-main.container {
-  @apply mb-32;
+main.largeContainer {
+  @apply mb-32 flex flex-col flex-wrap items-center lg:justify-center lg:flex-row lg:gap-24;
+  & > h1 {
+    @apply w-full max-w-full;
+  }
+  textarea {
+    @apply h-48;
+  }
+  & > section {
+    @apply mb-12;
+  }
+  & > form {
+    @apply lg:self-start;
+  }
+  & > section,
+  & > form {
+    @apply w-10/12 lg:w-5/12 max-w-xl;
+  }
   a {
     @apply text-blue-600;
   }

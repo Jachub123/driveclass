@@ -1,15 +1,34 @@
-<main class="container">
+<main class="largeContainer">
   <h1>Kontakt</h1>
-  Wir freuen uns, dass du dich für unsere Dienstleistungen interessierst.<br /><br />
-  Solltest du Fragen zu unserem Suchplattform-Angebot haben oder etwas beim Abo
-  unklar sein, stehen wir dir jederzeit gerne zur Verfügung. Unser engagiertes
-  Team ist bestrebt, dir alle erforderlichen Informationen bereitzustellen und
-  etwaige Unklarheiten aus dem Weg zu räumen.<br /><br />
-  Wir möchten sicherstellen, dass du das Beste aus unserem Suchplattform-Angebot
-  herausholen kannst und deine Erfahrungen mit Driveclass.ch reibungslos
-  verlaufen. Zögere daher nicht, uns zu kontaktieren, um deine Fragen zu klären
-  oder weitergehende Unterstützung zu erhalten.<br /><br />
-  Du kannst uns auf verschiedenen Wegen erreichen. Entweder nutzt du unser
-  Kontaktformular auf unserer Website oder sendest uns eine E-Mail an
-  <a href="mailto:info@driveclass.ch">info@driveclass.ch</a>
+
+  <section>
+    Wir freuen uns, dass du dich für unsere Dienstleistungen interessierst.<br /><br />
+    Solltest du Fragen zu unserem Suchplattform-Angebot haben oder etwas beim
+    Abo unklar sein, stehen wir dir jederzeit gerne zur Verfügung. Unser
+    engagiertes Team ist bestrebt, dir alle erforderlichen Informationen
+    bereitzustellen und etwaige Unklarheiten aus dem Weg zu räumen.<br /><br />
+    Wir möchten sicherstellen, dass du das Beste aus unserem
+    Suchplattform-Angebot herausholen kannst und deine Erfahrungen mit
+    Driveclass.ch reibungslos verlaufen. Zögere daher nicht, uns zu
+    kontaktieren, um deine Fragen zu klären oder weitergehende Unterstützung zu
+    erhalten.<br /><br />
+    Du kannst uns auf verschiedenen Wegen erreichen. Entweder nutzt du unser
+    Kontaktformular auf unserer Website oder sendest uns eine E-Mail an
+    <a href="mailto:info@driveclass.ch">info@driveclass.ch</a>
+  </section>
+  <form
+    #form
+    class="contact"
+    action="https://formsubmit.co/info@driveclass.ch"
+    method="POST"
+  >
+    <label id="name" for="name">Name</label>
+    <input id="name" type="text" name="name" required />
+    <label id="name" for="email">E-Mail</label>
+    <input id="email" type="email" name="email" required />
+    <label id="name" for="msg">Nachricht</label>
+    <textarea id="msg" type="text" name="msg" required></textarea>
+    <input type="hidden" name="_next" value="https://driveclass.ch/thanks" />
+    <button type="submit" (click)="form.submit()">Send</button>
+  </form>
 </main>

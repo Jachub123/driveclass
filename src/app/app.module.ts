@@ -29,6 +29,7 @@ import { ImpressumComponent } from './footer/impressum/impressum.component';
 import { FooterComponent } from './footer/footer.component';
 import { ContactComponent } from './footer/contact/contact.component';
 import { PremiumSubComponent } from './premium-sub/premium-sub.component';
+import { ThanksComponent } from './footer/contact/thanks/thanks.component';
 const appRoutes: Routes = [
   { path: '', component: SearchDriveClassComponent, pathMatch: 'full' },
   {
@@ -39,6 +40,10 @@ const appRoutes: Routes = [
   {
     path: 'premium',
     component: PremiumSubComponent,
+  },
+  {
+    path: 'thanks',
+    component: ThanksComponent,
   },
   {
     path: 'disclaimer',
@@ -86,6 +91,7 @@ const appRoutes: Routes = [
     FooterComponent,
     ContactComponent,
     PremiumSubComponent,
+    ThanksComponent,
   ],
   imports: [
     BrowserModule,
