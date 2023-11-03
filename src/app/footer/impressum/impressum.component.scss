@@ -1,9 +1,9 @@
 main {
   div {
-    @apply flex justify-between mt-28;
+    @apply flex flex-col gap-6 items-center md:flex-row md:justify-between my-28;
   }
 }
 
 section {
-  @apply w-1/6;
+  @apply text-center w-8/12 md:w-2/6;
 }

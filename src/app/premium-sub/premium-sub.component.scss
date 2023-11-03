@@ -1,0 +1,55 @@
+input[type="radio"] {
+  @apply hidden;
+  animation: colorFadeToBorder 0.3s ease-in forwards;
+  &:checked + .card {
+    @apply border z-10;
+
+    & h1 {
+      animation: colorFade 0.3s ease-in forwards;
+    }
+
+    &::after {
+      animation: colorFadeToBorderAfter 0.3s ease-in forwards;
+      @apply max-md:opacity-0;
+      width: calc(100% - 1rem);
+      height: calc(100% - 1rem);
+      z-index: 0;
+      background: linear-gradient(to right, white, white);
+    }
+    &::before {
+      animation: colorFadeToBorderBefore 0.3s ease-in forwards;
+      @apply max-md:opacity-0;
+    }
+  }
+}
+
+.container {
+  h1 {
+    @apply mx-auto my-28;
+  }
+}
+
+.card {
+  margin-bottom: 1rem !important;
+  @apply text-center p-4 relative w-full;
+  &::after,
+  &::before {
+    @apply rounded-lg opacity-0;
+    margin: 0.5rem 0.5rem;
+    content: "";
+    position: absolute;
+    display: block;
+    transition: 0.3s ease-in-out;
+    left: 0;
+    top: 0;
+    width: calc(100% - 1rem);
+    height: calc(100% - 1rem);
+    z-index: -2;
+  }
+  p {
+    @apply block uppercase tracking-wide text-gray-700 text-lg font-bold mb-2 z-10 relative;
+    &.price {
+      @apply block uppercase tracking-wide text-green-500 text-2xl font-bold my-6;
+    }
+  }
+}

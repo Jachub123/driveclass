@@ -172,7 +172,8 @@ export class SchoolDetailViewComponent implements OnInit, OnDestroy {
   }
 
   getUserCommentCount(user) {
-    if (user.providerData[0].providerId !== 'password') {
+    console.log(user);
+    if (user?.providerData[0]?.providerId !== 'password') {
       this.schoolService.fetchSchools();
       this.scoolSub3 = this.schoolService.schoolCache.subscribe((school) => {
         if (school.name === this.id) {
@@ -212,8 +213,8 @@ export class SchoolDetailViewComponent implements OnInit, OnDestroy {
   }
   userProvider(user) {
     if (
-      user.providerData[0].providerId !== 'facebook.com' &&
-      user.providerData[0].providerId !== 'google.com'
+      user?.providerData[0]?.providerId !== 'facebook.com' &&
+      user?.providerData[0]?.providerId !== 'google.com'
     ) {
       this.canNotComment = true;
     }

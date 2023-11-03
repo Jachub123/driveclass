@@ -82,6 +82,7 @@ $color4: #a0884d;
 }
 
 .comments {
+  padding-inline: 1rem;
   @apply max-w-7xl mx-auto bg-white py-8 lg:py-16 antialiased;
 
   .commentHeaderWrapper {

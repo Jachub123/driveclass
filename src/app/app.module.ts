@@ -28,12 +28,17 @@ import { DisclaimerComponent } from './footer/disclaimer/disclaimer.component';
 import { ImpressumComponent } from './footer/impressum/impressum.component';
 import { FooterComponent } from './footer/footer.component';
 import { ContactComponent } from './footer/contact/contact.component';
+import { PremiumSubComponent } from './premium-sub/premium-sub.component';
 const appRoutes: Routes = [
   { path: '', component: SearchDriveClassComponent, pathMatch: 'full' },
   {
     path: 'school/:id',
     canActivate: [AuthGuardService],
     component: SchoolDetailViewComponent,
+  },
+  {
+    path: 'premium',
+    component: PremiumSubComponent,
   },
   {
     path: 'disclaimer',
@@ -80,6 +85,7 @@ const appRoutes: Routes = [
     ImpressumComponent,
     FooterComponent,
     ContactComponent,
+    PremiumSubComponent,
   ],
   imports: [
     BrowserModule,
