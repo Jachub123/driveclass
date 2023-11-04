@@ -30,7 +30,6 @@
             [routerLinkActiveOptions]="{ exact: true }"
             text="HOME"
             aria-current="page"
-            href="#"
             >HOME</a
           >
         </li>
@@ -58,7 +57,7 @@
             class="nav-link"
             routerLinkActive="active"
             text="PREMIUM ABO"
-            href="premium"
+            routerLink="premium"
             >PREMIUM ABO</a
           >
         </li>
@@ -69,7 +68,6 @@
             routerLink="login"
             routerLinkActive="active"
             text="LOGIN"
-            href="#"
             >LOGIN</a
           >
           <ng-template #mySchoolLink>
@@ -79,7 +77,6 @@
               routerLink="school/mySchool"
               routerLinkActive="active"
               text="MEINE SCHULE"
-              href="#"
               >MEINE SCHULE</a
             >
           </ng-template>
@@ -93,7 +90,6 @@
           (click)="logout()"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
-          href="#"
           >Logout</a
         >
       </form>
