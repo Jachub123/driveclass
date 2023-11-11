@@ -54,7 +54,7 @@ nav {
     }
   }
   ul#login {
-    @apply flex items-center text-xl;
+    @apply flex items-center text-xl justify-center;
   }
   select {
     @apply w-fit;
