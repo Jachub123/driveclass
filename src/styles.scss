@@ -26,7 +26,8 @@ h3 {
   @apply text-2xl md:text-3xl;
 }
 form,
-main.edit {
+main.edit,
+nav {
   button,
   [type="button"],
   [type="reset"],

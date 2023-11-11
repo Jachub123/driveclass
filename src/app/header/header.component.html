@@ -21,7 +21,7 @@
       id="navbarSupportedContent"
       #navCollapsable
     >
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul id="navList" class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a
             class="nav-link"
@@ -61,38 +61,43 @@
             >PREMIUM ABO</a
           >
         </li>
+      </ul>
+      <ul id="login">
         <li [class]="schoolLoggedIn ? ' nav-item' : 'nav-item login'">
-          <a
+          <button
             *ngIf="isLoggedOut; else mySchoolLink"
-            class="nav-link login"
+            type="button"
             routerLink="login"
             routerLinkActive="active"
             text="LOGIN"
-            >LOGIN</a
           >
+            LOGIN
+          </button>
           <ng-template #mySchoolLink>
-            <a
+            <button
               *ngIf="schoolLoggedIn"
-              class="nav-link"
+              type="button"
               routerLink="school/mySchool"
               routerLinkActive="active"
-              text="MEINE SCHULE"
-              >MEINE SCHULE</a
             >
+              MEINE SCHULE
+            </button>
           </ng-template>
         </li>
+        <li>
+          <form class="d-flex items-center" role="search">
+            <a
+              *ngIf="!isLoggedOut"
+              class="nav-link mx-2"
+              routerLink="/"
+              (click)="logout()"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >Logout</a
+            >
+          </form>
+        </li>
       </ul>
-      <form class="d-flex items-center" role="search">
-        <a
-          *ngIf="!isLoggedOut"
-          class="nav-link mx-2"
-          routerLink="/"
-          (click)="logout()"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-          >Logout</a
-        >
-      </form>
     </div>
   </div>
 </nav>

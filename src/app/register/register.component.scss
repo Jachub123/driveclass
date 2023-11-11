@@ -23,7 +23,7 @@ form {
   }
 
   .check {
-    @apply flex my-10;
+    @apply flex mb-10 mt-7;
     & > div {
       @apply w-full my-2 md:w-1/4 md:my-0 flex;
       & > label {
@@ -34,7 +34,9 @@ form {
   textarea {
     @apply h-48;
   }
-
+  .driveclassOpt {
+    @apply mt-5;
+  }
   input.ng-touched.ng-invalid,
   select.ng-touched.ng-invalid {
     @apply border-red-500;

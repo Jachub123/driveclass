@@ -31,7 +31,19 @@ input[type="radio"] {
 
 .card {
   margin-bottom: 1rem !important;
-  @apply text-center p-4 relative w-full;
+  @apply text-center p-4 relative w-full lg:w-5/12 cursor-pointer;
+  &#opt1 {
+    @apply order-1;
+  }
+  &#opt2 {
+    @apply order-2 lg:order-3;
+  }
+  &#opt3 {
+    @apply order-3 lg:order-2;
+  }
+  &#opt4 {
+    @apply order-4;
+  }
   &::after,
   &::before {
     @apply rounded-lg opacity-0;
@@ -52,4 +64,8 @@ input[type="radio"] {
       @apply block uppercase tracking-wide text-green-500 text-2xl font-bold my-6;
     }
   }
+}
+
+fieldset {
+  @apply flex flex-wrap justify-center gap-x-4;
 }

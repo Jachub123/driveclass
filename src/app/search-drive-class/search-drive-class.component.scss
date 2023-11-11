@@ -17,6 +17,14 @@
 
   section {
     @apply flex flex-col md:flex-row p-2 flex-wrap h-fit text-white justify-center;
+    :last-child {
+      @apply flex items-center w-full;
+      button {
+        @apply lg:w-1/6
+        md:w-2/6
+        w-full justify-center drop-shadow-xl;
+      }
+    }
     div {
       @apply my-2 mx-0 md:m-2;
     }
@@ -31,16 +39,6 @@
     @apply border
     border-[#858585]
     h-10;
-  }
-  .buttonWrapper {
-    @apply flex w-full items-center;
-    button {
-      @apply bg-[#4DBA57] w-full md:w-2/6 xl:w-1/6 drop-shadow-xl;
-
-      &:hover {
-        background: linear-gradient(#005c10, #4dba57);
-      }
-    }
   }
   div {
     @apply flex
