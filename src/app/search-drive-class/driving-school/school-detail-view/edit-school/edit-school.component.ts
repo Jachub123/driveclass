@@ -13,6 +13,8 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./edit-school.component.scss'],
 })
 export class EditSchoolComponent implements OnInit {
+  ack: boolean = false;
+  warn: boolean = false;
   id: string;
   schoolSub: Subscription;
   school: any;
@@ -20,6 +22,8 @@ export class EditSchoolComponent implements OnInit {
   file: any;
   msg: string;
   user: any;
+  warn1: string = 'bist du dir sicher, dass du dein ';
+  warn2: string = 'möchtest?';
   constructor(
     private route: ActivatedRoute,
     private auth: AuthService,
@@ -68,8 +72,10 @@ export class EditSchoolComponent implements OnInit {
     // Make an HTTPS POST request
 
     this.http.post<any>(url, this.user.email).subscribe((data) => {
+      this.msg = 'Abo wird gekündigt...';
       if (data.success) {
         this.msg = 'Dein Abonnement wurde gekündigt.';
+        this.warn = false;
       } else {
         this.msg = 'Etwas ist schief gelaufen. Bitte versuche es erneut.';
       }

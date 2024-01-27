@@ -157,8 +157,14 @@
       Änderungen übernehmen
     </button>
   </section>
-  <button type="button" class="cancelSub" (click)="makeHttpsRequest()">
+  <p *ngIf="warn">{{ warn1 }}</p>
+  <button
+    type="button"
+    class="cancelSub"
+    (click)="ack ? makeHttpsRequest() : (warn = true); ack = true"
+  >
     Abo kündigen
   </button>
+  <p *ngIf="warn">{{ warn2 }}</p>
   <p>{{ msg }}</p>
 </main>
