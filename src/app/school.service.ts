@@ -52,6 +52,9 @@ export class SchoolService {
       .get()
       .subscribe((response) => {
         response.docs.map((response2) => {
+          console.log(new Date(response2.data()['school'].valid).toISOString());
+          console.log(Date.parse(response2.data()['school'].valid));
+
           if (
             Date.parse(response2.data()['school'].valid) -
               new Date().getTime() >=

@@ -13,10 +13,6 @@ admin.initializeApp({
 const handler: Handler = async (event, context) => {
   const firestore = admin.firestore();
   try {
-    console.log(JSON.parse(event.body));
-    console.log(JSON.parse(event.body)?.subscription?.status);
-    console.log(JSON.parse(event.body)?.subscription?.valid_until);
-    console.log(new Date().getHours() + 1);
     // Access Firestore data here
     const collectionRef = firestore
       .collection('schools')
@@ -32,10 +28,14 @@ const handler: Handler = async (event, context) => {
             doc.data()['school']['payrexxUuid'] &&
           JSON.parse(event.body)?.subscription?.uuid !== undefined
         ) {
-          const time = new Date().getHours() + 1;
+          let time = (new Date().getHours() + 1).toString();
+          if (time.toString()[1] === undefined) {
+            time = '0' + time.toString();
+          }
           collectionRef.doc(doc.id).update({
             school: {
               ...doc.data()['school'],
+              time: JSON.parse(event.body)?.subscription?.time,
               valid:
                 JSON.parse(event.body)?.subscription?.valid_until +
                 'T' +

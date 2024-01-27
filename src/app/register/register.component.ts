@@ -13,6 +13,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AuthService } from './auth-service.service';
 import { ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { min } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -201,11 +202,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
               case 'transaction':
                 if (typeof data.payrexx[name] === 'object') {
                   if (data.payrexx[name].status === 'confirmed') {
-                    const time = new Date().getHours() + 1;
+                    let time = (new Date().getHours() + 1).toString();
+                    if (time.toString()[1] === undefined) {
+                      time = '0' + time.toString();
+                    }
+
                     // Handle success
                     this.register(
-                      data.payrexx.transaction.subscription.uuid,
-                      data.payrexx.transaction.subscription.valid_until +
+                      data.payrexx.transaction?.subscription?.uuid,
+                      data.payrexx.transaction?.subscription?.valid_until +
                         'T' +
                         time +
                         ':00'

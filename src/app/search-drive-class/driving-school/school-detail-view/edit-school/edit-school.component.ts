@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/register/auth-service.service';
 import { SchoolService } from 'src/app/school.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-edit-school',
@@ -17,13 +18,18 @@ export class EditSchoolComponent implements OnInit {
   school: any;
   render: boolean;
   file: any;
+  msg: string;
+  user: any;
   constructor(
     private route: ActivatedRoute,
     private auth: AuthService,
     private schoolService: SchoolService,
     private db: AngularFirestore,
-    private angFire: AngularFireStorage
-  ) {}
+    private angFire: AngularFireStorage,
+    private http: HttpClient
+  ) {
+    this.user = JSON.parse(localStorage.getItem('user'));
+  }
 
   async updateSchool() {
     const imgPath = this.angFire.ref(
@@ -53,6 +59,21 @@ export class EditSchoolComponent implements OnInit {
 
   upload(event) {
     this.file = event.target.files[0];
+  }
+
+  makeHttpsRequest(): void {
+    const url = '/.netlify/functions/webhook?' + this.user.email;
+    // Replace with your actual API endpoint
+
+    // Make an HTTPS POST request
+
+    this.http.post<any>(url, this.user.email).subscribe((data) => {
+      if (data.success) {
+        this.msg = 'Dein Abonnement wurde gekündigt.';
+      } else {
+        this.msg = 'Etwas ist schief gelaufen. Bitte versuche es erneut.';
+      }
+    });
   }
 
   ngOnInit() {

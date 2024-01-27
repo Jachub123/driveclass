@@ -21,7 +21,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { DatePipe } from '@angular/common';
 import { Comment } from 'src/app/comment';
-import { Subscription, lastValueFrom } from 'rxjs';
+import { Observable, Subscription, lastValueFrom } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-school-detail-view',
@@ -47,7 +48,7 @@ export class SchoolDetailViewComponent implements OnInit, OnDestroy {
   render: boolean = false;
   comments: Array<Comment> = [];
   @ViewChild('payrexxIframe', { static: false }) iframe: ElementRef;
-
+  msg: string;
   constructor(
     private schoolService: SchoolService,
     private route: ActivatedRoute,
@@ -55,7 +56,8 @@ export class SchoolDetailViewComponent implements OnInit, OnDestroy {
     private auth3: AngularFireAuth,
     private firebase: FirebaseApp,
     private db: AngularFirestore,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private http: HttpClient
   ) {
     window.addEventListener('message', this.handleMessage.bind(this), false);
     this.user = JSON.parse(localStorage.getItem('user'));
@@ -289,6 +291,7 @@ export class SchoolDetailViewComponent implements OnInit, OnDestroy {
       }
     });
   }
+
   ngOnInit() {
     this.schools = [];
     this.route.params.subscribe((params: Params) => {
