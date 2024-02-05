@@ -297,7 +297,7 @@
       </div>
       <div class="w-full md:w-1/2 px-3">
         <label for="telefon">
-          {{ text[42] }}
+          {{ text[41] }}
         </label>
         <input
           class=""
@@ -306,7 +306,7 @@
           name="telefon"
           [(ngModel)]="nummer"
           pattern="[0-9]{8,11}"
-          placeholder="{{ text[43] }}"
+          placeholder="{{ text[42] }}"
           required
         />
         <p class="warn text-red-500">
@@ -317,7 +317,7 @@
 
     <div class="labelInputWrapper mb-3">
       <div class="w-full px-3">
-        <label for="webseite"> {{ text[44] }} </label>
+        <label for="webseite"> {{ text[43] }} </label>
         <input
           class=""
           id="webseite"
@@ -334,7 +334,7 @@
   </div>
 
   <fieldset *ngIf="pageCount === 3" class="containerP2">
-    <h1 class="subHeading">{{ text[45] }}</h1>
+    <h1 class="subHeading">{{ text[44] }}</h1>
     <input
       id="opt1"
       class="w-full h-full"
@@ -344,12 +344,12 @@
       [(ngModel)]="abo"
     />
     <label class="card" for="opt1">
-      <h1>{{ text[50] }}</h1>
+      <h1>{{ text[49] }}</h1>
+      <p>&#10003; {{ text[45] }}</p>
       <p>&#10003; {{ text[46] }}</p>
-      <p>&#10003; {{ text[47] }}</p>
       <p>&#10003; Call to Actions</p>
+      <p>&#10003; {{ text[47] }}</p>
       <p>&#10003; {{ text[48] }}</p>
-      <p>&#10003; {{ text[49] }}</p>
       <p class="price">70.00 CHF</p>
     </label>
     <input
@@ -362,12 +362,12 @@
     />
 
     <label class="card" for="opt2">
-      <h1>{{ text[51] }}</h1>
+      <h1>{{ text[50] }}</h1>
+      <p>&#10003; {{ text[45] }}</p>
       <p>&#10003; {{ text[46] }}</p>
+      <p>&#10003; Call to Actions</p>
       <p>&#10003; {{ text[47] }}</p>
-      <p>&#10003; Call to Action</p>
       <p>&#10003; {{ text[48] }}</p>
-      <p>&#10003; {{ text[49] }}</p>
       <p class="price">720.00 CHF</p>
     </label>
     <input
@@ -380,12 +380,12 @@
     />
 
     <label class="card" for="opt3">
-      <h1>{{ text[52] }}</h1>
+      <h1>{{ text[51] }}</h1>
+      <p>&#10003; {{ text[45] }}</p>
       <p>&#10003; {{ text[46] }}</p>
-      <p>&#10003; {{ text[47] }}</p>
       <p>&#10003; Call to Actions</p>
+      <p>&#10003; {{ text[47] }}</p>
       <p>&#10003; {{ text[48] }}</p>
-      <p>&#10003; {{ text[49] }}</p>
       <p class="price">150.00 CHF</p>
     </label>
     <input
@@ -397,31 +397,31 @@
       [(ngModel)]="abo"
     />
     <label class="card" for="opt4">
-      <h1>{{ text[53] }}</h1>
+      <h1>{{ text[52] }}</h1>
+      <p>&#10003; {{ text[45] }}</p>
       <p>&#10003; {{ text[46] }}</p>
-      <p>&#10003; {{ text[47] }}</p>
       <p>&#10003; Call to Actions</p>
+      <p>&#10003; {{ text[47] }}</p>
       <p>&#10003; {{ text[48] }}</p>
-      <p>&#10003; {{ text[49] }}</p>
       <p class="price">1500.00 CHF</p>
     </label>
   </fieldset>
 
   <div class="buttonContainer">
     <button *ngIf="pageCount === 2" type="button" (click)="back()">
-      {{ text[54] }} 1/4
+      {{ text[53] }} 1/4
     </button>
     <button *ngIf="pageCount === 3" type="button" (click)="back()">
-      {{ text[54] }} 2/4
+      {{ text[53] }} 2/4
     </button>
     <button *ngIf="pageCount === 4" type="button" (click)="back()">
-      {{ text[54] }} 3/4
+      {{ text[53] }} 3/4
     </button>
     <button class="next" *ngIf="pageCount === 1" type="button" (click)="next()">
-      {{ text[55] }} 2/4
+      {{ text[54] }} 2/4
     </button>
     <button class="next" *ngIf="pageCount === 2" type="button" (click)="next()">
-      {{ text[55] }} 3/4
+      {{ text[54] }} 3/4
     </button>
 
     <!--     <button class="next" *ngIf="pageCount === 3" type="button">
