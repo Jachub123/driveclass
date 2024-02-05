@@ -30,6 +30,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ContactComponent } from './footer/contact/contact.component';
 import { PremiumSubComponent } from './premium-sub/premium-sub.component';
 import { ThanksComponent } from './footer/contact/thanks/thanks.component';
+
 const appRoutes: Routes = [
   { path: '', component: SearchDriveClassComponent, pathMatch: 'full' },
   {

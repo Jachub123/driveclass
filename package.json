@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
+  "type": "module",
   "private": true,
   "dependencies": {
     "@angular/animations": "^16.1.0",
@@ -24,10 +25,12 @@
     "@netlify/functions": "^2.3.0",
     "@types/node": "^14.18.63",
     "bootstrap": "^5.3.1",
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "firebase": "^10.2.0",
     "firebase-admin": "^11.11.0",
     "firebase-functions": "^4.4.1",
+    "node-fetch": "^3.3.2",
     "nodemailer": "^6.9.7",
     "rxjs": "~7.8.0",
     "stripe": "^14.13.0",

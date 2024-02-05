@@ -1,12 +1,12 @@
 <h1 id="heading" #heading *ngIf="!successMsg" class="">
-  Registriere deine Fahrschule/Berufsschule bei Driveclass
+  {{ text[0] }}
 </h1>
 
 <form class="login" *ngIf="!successMsg" #f="ngForm">
   <div *ngIf="pageCount === 1" class="containerP1">
-    <h3 class="subHeading">Alles über deine Fahrschule/Berufsschule</h3>
+    <h3 class="subHeading">{{ text[1] }}</h3>
     <div class="w-full md:w-1/2 schulWrapper">
-      <label for="berufsschule">Berufsschule</label
+      <label for="berufsschule">{{ text[2] }}</label
       ><input
         id="berufsschule"
         class="schule"
@@ -15,7 +15,7 @@
         value="berufsschule"
         ngModel="berufsschule"
       />
-      <label for="fahrschule">Fahrschule</label
+      <label for="fahrschule">{{ text[3] }}</label
       ><input
         id="fahrschule"
         class="schule"
@@ -28,41 +28,41 @@
     <div class="wrapper px-1">
       <div class="inner">
         <label class="" for="name">
-          *Name deiner Fahrschule/Berufsschule:
+          {{ text[4] }}
         </label>
         <input
           class="name"
           id="name"
           type="text"
-          placeholder='z.B. "Drive Safe Fahrschule/Berufsschule Kernten"'
+          placeholder="{{ text[5] }}"
           name="name"
           [(ngModel)]="name"
           required
         />
         <p class="warn text-red-500">
-          Dies ist ein Pflichtfeld, bitte ausfüllen!
+          {{ text[6] }}
         </p>
       </div>
       <div class="w-full md:w-1/2 px-3">
-        <label for="grid-last-name"> *E-Mail </label>
+        <label for="grid-last-name"> {{ text[7] }} </label>
         <input
           class=""
           id="grid-last-name"
           type="email"
-          placeholder="mit diesem Namen Meldest du dich an"
+          placeholder="{{ text[8] }}"
           name="profilename"
           [(ngModel)]="profilename"
           required
           email
         />
         <p class="warn text-red-500">
-          Dies ist ein Pflichtfeld, bitte ausfüllen!
+          {{ text[6] }}
         </p>
       </div>
     </div>
     <div class="labelInputWrapper mb-6">
       <div class="w-full px-3">
-        <label for="grid-password"> *Passwort </label>
+        <label for="grid-password">{{ text[9] }} </label>
         <input
           class=""
           id="grid-password"
@@ -73,14 +73,14 @@
           required
         />
         <p class="warn text-red-500">
-          Dies ist ein Pflichtfeld, bitte ausfüllen!
+          {{ text[6] }}
         </p>
-        <p class="warn text-gray-600">Mach es sicher!</p>
+        <p class="warn text-gray-600">{{ text[10] }}</p>
       </div>
     </div>
     <div class="labelInputWrapper mb-3">
       <div class="w-full px-3">
-        <label for="img"> *Bild deiner Fahrschule/Berufsschule </label>
+        <label for="img">{{ text[11] }} </label>
         <input
           class=""
           #img
@@ -93,13 +93,13 @@
           ngModel
         />
         <p class="warn text-red-500">
-          Dies ist ein Pflichtfeld, bitte ausfüllen!
+          {{ text[6] }}
         </p>
       </div>
     </div>
     <div class="labelInputWrapper mb-3 px-1">
       <div class="labelInputWrapperInner">
-        <label for="stadt"> *Stadt deiner Fahrschule/Berufsschule </label>
+        <label for="stadt">{{ text[12] }} </label>
         <input
           class=""
           id="stadt"
@@ -110,11 +110,11 @@
           required
         />
         <p class="warn text-red-500">
-          Dies ist ein Pflichtfeld, bitte ausfüllen!
+          {{ text[6] }}
         </p>
       </div>
       <div class="labelInputWrapperInner">
-        <label for="kanton"> *Kanton </label>
+        <label for="kanton">{{ text[13] }} </label>
         <div class="relative">
           <select
             class="form-select"
@@ -151,12 +151,12 @@
             <option>Jura</option>
           </select>
           <p class="warn text-red-500">
-            Dies ist ein Pflichtfeld, bitte ausfüllen!
+            {{ text[6] }}
           </p>
         </div>
       </div>
       <div class="labelInputWrapperInner">
-        <label for="grid-zip"> *Postleitzahl </label>
+        <label for="grid-zip">{{ text[14] }} </label>
         <input
           class=""
           id="grid-zip"
@@ -167,35 +167,29 @@
           required
         />
         <p class="warn text-red-500">
-          Dies ist ein Pflichtfeld, bitte ausfüllen!
+          {{ text[6] }}
         </p>
       </div>
     </div>
     <div class="labelInputWrapper">
       <div class="w-full px-3">
-        <label for="infoText">
-          Info-Text zu deiner Fahrschule/Berufsschule</label
-        >
+        <label for="infoText"> {{ text[15] }}</label>
         <textarea
           class=""
           id="infoText"
           type="text"
-          placeholder="erzähl etwas über deine Fahrschule/Berufsschule"
+          placeholder="{{ text[16] }}"
           name="infoText"
           [(ngModel)]="infoText"
         ></textarea>
       </div>
     </div>
     <label class="px-1 driveclassOpt"
-      >Was bietet deine Fahrschule/Berufsschule an?
-      <span class="text-yellow-600"
-        >(Achtung: bei nicht ankreuzen, gibst du an dass dies deine
-        Fahrschule/Berufsschule nicht anbietet)</span
-      ></label
+      >{{ text[17] }} <span class="text-yellow-600">{{ text[18] }}</span></label
     >
     <div class="labelInputWrapper check px-2">
       <div>
-        <label for="handgeschaltet"> Handgeschaltet</label>
+        <label for="handgeschaltet"> {{ text[19] }}</label>
         <input
           [(ngModel)]="handgeschaltet"
           type="checkbox"
@@ -204,7 +198,7 @@
         />
       </div>
       <div>
-        <label for="automat"> Automat</label>
+        <label for="automat">{{ text[20] }} </label>
         <input
           [(ngModel)]="automat"
           type="checkbox"
@@ -213,7 +207,7 @@
         />
       </div>
       <div>
-        <label for="verkehrskunde"> Verkehrskunde</label>
+        <label for="verkehrskunde">{{ text[21] }} </label>
         <input
           [(ngModel)]="verkehrskunde"
           type="checkbox"
@@ -222,7 +216,7 @@
         />
       </div>
       <div>
-        <label for="nothelferkurs"> Nothelferkurs</label>
+        <label for="nothelferkurs">{{ text[22] }} </label>
         <input
           [(ngModel)]="nothelferkurs"
           type="checkbox"
@@ -233,21 +227,21 @@
     </div>
     <div class="labelInputWrapper">
       <div class="w-full px-3">
-        <label for="sprache"> *Sprachen</label>
+        <label for="sprache">{{ text[23] }} </label>
         <input
           type="text"
           name="sprache"
           id="sprache"
           [(ngModel)]="sprache"
           required
-          placeholder="bitte mit Komma getrennt angeben: englisch, deutsch, französisch"
+          placeholder="{{ text[24] }}"
         />
       </div>
     </div>
-    <label class="px-1 mt-3 mb-4">Was verlangst du für:</label>
+    <label class="px-1 mt-3 mb-4">{{ text[25] }}</label>
     <div class="labelInputWrapper mb-3 px-1">
       <div class="labelInputWrapperInner">
-        <label for="lektion">eine Lektion</label>
+        <label for="lektion">{{ text[26] }}</label>
         <input
           [(ngModel)]="preisLektionen"
           type="number"
@@ -256,7 +250,7 @@
         />
       </div>
       <div class="labelInputWrapperInner">
-        <label for="preisVerkehrskunde">Verkehrskunde</label>
+        <label for="preisVerkehrskunde">{{ text[27] }}</label>
         <input
           [(ngModel)]="preisVerkehrskunde"
           type="number"
@@ -265,7 +259,7 @@
         />
       </div>
       <div class="labelInputWrapperInner">
-        <label for="preisNothelferkurs">Nothelferkurs</label>
+        <label for="preisNothelferkurs">{{ text[28] }}</label>
         <input
           [(ngModel)]="preisNothelferKurs"
           type="number"
@@ -277,11 +271,11 @@
   </div>
 
   <div *ngIf="pageCount === 2" class="containerP2">
-    <h1 class="subHeading">Kontaktdaten zu deiner Fahrschule/Berufsschule</h1>
+    <h1 class="subHeading">{{ text[29] }}</h1>
 
     <div class="wrapper px-1">
       <div class="inner">
-        <label for="vorwhal"> *Vorwahl </label>
+        <label for="vorwhal">{{ text[30] }} </label>
         <select
           id="vorwhal"
           name="vorwahl"
@@ -289,21 +283,21 @@
           required
           [(ngModel)]="vorwahl"
         >
-          <option value="+41">+41 Schweiz</option>
-          <option value="+30">+30 Griechenland</option>
-          <option value="+31">+31 Niederlande</option>
-          <option value="+32">+32 Belgien</option>
-          <option value="+33">+33 Frankreich</option>
-          <option value="+34">+34 Spanien</option>
-          <option value="+39">+39 Italien</option>
-          <option value="+40">+40 Rumänien</option>
-          <option value="+43">+43 Österreich</option>
-          <option value="+49">+49 Deutschland</option>
+          <option value="+41">+41 {{ text[31] }}</option>
+          <option value="+30">+30 {{ text[32] }}</option>
+          <option value="+31">+31 {{ text[33] }}</option>
+          <option value="+32">+32 {{ text[34] }}</option>
+          <option value="+33">+33 {{ text[35] }}</option>
+          <option value="+34">+34 {{ text[36] }}</option>
+          <option value="+39">+39 {{ text[37] }}</option>
+          <option value="+40">+40 {{ text[38] }}</option>
+          <option value="+43">+43 {{ text[39] }}</option>
+          <option value="+49">+49 {{ text[40] }}</option>
         </select>
       </div>
       <div class="w-full md:w-1/2 px-3">
         <label for="telefon">
-          *Telefonnummer der Fahrschule/Berufsschule
+          {{ text[42] }}
         </label>
         <input
           class=""
@@ -312,18 +306,18 @@
           name="telefon"
           [(ngModel)]="nummer"
           pattern="[0-9]{8,11}"
-          placeholder="Bitte erste Null weg lassen"
+          placeholder="{{ text[43] }}"
           required
         />
         <p class="warn text-red-500">
-          Dies ist ein Pflichtfeld, bitte ausfüllen!
+          {{ text[6] }}
         </p>
       </div>
     </div>
 
     <div class="labelInputWrapper mb-3">
       <div class="w-full px-3">
-        <label for="webseite"> *Webseite der Fahrschule/Berufsschule </label>
+        <label for="webseite"> {{ text[44] }} </label>
         <input
           class=""
           id="webseite"
@@ -333,14 +327,14 @@
           required
         />
         <p class="warn text-red-500">
-          Dies ist ein Pflichtfeld, bitte ausfüllen!
+          {{ text[6] }}
         </p>
       </div>
     </div>
   </div>
 
   <fieldset *ngIf="pageCount === 3" class="containerP2">
-    <h1 class="subHeading">Dein Abo</h1>
+    <h1 class="subHeading">{{ text[45] }}</h1>
     <input
       id="opt1"
       class="w-full h-full"
@@ -350,12 +344,12 @@
       [(ngModel)]="abo"
     />
     <label class="card" for="opt1">
-      <h1>Premium Abo Fahrschule Monatlich</h1>
-      <p>&#10003; übersichtliches Profil</p>
-      <p>&#10003; SEO optimierte Inhalte</p>
+      <h1>{{ text[50] }}</h1>
+      <p>&#10003; {{ text[46] }}</p>
+      <p>&#10003; {{ text[47] }}</p>
       <p>&#10003; Call to Actions</p>
-      <p>&#10003; laufende Updates</p>
-      <p>&#10003; aktive promotion auf Social Media</p>
+      <p>&#10003; {{ text[48] }}</p>
+      <p>&#10003; {{ text[49] }}</p>
       <p class="price">70.00 CHF</p>
     </label>
     <input
@@ -368,12 +362,12 @@
     />
 
     <label class="card" for="opt2">
-      <h1>Premium Abo Fahrschule Jährlich</h1>
-      <p>&#10003; übersichtliches Profil</p>
-      <p>&#10003; SEO optimierte Inhalte</p>
-      <p>&#10003; Call to Actions</p>
-      <p>&#10003; laufende Updates</p>
-      <p>&#10003; aktive promotion auf Social Media</p>
+      <h1>{{ text[51] }}</h1>
+      <p>&#10003; {{ text[46] }}</p>
+      <p>&#10003; {{ text[47] }}</p>
+      <p>&#10003; Call to Action</p>
+      <p>&#10003; {{ text[48] }}</p>
+      <p>&#10003; {{ text[49] }}</p>
       <p class="price">720.00 CHF</p>
     </label>
     <input
@@ -386,12 +380,12 @@
     />
 
     <label class="card" for="opt3">
-      <h1>Premium Abo Berufsschule Monatlich</h1>
-      <p>&#10003; übersichtliches Profil</p>
-      <p>&#10003; SEO optimierte Inhalte</p>
+      <h1>{{ text[52] }}</h1>
+      <p>&#10003; {{ text[46] }}</p>
+      <p>&#10003; {{ text[47] }}</p>
       <p>&#10003; Call to Actions</p>
-      <p>&#10003; laufende Updates</p>
-      <p>&#10003; aktive promotion auf Social Media</p>
+      <p>&#10003; {{ text[48] }}</p>
+      <p>&#10003; {{ text[49] }}</p>
       <p class="price">150.00 CHF</p>
     </label>
     <input
@@ -403,31 +397,31 @@
       [(ngModel)]="abo"
     />
     <label class="card" for="opt4">
-      <h1>Premium Abo Berufsschule Jährlich</h1>
-      <p>&#10003; übersichtliches Profil</p>
-      <p>&#10003; SEO optimierte Inhalte</p>
+      <h1>{{ text[53] }}</h1>
+      <p>&#10003; {{ text[46] }}</p>
+      <p>&#10003; {{ text[47] }}</p>
       <p>&#10003; Call to Actions</p>
-      <p>&#10003; laufende Updates</p>
-      <p>&#10003; aktive promotion auf Social Media</p>
+      <p>&#10003; {{ text[48] }}</p>
+      <p>&#10003; {{ text[49] }}</p>
       <p class="price">1500.00 CHF</p>
     </label>
   </fieldset>
 
   <div class="buttonContainer">
     <button *ngIf="pageCount === 2" type="button" (click)="back()">
-      zurück zu 1/4
+      {{ text[54] }} 1/4
     </button>
     <button *ngIf="pageCount === 3" type="button" (click)="back()">
-      zurück zu 2/4
+      {{ text[54] }} 2/4
     </button>
     <button *ngIf="pageCount === 4" type="button" (click)="back()">
-      zurück zu 3/4
+      {{ text[54] }} 3/4
     </button>
     <button class="next" *ngIf="pageCount === 1" type="button" (click)="next()">
-      weiter zu 2/4
+      {{ text[55] }} 2/4
     </button>
     <button class="next" *ngIf="pageCount === 2" type="button" (click)="next()">
-      weiter zu 3/4
+      {{ text[55] }} 3/4
     </button>
 
     <!--     <button class="next" *ngIf="pageCount === 3" type="button">

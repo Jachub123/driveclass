@@ -57,7 +57,7 @@ nav {
     @apply flex items-center text-xl justify-center;
   }
   select {
-    @apply w-fit;
+    @apply w-fit border mr-4 h-[3rem];
   }
 }
 

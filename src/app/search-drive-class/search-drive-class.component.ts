@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SchoolService } from '../school.service';
 import { School } from './driving-school/school.model';
-import { Subscription } from 'rxjs';
+import { Subscription, first } from 'rxjs';
 import { AuthService } from '../register/auth-service.service';
 
 @Component({
@@ -11,6 +11,8 @@ import { AuthService } from '../register/auth-service.service';
   styleUrls: ['./search-drive-class.component.scss'],
 })
 export class SearchDriveClassComponent implements OnInit, OnDestroy {
+  langSub: Subscription;
+  langChangeSub: Subscription;
   constructor(
     private schoolService: SchoolService,
     private authService: AuthService
@@ -23,6 +25,20 @@ export class SearchDriveClassComponent implements OnInit, OnDestroy {
   filteredSchools: School[] = [];
   schoolSub: Subscription;
   count = 0;
+  text = [
+    'Firma/Schule',
+    'Fahrschule',
+    'Berufsschule',
+    'Suche nach',
+    'Postleitzahl',
+    'Gebiet',
+    'Sprache ',
+    'Suchen',
+    'Fahrschulen oder Berufsschulen in deiner Nähe',
+  ];
+  headerSearchList = 'Fahrschulen oder Berufsschulen in deiner Nähe';
+  searchfield1 = 'Suche nach';
+  searchfield2 = 'Firma/Schule';
   searchedName(word, searchBar) {
     //gib den Namen zurück der dem eingegebenen Suchfeldbegriff entspricht.
     return word.toLowerCase().includes(searchBar.toLowerCase());
@@ -123,6 +139,25 @@ export class SearchDriveClassComponent implements OnInit, OnDestroy {
       this.schoolService.fetchSchools();
     }
 
+    this.langChangeSub = this.schoolService.language.subscribe((lang) => {
+      for (let i = 0; i < this.text.length; i++) {
+        this.schoolService
+          .getTranslation(this.text[i], '', lang)
+          .subscribe((result) => {
+            this.text[i] = result.translations[0].text;
+          });
+      }
+    });
+    if (localStorage.getItem('lang') !== 'DE') {
+      for (let i = 0; i < this.text.length; i++) {
+        this.langSub = this.schoolService
+          .getTranslation(this.text[i], 'DE', localStorage.getItem('lang'))
+          .pipe(first())
+          .subscribe((result) => {
+            this.text[i] = result.translations[0].text;
+          });
+      }
+    }
     this.schoolSub = this.schoolService.schoolCache.subscribe((obj) => {
       this.schools.push(obj);
     });
@@ -130,5 +165,7 @@ export class SearchDriveClassComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.schoolSub.unsubscribe();
+    this.langSub?.unsubscribe();
+    this.langChangeSub?.unsubscribe();
   }
 }

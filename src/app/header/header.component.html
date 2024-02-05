@@ -37,8 +37,8 @@
             class="nav-link"
             routerLinkActive="active"
             routerLink="tipps"
-            text="LINKS & TIPPS"
-            >LINKS & TIPPS</a
+            [attr.text]="text[0]"
+            >{{ text[0] }}</a
           >
         </li>
 
@@ -47,20 +47,26 @@
             routerLink="register"
             routerLinkActive="active"
             class="nav-link"
-            text="REGISTRIEREN"
-            >REGISTRIEREN</a
+            [attr.text]="text[1]"
+            >{{ text[1] }}</a
           >
         </li>
         <li class="nav-item">
           <a
             class="nav-link"
             routerLinkActive="active"
-            text="PREMIUM ABO"
+            [attr.text]="text[2]"
             routerLink="premium"
-            >PREMIUM ABO</a
+            >{{ text[2] }}</a
           >
         </li>
       </ul>
+      <select #langSelect (change)="langChange($event)">
+        <option>DE</option>
+        <option>EN</option>
+        <option>IT</option>
+        <option>FR</option>
+      </select>
       <ul id="login">
         <li [class]="schoolLoggedIn ? ' nav-item' : 'nav-item login'">
           <button
@@ -78,8 +84,9 @@
               type="button"
               routerLink="school/mySchool"
               routerLinkActive="active"
+              [attr.text]="text[3]"
             >
-              MEINE SCHULE
+              {{ text[3] }}
             </button>
           </ng-template>
         </li>

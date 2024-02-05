@@ -13,7 +13,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AuthService } from './auth-service.service';
 import { ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { min } from 'rxjs';
+import { Subscription, first } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -23,6 +23,65 @@ import { min } from 'rxjs';
 export class RegisterComponent implements OnInit, OnDestroy {
   user: any;
   sub: any;
+  langChangeSub: Subscription;
+  langSub: Subscription;
+  text: Array<String> = [
+    'Registriere deine Fahrschule/Berufsschule bei Driveclass',
+    'Alles über deine Fahrschule/Berufsschule',
+    'Berufsschule',
+    'Fahrschule',
+    '*Name deiner Fahrschule/Berufsschule:',
+    'z.B. "Drive Safe Fahrschule/Berufsschule Kernten"',
+    'Dies ist ein Pflichtfeld, bitte ausfüllen!',
+    '*E-Mail',
+    'mit diesem Namen Meldest du dich an',
+    '*Passwort',
+    'Mach es sicher!',
+    '*Bild deiner Fahrschule/Berufsschule',
+    '*Stadt deiner Fahrschule/Berufsschule',
+    '*Kanton',
+    '*Postleitzahl',
+    'Info-Text zu deiner Fahrschule/Berufsschule',
+    'erzähl etwas über deine Fahrschule/Berufsschule',
+    'Was bietet deine Fahrschule/Berufsschule an?',
+    '(Achtung: bei nicht ankreuzen, gibst du an dass deine Fahrschule/Berufsschule dies nicht anbietet)',
+    'Handgeschaltet',
+    'Automat',
+    'Verkehrskunde',
+    'Nothelferkurs',
+    '*Sprachen',
+    'bitte mit Komma getrennt angeben: englisch, deutsch, französisch',
+    'Was verlangst du für:',
+    'eine Lektion',
+    'Verkehrskunde',
+    'Nothelferkurs',
+    'Kontaktdaten zu deiner Fahrschule/Berufsschule',
+    '*Vorwahl',
+    'Schweiz',
+    'Griechenland',
+    'Niederlande',
+    'Belgien',
+    'Frankreich',
+    'Spanien',
+    'Italien',
+    'Rumänien',
+    'Österreich',
+    'Deutschland',
+    '*Telefonnummer der Fahrschule/Berufsschule',
+    'Bitte erste Null weg lassen',
+    '*Webseite der Fahrschule/Berufsschule',
+    'Dein Abo',
+    'übersichtliches Profil',
+    'SEO optimierte Inhalte',
+    'laufende Updates',
+    'aktive promotion auf Social Media',
+    'Premium Abo Fahrschule Monatlich',
+    'Premium Abo Fahrschule Jährlich',
+    'Premium Abo Berufsschule Monatlich',
+    'Premium Abo Berufsschule Jährlich',
+    'zurück zu',
+    'weiter zu',
+  ];
   constructor(
     private angFire: AngularFireStorage,
     private db: AngularFirestore,
@@ -74,7 +133,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   upload(event) {
     if (event.target.files[0].size > 5 * 1024 * 1024) {
-      this.errorMsg = 'Das Bild darf nicht größer als 5MB sein.';
+      this.errorMsg += ' Das Bild darf nicht größer als 5MB sein. ';
       this.imgInput.nativeElement.value = '';
       return;
     } else {
@@ -100,7 +159,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (this.form.valid) {
       if (this.pageCount === 1) {
         if (this.form.value.name.length < 3) {
-          this.errorMsg += 'Der Name muss mindestens 3 Buchstaben enthalten.';
+          this.errorMsg += ' Der Name muss mindestens 3 Buchstaben enthalten. ';
           return;
         }
         this.db
@@ -127,10 +186,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
             if (usernameExists || nameExists) {
               // Display the error message if either username or email exists
               if (usernameExists) {
-                this.errorMsg += 'Die E-Mail existiert bereits! ';
+                this.errorMsg += ' Die E-Mail existiert bereits! ';
               }
               if (nameExists) {
-                this.errorMsg += 'Name der Fahrschule existiert bereits. ';
+                this.errorMsg += ' Name der Fahrschule existiert bereits. ';
               }
             } else {
               // No conflicts, proceed with registration
@@ -239,6 +298,27 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.langChangeSub = this.schoolservice.language.subscribe((lang) => {
+      for (let i = 0; i < this.text.length; i++) {
+        this.schoolservice
+          .getTranslation(this.text[i], localStorage.getItem('lang'), lang)
+          .subscribe((result) => {
+            this.text[i] = result.translations[0].text;
+          });
+      }
+    });
+
+    if (localStorage.getItem('lang') !== 'DE') {
+      for (let i = 0; i < this.text.length; i++) {
+        this.langSub = this.schoolservice
+          .getTranslation(this.text[i], 'DE', localStorage.getItem('lang'))
+          .pipe(first())
+          .subscribe((result) => {
+            this.text[i] = result.translations[0].text;
+          });
+      }
+    }
+
     this.scrollToAnchor('heading');
 
     this.authService.getUser();
@@ -248,5 +328,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
+    this.langSub.unsubscribe();
+    this.langChangeSub.unsubscribe();
   }
 }

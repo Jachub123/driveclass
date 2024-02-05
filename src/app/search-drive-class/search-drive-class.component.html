@@ -2,7 +2,7 @@
   <section>
     <div class="inputContainer">
       <div></div>
-      <label for="schule">Suche nach </label>
+      <label for="schule">{{ this.text[0] }} </label>
       <select
         id="schule"
         name="schoolType"
@@ -10,13 +10,13 @@
         (click)="filterSchools()"
         (change)="filterSchools()"
       >
-        <option name="fahrschule">Fahrschule</option>
-        <option name="berufsschule">Berufsschule</option>
+        <option name="fahrschule">{{ this.text[1] }}</option>
+        <option name="berufsschule">{{ this.text[2] }}</option>
       </select>
     </div>
     <div class="inputContainer">
       <div></div>
-      <label for="driveClassSearchbar">Firma/Schule </label>
+      <label for="driveClassSearchbar">{{ this.text[3] }} </label>
       <input
         id="driveClassSearchbar"
         name="driveClassSearchbar"
@@ -28,7 +28,7 @@
     </div>
     <div class="inputContainer">
       <div></div>
-      <label for="plz">Postleitzahl</label>
+      <label for="plz">{{ this.text[4] }}</label>
       <input
         id="plz"
         name="plz"
@@ -39,7 +39,7 @@
     </div>
     <div class="inputContainer">
       <div></div>
-      <label for="stadt">Gebiet </label>
+      <label for="stadt">{{ this.text[5] }}</label>
       <select
         id="stadt"
         name="stadt"
@@ -78,7 +78,7 @@
     </div>
     <div class="inputContainer">
       <div></div>
-      <label for="lang">Sprache </label>
+      <label for="lang">{{ this.text[6] }}</label>
       <input
         id="lang"
         name="lang"
@@ -88,11 +88,13 @@
       />
     </div>
     <div>
-      <button type="button" (click)="filterSchools()">Suchen</button>
+      <button type="button" (click)="filterSchools()">
+        {{ this.text[7] }}
+      </button>
     </div>
   </section>
 </form>
-<h1>Fahrschulen oder Berufsschulen in deiner Nähe</h1>
+<h1>{{ this.text[8] }}</h1>
 
 <main class="container" *ngIf="filteredSchools.length > 0; else allSchools">
   <app-driving-school

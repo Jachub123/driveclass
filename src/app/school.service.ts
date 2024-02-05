@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, map } from 'rxjs';
 import { School } from './search-drive-class/driving-school/school.model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,8 @@ export class SchoolService {
   invalidSchools = new Subject<School>();
   constructor(
     private db: AngularFirestore,
-    private fireStorage: AngularFireStorage
+    private fireStorage: AngularFireStorage,
+    private http: HttpClient
   ) {}
   schoolCache = new Subject<School>();
   schools = new Subject<School[]>();
@@ -43,6 +45,35 @@ export class SchoolService {
     payrexxUuid: '',
     valid: '',
   };
+  language = new Subject<String>();
+  languageSelected: String;
+  endpoint = 'https://api-free.deepl.com/v2/translate';
+  authKey = 'dbc5f054-b4f3-e6d4-b4ed-571ebc2f473c:fx';
+
+  private extractData(res: Response) {
+    let body = res;
+    return body || {};
+  }
+
+  getTranslation(text, fromLanguage, targetLanguage): Observable<any> {
+    var sourceLangString = '';
+    if (fromLanguage) {
+      sourceLangString = '&source_lang=' + fromLanguage;
+    }
+
+    return this.http
+      .get(
+        this.endpoint +
+          '?auth_key=' +
+          this.authKey +
+          '&text=' +
+          text +
+          sourceLangString +
+          '&target_lang=' +
+          targetLanguage
+      )
+      .pipe(map(this.extractData));
+  }
 
   fetchSchools(email = '') {
     this.db
