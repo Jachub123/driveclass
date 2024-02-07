@@ -53,11 +53,11 @@ nav {
       }
     }
   }
-  ul#login {
+  ul {
     @apply flex items-center text-xl justify-center;
   }
   select {
-    @apply w-fit border mr-4 h-[3rem];
+    @apply w-fit border m-4 h-[3rem];
   }
 }
 

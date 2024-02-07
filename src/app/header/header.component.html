@@ -61,12 +61,16 @@
           >
         </li>
       </ul>
-      <select #langSelect (change)="langChange($event)">
-        <option>DE</option>
-        <option>EN</option>
-        <option>IT</option>
-        <option>FR</option>
-      </select>
+      <ul>
+        <li>
+          <select #langSelect (change)="langChange($event)">
+            <option>DE</option>
+            <option>EN</option>
+            <option>IT</option>
+            <option>FR</option>
+          </select>
+        </li>
+      </ul>
       <ul id="login">
         <li [class]="schoolLoggedIn ? ' nav-item' : 'nav-item login'">
           <button
