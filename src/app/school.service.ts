@@ -97,7 +97,7 @@ export class SchoolService {
             schools.listAll().subscribe((school) => {
               this.fireStorage
                 .ref(
-                  `${school.prefixes[0]?.fullPath}/${
+                  `${response2.data()['school']['name']}/${
                     response2.data()['school']['img']
                   }`
                 )
