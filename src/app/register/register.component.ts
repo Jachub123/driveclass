@@ -242,11 +242,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.successMsg =
       'Deine Fahrschule wurde angelegt! Danke dass du Teil von Driveclass bist!';
     this.angFire.upload(
-      this.schoolservice.getAllSchools().name +
-        '/' +
-        this.user.uid +
-        '/' +
-        this.file.name,
+      this.schoolservice.getAllSchools().name + '/' + this.file.name,
       this.file
     );
   }
